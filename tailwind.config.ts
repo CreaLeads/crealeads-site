@@ -9,8 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        navy: "#0B1E3D",
+        "navy-light": "#0F2547",
+        green: "#00C896",
+        muted: "#A0B4C8",
+      },
+      fontFamily: {
+        poppins: ["var(--font-poppins)", "sans-serif"],
       },
     },
   },

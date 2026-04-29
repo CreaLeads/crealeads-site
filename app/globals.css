@@ -3,25 +3,46 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --navy: #0B1E3D;
+  --green: #00C896;
+  --text-muted: #A0B4C8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #0B1E3D;
+  color: #FFFFFF;
+  overflow-x: hidden;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* GSAP initial state helpers */
+.gsap-init {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Timeline line */
+.timeline-line {
+  transform-origin: left center;
+}
+
+/* Accordion */
+.accordion-content {
+  overflow: hidden;
+  height: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B1E3D;
+}
+::-webkit-scrollbar-thumb {
+  background: #00C896;
+  border-radius: 3px;
 }
