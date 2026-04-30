@@ -6,6 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const CAL_URL = "https://cal.eu/enzo-crealeads/20min";
 
+const openFunnel = () =>
+  typeof document !== "undefined" &&
+  document.dispatchEvent(new CustomEvent("open-funnel"));
+
 // ─── NAVBAR ──────────────────────────────────────────────────────────────────
 
 function Navbar() {
@@ -49,14 +53,13 @@ function Navbar() {
           ))}
         </nav>
 
-        <a
-          href={CAL_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={openFunnel}
           className="hidden md:inline-flex items-center gap-2 bg-[#00C896] text-[#0B1E3D] font-bold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all duration-200"
         >
           Prendre rendez-vous
-        </a>
+        </button>
 
         <button
           className="md:hidden flex flex-col gap-1.5 p-2"
@@ -76,15 +79,13 @@ function Navbar() {
               {l.label}
             </a>
           ))}
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={() => { setMenuOpen(false); openFunnel(); }}
             className="inline-flex justify-center bg-[#00C896] text-[#0B1E3D] font-bold text-sm px-5 py-3 rounded-full"
-            onClick={() => setMenuOpen(false)}
           >
             Prendre rendez-vous
-          </a>
+          </button>
         </div>
       </div>
     </header>
@@ -100,10 +101,36 @@ function Hero() {
     if (typeof window === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".hero-item",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.18, ease: "power3.out", delay: 0.3 }
+      const tl = gsap.timeline({ delay: 0.25 });
+
+      // Badge pill : pop depuis le haut avec overshoot
+      tl.fromTo(".hero-badge",
+        { opacity: 0, y: -24, scale: 0.88 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.8)" }
+      )
+      // Titre H1 : sweep puissant depuis le bas
+      .fromTo(".hero-title",
+        { opacity: 0, y: 72 },
+        { opacity: 1, y: 0, duration: 1, ease: "power4.out" },
+        "-=0.15"
+      )
+      // Sous-titre : suit le titre
+      .fromTo(".hero-sub",
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+        "-=0.55"
+      )
+      // CTAs : léger overshoot back.out
+      .fromTo(".hero-cta",
+        { opacity: 0, y: 32 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.5)" },
+        "-=0.45"
+      )
+      // Badge preuve : pop avec overshoot + légère échelle
+      .fromTo(".hero-proof",
+        { opacity: 0, y: 20, scale: 0.94 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.65, ease: "back.out(1.7)" },
+        "-=0.35"
       );
     }, heroRef);
     return () => ctx.revert();
@@ -118,34 +145,33 @@ function Hero() {
       </div>
 
       <div className="max-w-4xl mx-auto px-5 py-24 text-center relative z-10">
-        <div className="hero-item inline-flex items-center gap-2 bg-[#00C896]/10 border border-[#00C896]/30 text-[#00C896] text-xs font-semibold px-4 py-2 rounded-full mb-8">
+        <div className="hero-badge inline-flex items-center gap-2 bg-[#00C896]/10 border border-[#00C896]/30 text-[#00C896] text-xs font-semibold px-4 py-2 rounded-full mb-8">
           <span className="w-2 h-2 bg-[#00C896] rounded-full animate-pulse" />
           Agence d&apos;acquisition digitale pour artisans du bâtiment
         </div>
 
-        <h1 className="hero-item text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white mb-6">
+        <h1 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white mb-6">
           Des clients qualifiés directement sur{" "}
           <span className="text-[#00C896]">votre téléphone.</span>
         </h1>
 
-        <p className="hero-item text-lg sm:text-xl text-[#A0B4C8] leading-relaxed max-w-2xl mx-auto mb-10">
+        <p className="hero-sub text-lg sm:text-xl text-[#A0B4C8] leading-relaxed max-w-2xl mx-auto mb-10">
           CreaLeads met en place votre système Lead Ads Meta clé en main —
           formulaires instantanés, CRM, notifications WhatsApp. Vous recevez vos
           premiers leads en 24 à 72h.
         </p>
 
-        <div className="hero-item flex flex-col sm:flex-row gap-4 justify-center mb-10">
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+        <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-center mb-10">
+          <button
+            type="button"
+            onClick={openFunnel}
             className="inline-flex items-center justify-center gap-2 bg-[#00C896] text-[#0B1E3D] font-bold text-base px-8 py-4 rounded-full hover:brightness-110 hover:scale-105 transition-all duration-200 shadow-lg shadow-[#00C896]/25"
           >
             Prendre rendez-vous gratuitement
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </a>
+          </button>
           <a
             href="#process"
             className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold text-base px-8 py-4 rounded-full hover:border-[#00C896] hover:text-[#00C896] transition-all duration-200"
@@ -154,7 +180,7 @@ function Hero() {
           </a>
         </div>
 
-        <div className="hero-item inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
+        <div className="hero-proof inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
           <span className="text-2xl">⚡</span>
           <p className="text-sm text-[#A0B4C8] text-left">
             <span className="text-white font-semibold">Premiers leads en 24 à 72h après lancement</span>
@@ -265,9 +291,10 @@ function CountUp({ end, suffix = "", prefix = "" }: { end: number; suffix?: stri
         const obj = { val: 0 };
         gsap.to(obj, {
           val: end,
-          duration: 2,
-          ease: "power2.out",
+          duration: 2.4,
+          ease: "power4.out",
           onUpdate: () => setValue(Math.floor(obj.val)),
+          onComplete: () => setValue(end), // snap exact au chiffre final
         });
       },
     });
@@ -297,10 +324,10 @@ function PreuveSociale() {
   }, []);
 
   const metrics = [
-    { value: 50, suffix: " leads", label: "qualifiés en 5 jours", small: false },
-    { value: 8, suffix: " devis", label: "envoyés la 1ère semaine", small: false },
-    { value: 3, suffix: " chantiers", label: "signés la 1ère semaine", small: true },
-    { value: 60, suffix: "%", label: "taux de closing", small: false },
+    { value: 50, suffix: " leads", label: "qualifiés en 5 jours" },
+    { value: 8, suffix: " devis", label: "envoyés la 1ère semaine" },
+    { value: 3, suffix: " chantiers", label: "signés la 1ère semaine" },
+    { value: 60, suffix: "%", label: "taux de closing" },
   ];
 
   return (
@@ -315,13 +342,13 @@ function PreuveSociale() {
         <p className="preuve-title text-[#A0B4C8] mb-14 text-base">
           Applicateur résine — campagne Meta lancée sur une zone ciblée
         </p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {metrics.map((m, i) => (
-            <div key={i} className="metric-card bg-[#0B1E3D] border border-white/10 rounded-2xl p-6 text-center hover:border-[#00C896]/30 transition-colors duration-300">
-              <div className={`font-black text-[#00C896] mb-2 whitespace-nowrap ${m.small ? "text-3xl sm:text-4xl" : "text-4xl sm:text-5xl"}`}>
+            <div key={i} className="metric-card bg-[#0B1E3D] border border-white/10 rounded-2xl p-4 sm:p-6 text-center hover:border-[#00C896]/30 transition-colors duration-300 overflow-hidden min-w-0">
+              <div className="font-black text-[#00C896] mb-2 whitespace-nowrap text-2xl lg:text-4xl">
                 <CountUp end={m.value} suffix={m.suffix} />
               </div>
-              <div className="text-xs text-[#A0B4C8] font-semibold uppercase tracking-wide">{m.label}</div>
+              <div className="text-xs lg:text-sm text-[#A0B4C8] font-semibold uppercase tracking-wide leading-tight">{m.label}</div>
             </div>
           ))}
         </div>
@@ -373,27 +400,42 @@ function Process() {
     if (typeof window === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
+      // Titre process
       gsap.fromTo(".process-title", { opacity: 0, y: 30 }, {
         opacity: 1, y: 0, duration: 0.7,
         scrollTrigger: { trigger: ".process-title", start: "top 85%" },
       });
 
+      // Timeline scrub : ligne se trace d'abord, puis chaque step apparaît
       const line = lineRef.current;
       if (line) {
-        const length = (line as SVGLineElement & { getTotalLength(): number }).getTotalLength?.() ?? 1000;
+        const length = 1000; // correspond au viewBox 0 0 1000 24
         gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
-        gsap.to(line, {
-          strokeDashoffset: 0,
-          duration: 2,
-          ease: "power2.inOut",
-          scrollTrigger: { trigger: ".process-timeline", start: "top 80%" },
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".process-timeline",
+            start: "top 72%",
+            end: "bottom 55%",
+            scrub: 1.5,
+          },
+        });
+
+        // Phase 1 : la ligne se trace (60 % de la durée)
+        tl.to(line, { strokeDashoffset: 0, ease: "none", duration: 0.6 })
+        // Phase 2 : les steps apparaissent en stagger (40 % restants)
+          .fromTo(".step-card",
+            { opacity: 0, y: 44, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1, stagger: 0.12, ease: "power3.out", duration: 0.4 },
+            "-=0.05"
+          );
+      } else {
+        // Fallback mobile (pas de line ref) : stagger simple
+        gsap.fromTo(".step-card", { opacity: 0, y: 40 }, {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out",
+          scrollTrigger: { trigger: ".step-card", start: "top 85%" },
         });
       }
-
-      gsap.fromTo(".step-card", { opacity: 0, y: 40 }, {
-        opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out",
-        scrollTrigger: { trigger: ".process-timeline", start: "top 75%" },
-      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -417,7 +459,6 @@ function Process() {
                 x1="0" y1="12" x2="1000" y2="12"
                 stroke="#00C896"
                 strokeWidth="2"
-                strokeDasharray="10 5"
               />
             </svg>
           </div>
@@ -467,14 +508,28 @@ function Offres() {
     if (typeof window === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
+      // Titre : simple fadeUp avant le pin
       gsap.fromTo(".offres-title", { opacity: 0, y: 30 }, {
         opacity: 1, y: 0, duration: 0.7,
         scrollTrigger: { trigger: ".offres-title", start: "top 85%" },
       });
-      gsap.fromTo(".offer-card", { opacity: 0, y: 50 }, {
-        opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out",
-        scrollTrigger: { trigger: ".offer-card", start: "top 85%" },
+
+      // Cards : section pineé, cards arrivent en stagger au scroll
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=560",
+          pin: true,
+          scrub: 0.9,
+          anticipatePin: 1,
+        },
       });
+
+      tl.fromTo(".offer-card",
+        { opacity: 0, y: 90, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, stagger: 0.28, ease: "power3.out", duration: 0.55 }
+      );
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -542,14 +597,13 @@ function Offres() {
             <p className="text-xs text-[#A0B4C8]/60 italic mb-5">
               Pour : artisan sceptique ou budget serré — test à faible risque
             </p>
-            <a
-              href={CAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-center border border-[#00C896] text-[#00C896] font-bold text-sm py-3.5 rounded-full hover:bg-[#00C896] hover:text-[#0B1E3D] transition-all duration-200"
+            <button
+              type="button"
+              onClick={openFunnel}
+              className="block w-full text-center border border-[#00C896] text-[#00C896] font-bold text-sm py-3.5 rounded-full hover:bg-[#00C896] hover:text-[#0B1E3D] transition-all duration-200"
             >
               Démarrer avec l&apos;Essentiel
-            </a>
+            </button>
           </div>
 
           {/* Growth */}
@@ -574,14 +628,13 @@ function Offres() {
             <p className="text-xs text-[#A0B4C8]/60 italic mb-5">
               Pour : artisan motivé qui veut un système clé en main
             </p>
-            <a
-              href={CAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-center bg-[#00C896] text-[#0B1E3D] font-black text-sm py-3.5 rounded-full hover:brightness-110 transition-all duration-200 shadow-lg shadow-[#00C896]/30"
+            <button
+              type="button"
+              onClick={openFunnel}
+              className="block w-full text-center bg-[#00C896] text-[#0B1E3D] font-black text-sm py-3.5 rounded-full hover:brightness-110 transition-all duration-200 shadow-lg shadow-[#00C896]/30"
             >
               Démarrer avec le Growth
-            </a>
+            </button>
           </div>
 
           {/* Full */}
@@ -603,14 +656,13 @@ function Offres() {
             <p className="text-xs text-[#A0B4C8]/60 italic mb-5">
               Pour : artisan avec équipe ou fort volume de chantiers
             </p>
-            <a
-              href={CAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-center border border-[#00C896] text-[#00C896] font-bold text-sm py-3.5 rounded-full hover:bg-[#00C896] hover:text-[#0B1E3D] transition-all duration-200"
+            <button
+              type="button"
+              onClick={openFunnel}
+              className="block w-full text-center border border-[#00C896] text-[#00C896] font-bold text-sm py-3.5 rounded-full hover:bg-[#00C896] hover:text-[#0B1E3D] transition-all duration-200"
             >
               Démarrer avec le Full
-            </a>
+            </button>
           </div>
         </div>
 
@@ -667,6 +719,106 @@ function Engagements() {
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── CERTIFICATIONS META ──────────────────────────────────────────────────────
+
+function MetaLogo() {
+  return (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-label="Meta">
+      {/* Infinity / Meta wordmark stylisé */}
+      <path
+        d="M6 18c0-3.2 1.6-6 4-7.8C12 8.5 14.5 8 16.5 9c1.2.6 2.2 1.7 3.5 3.5 1.3-1.8 2.3-2.9 3.5-3.5 2-1 4.5-.5 6.5 1.2 2.4 1.8 4 4.6 4 7.8s-1.6 5.6-3.8 7c-1.8 1.1-3.8 1-5.4-.2-1-.7-2-1.9-3.3-3.8-1.3 1.9-2.3 3.1-3.3 3.8-1.6 1.2-3.6 1.3-5.4.2C7.6 23.6 6 21.2 6 18z"
+        fill="#0082FB"
+      />
+      <path
+        d="M18 12.5c1 1.4 1.8 2.7 2.6 4a28 28 0 0 0 2.3 3.2c1 1.1 2 1.6 3.1.9 1.4-.9 2-2.7 2-4.6 0-2.4-1.1-4.4-2.8-5.7-1.4-1-2.8-1.1-4 0-.7.6-1.6 1.5-3.2 2.2z"
+        fill="#0866FF"
+      />
+      <path
+        d="M18 12.5c-1 1.4-1.8 2.7-2.6 4a28 28 0 0 1-2.3 3.2c-1 1.1-2 1.6-3.1.9C8.6 19.7 8 17.9 8 16c0-2.4 1.1-4.4 2.8-5.7 1.4-1 2.8-1.1 4 0 .7.6 1.6 1.5 3.2 2.2z"
+        fill="#0082FB"
+      />
+    </svg>
+  );
+}
+
+const certCards = [
+  {
+    title: "AI and Performance Marketing Specialist",
+    desc: "Maîtrise des campagnes Meta optimisées par l'IA pour maximiser le ROI et la qualité des leads.",
+  },
+  {
+    title: "Media Buying Professional",
+    desc: "Expert en achat média Facebook & Instagram — ciblage avancé, stratégie d'enchères et optimisation CPL.",
+  },
+];
+
+function Certifications() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.fromTo(".cert-title", { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 0.7,
+        scrollTrigger: { trigger: ".cert-title", start: "top 85%" },
+      });
+      gsap.fromTo(".cert-card", { opacity: 0, y: 50 }, {
+        opacity: 1, y: 0, duration: 0.7, stagger: 0.2, ease: "power3.out",
+        scrollTrigger: { trigger: ".cert-card", start: "top 85%" },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="py-24 px-5">
+      <div className="max-w-4xl mx-auto">
+        {/* Titre */}
+        <div className="text-center mb-14">
+          <div className="cert-title inline-flex items-center gap-2 bg-[#0082FB]/10 border border-[#0082FB]/25 text-[#0082FB] text-xs font-semibold px-4 py-2 rounded-full mb-6">
+            <MetaLogo />
+            <span>Certifié Meta Blueprint</span>
+          </div>
+          <h2 className="cert-title text-3xl sm:text-4xl font-black text-white mb-4">
+            Certifié Meta <span className="text-[#00C896]">Blueprint</span>
+          </h2>
+          <p className="cert-title text-[#A0B4C8] text-base max-w-xl mx-auto leading-relaxed">
+            Vos campagnes sont gérées par un expert certifié officiellement par Meta
+          </p>
+        </div>
+
+        {/* Cards */}
+        <div className="grid sm:grid-cols-2 gap-5 mb-10">
+          {certCards.map((c, i) => (
+            <div
+              key={i}
+              className="cert-card bg-[#0F2547] border border-[#0082FB]/20 rounded-2xl p-7 hover:border-[#0082FB]/50 transition-all duration-300 group"
+            >
+              {/* Badge META CERTIFIED */}
+              <div className="inline-flex items-center gap-2 bg-[#0082FB]/10 border border-[#0082FB]/20 text-[#0082FB] text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-5">
+                <MetaLogo />
+                Meta Certified
+              </div>
+
+              <h3 className="text-base font-bold text-white mb-3 leading-snug group-hover:text-[#00C896] transition-colors duration-200">
+                {c.title}
+              </h3>
+              <p className="text-sm text-[#A0B4C8] leading-relaxed">{c.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Note bas */}
+        <p className="cert-title text-center text-xs text-[#A0B4C8]/60 leading-relaxed">
+          Certification officielle Meta Blueprint — garantit la maîtrise des Lead Ads,
+          du ciblage et de l&apos;optimisation des campagnes Facebook &amp; Instagram
+        </p>
       </div>
     </section>
   );
@@ -791,17 +943,16 @@ function CTAFinal() {
           Appel découverte gratuit de 20 min — on voit ensemble si CreaLeads
           correspond à votre activité.
         </p>
-        <a
-          href={CAL_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={openFunnel}
           className="cta-item inline-flex items-center gap-2 bg-[#0B1E3D] text-white font-black text-base px-10 py-5 rounded-full hover:brightness-110 hover:scale-105 transition-all duration-200 shadow-xl"
         >
           Réserver mon appel gratuit
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
-        </a>
+        </button>
         <p className="cta-item mt-5 text-[#0B1E3D]/60 text-sm font-medium">
           Pas de pression, pas d&apos;engagement — juste 20 minutes.
         </p>
@@ -849,11 +1000,344 @@ function Footer() {
   );
 }
 
+// ─── FUNNEL MODAL ─────────────────────────────────────────────────────────────
+
+const FUNNEL_QUESTIONS: {
+  question: string;
+  key: string;
+  cols2: boolean;
+  options: { emoji: string; label: string }[];
+}[] = [
+  {
+    question: "Dans quel secteur exerces-tu ?",
+    key: "secteur",
+    cols2: true,
+    options: [
+      { emoji: "🏗️", label: "Résine / Sol industriel" },
+      { emoji: "🎨", label: "Peinture / Ravalement" },
+      { emoji: "🔧", label: "Plomberie / Chauffage" },
+      { emoji: "⚡", label: "Électricité" },
+      { emoji: "🌿", label: "Paysagisme / Jardinage" },
+      { emoji: "🪚", label: "Menuiserie / Charpente" },
+      { emoji: "🏠", label: "Rénovation générale" },
+      { emoji: "➕", label: "Autre" },
+    ],
+  },
+  {
+    question: "Combien de personnes dans ton entreprise ?",
+    key: "employes",
+    cols2: false,
+    options: [
+      { emoji: "👤", label: "Seul(e)" },
+      { emoji: "👥", label: "2 à 5 personnes" },
+      { emoji: "👥", label: "6 à 15 personnes" },
+      { emoji: "🏢", label: "Plus de 15 personnes" },
+    ],
+  },
+  {
+    question: "Quel budget envisages-tu pour tes pubs Meta ?",
+    key: "budget_pub",
+    cols2: false,
+    options: [
+      { emoji: "💰", label: "Moins de 300 €/mois" },
+      { emoji: "💰", label: "Entre 300 et 600 €/mois" },
+      { emoji: "💰", label: "Entre 600 et 1 500 €/mois" },
+      { emoji: "💰", label: "Plus de 1 500 €/mois" },
+    ],
+  },
+  {
+    question: "Quel est ton frein n°1 pour développer ton activité ?",
+    key: "probleme",
+    cols2: false,
+    options: [
+      { emoji: "❌", label: "Pas assez de nouveaux clients" },
+      { emoji: "🌐", label: "Pas de présence en ligne efficace" },
+      { emoji: "⏰", label: "Je n'ai pas le temps de gérer le marketing" },
+      { emoji: "❓", label: "Je ne sais pas par où commencer" },
+      { emoji: "📉", label: "Mes leads ne convertissent pas en chantiers" },
+    ],
+  },
+];
+
+type Answers = { secteur: string; employes: string; budget_pub: string; probleme: string };
+type ContactInfo = { prenom: string; nom: string; email: string; telephone: string };
+
+function FunnelModal() {
+  const [open, setOpen] = useState(false);
+  const [step, setStep] = useState(1);
+  const [answers, setAnswers] = useState<Answers>({ secteur: "", employes: "", budget_pub: "", probleme: "" });
+  const [contact, setContact] = useState<ContactInfo>({ prenom: "", nom: "", email: "", telephone: "" });
+  const [errors, setErrors] = useState<Partial<ContactInfo>>({});
+  const [loading, setLoading] = useState(false);
+  const [sendError, setSendError] = useState("");
+
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const stepContentRef = useRef<HTMLDivElement>(null);
+
+  // Écoute l'événement open-funnel
+  useEffect(() => {
+    const handler = () => {
+      setOpen(true);
+      setStep(1);
+      setAnswers({ secteur: "", employes: "", budget_pub: "", probleme: "" });
+      setContact({ prenom: "", nom: "", email: "", telephone: "" });
+      setErrors({});
+      setSendError("");
+    };
+    document.addEventListener("open-funnel", handler);
+    return () => document.removeEventListener("open-funnel", handler);
+  }, []);
+
+  // Animate in
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" });
+    gsap.fromTo(panelRef.current, { opacity: 0, y: 48 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" });
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  const animateStep = (next: number) => {
+    const el = stepContentRef.current;
+    if (!el) { setStep(next); return; }
+    gsap.to(el, {
+      x: -56, opacity: 0, duration: 0.22, ease: "power2.in",
+      onComplete: () => {
+        setStep(next);
+        gsap.fromTo(el, { x: 56, opacity: 0 }, { x: 0, opacity: 1, duration: 0.28, ease: "power3.out" });
+      },
+    });
+  };
+
+  const closeModal = () => {
+    gsap.to(overlayRef.current, { opacity: 0, duration: 0.25 });
+    gsap.to(panelRef.current, { opacity: 0, y: 32, duration: 0.25, onComplete: () => setOpen(false) });
+  };
+
+  const selectOption = (key: keyof Answers, value: string) =>
+    setAnswers(prev => ({ ...prev, [key]: value }));
+
+  const validateContact = (): boolean => {
+    const errs: Partial<ContactInfo> = {};
+    if (!contact.prenom.trim()) errs.prenom = "Requis";
+    if (!contact.nom.trim()) errs.nom = "Requis";
+    if (!contact.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email))
+      errs.email = "Email invalide";
+    if (!contact.telephone.trim() || contact.telephone.replace(/\D/g, "").length < 8)
+      errs.telephone = "Téléphone invalide";
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const submitContact = async () => {
+    if (!validateContact()) return;
+    setLoading(true);
+    setSendError("");
+    try {
+      const url = process.env.NEXT_PUBLIC_MAKE_WEBHOOK;
+      if (url) {
+        await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...contact, ...answers, date: new Date().toISOString() }),
+        });
+      }
+      animateStep(6);
+    } catch {
+      setSendError("Erreur lors de l'envoi. Contacte-nous directement.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const currentQ = step >= 1 && step <= 4 ? FUNNEL_QUESTIONS[step - 1] : null;
+  const currentAnswer = currentQ ? answers[currentQ.key as keyof Answers] : "";
+  const progressPct = Math.round((step / 6) * 100);
+
+  if (!open) return null;
+
+  return (
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ backgroundColor: "rgba(0,0,0,0.72)" }}
+      onClick={e => e.target === e.currentTarget && closeModal()}
+    >
+      <div
+        ref={panelRef}
+        className="relative w-full max-w-xl max-h-[92dvh] bg-[#0B1E3D] rounded-2xl flex flex-col shadow-2xl overflow-hidden"
+      >
+        {/* Barre de progression */}
+        <div className="h-1 bg-white/10 flex-shrink-0">
+          <div className="h-full bg-[#00C896] transition-all duration-500" style={{ width: `${progressPct}%` }} />
+        </div>
+
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 flex-shrink-0">
+          <span className="text-xs font-semibold text-[#A0B4C8]">
+            Étape <span className="text-white">{step}</span> <span className="text-white/30">/</span> 6
+          </span>
+          <button type="button" onClick={closeModal} className="text-[#A0B4C8] hover:text-white transition-colors p-1" aria-label="Fermer">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Contenu de l'étape */}
+        <div className="flex-1 overflow-y-auto">
+          <div ref={stepContentRef} className="px-5 py-7">
+
+            {/* Étapes 1-4 : QCM */}
+            {currentQ && (
+              <>
+                <h2 className="text-lg sm:text-xl font-black text-white mb-6 text-center leading-snug">
+                  {currentQ.question}
+                </h2>
+                <div className={`grid gap-2.5 ${currentQ.cols2 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-2"}`}>
+                  {currentQ.options.map(opt => (
+                    <button
+                      key={opt.label}
+                      type="button"
+                      onClick={() => selectOption(currentQ.key as keyof Answers, opt.label)}
+                      className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all duration-150 ${
+                        currentAnswer === opt.label
+                          ? "bg-[#00C896]/10 border-[#00C896] text-white"
+                          : "bg-[#0F2547] border-white/10 text-[#A0B4C8] hover:border-[#00C896]/40 hover:text-white"
+                      }`}
+                    >
+                      <span className="text-xl flex-shrink-0 leading-none">{opt.emoji}</span>
+                      <span className="text-sm font-semibold leading-tight">{opt.label}</span>
+                      {currentAnswer === opt.label && (
+                        <span className="ml-auto text-[#00C896] flex-shrink-0">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Étape 5 : Coordonnées */}
+            {step === 5 && (
+              <>
+                <h2 className="text-lg sm:text-xl font-black text-white mb-1.5 text-center">Tes coordonnées</h2>
+                <p className="text-[#A0B4C8] text-sm text-center mb-6">Pour recevoir ton plan personnalisé et réserver ton créneau</p>
+                <div className="grid sm:grid-cols-2 gap-3.5">
+                  {([
+                    { key: "prenom", label: "Prénom", placeholder: "Jean", type: "text" },
+                    { key: "nom", label: "Nom", placeholder: "Dupont", type: "text" },
+                    { key: "email", label: "Email", placeholder: "jean@example.com", type: "email" },
+                    { key: "telephone", label: "Téléphone", placeholder: "06 12 34 56 78", type: "tel" },
+                  ] as const).map(f => (
+                    <div key={f.key}>
+                      <label className="block text-xs font-semibold text-[#A0B4C8] mb-1.5">
+                        {f.label} <span className="text-[#00C896]">*</span>
+                      </label>
+                      <input
+                        type={f.type}
+                        placeholder={f.placeholder}
+                        value={contact[f.key]}
+                        onChange={e => setContact(prev => ({ ...prev, [f.key]: e.target.value }))}
+                        className={`w-full bg-[#0F2547] border rounded-xl px-4 py-3 text-white text-sm placeholder-white/25 outline-none focus:border-[#00C896] transition-colors ${
+                          errors[f.key] ? "border-red-500" : "border-white/15"
+                        }`}
+                      />
+                      {errors[f.key] && <p className="text-red-400 text-xs mt-1">{errors[f.key]}</p>}
+                    </div>
+                  ))}
+                </div>
+                {sendError && <p className="mt-4 text-red-400 text-sm text-center">{sendError}</p>}
+              </>
+            )}
+
+            {/* Étape 6 : Calendrier */}
+            {step === 6 && (
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-14 h-14 bg-[#00C896]/15 rounded-full mb-4">
+                  <span className="text-2xl">✅</span>
+                </div>
+                <h2 className="text-lg sm:text-xl font-black text-white mb-1.5">
+                  Plus qu&apos;une étape — choisis ton créneau
+                </h2>
+                <p className="text-[#A0B4C8] text-sm mb-5">Appel découverte 20 min — Google Meet</p>
+                <iframe
+                  src={CAL_URL}
+                  style={{ width: "100%", height: 500, border: "none", borderRadius: 12 }}
+                  title="Réserver un créneau"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Footer navigation */}
+        {step < 6 && (
+          <div className="flex-shrink-0 flex items-center justify-between gap-3 px-5 py-4 border-t border-white/10">
+            {step > 1 ? (
+              <button
+                type="button"
+                onClick={() => animateStep(step - 1)}
+                className="flex items-center gap-1.5 border border-white/20 text-[#A0B4C8] font-semibold text-sm px-4 py-2.5 rounded-full hover:border-white/40 hover:text-white transition-all duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
+                Précédent
+              </button>
+            ) : <div />}
+
+            {step <= 4 && (
+              <button
+                type="button"
+                onClick={() => currentAnswer && animateStep(step + 1)}
+                disabled={!currentAnswer}
+                className={`flex items-center gap-1.5 font-bold text-sm px-5 py-2.5 rounded-full transition-all duration-200 ${
+                  currentAnswer
+                    ? "bg-[#00C896] text-[#0B1E3D] hover:brightness-110"
+                    : "bg-white/10 text-white/30 cursor-not-allowed"
+                }`}
+              >
+                Suivant
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+            )}
+
+            {step === 5 && (
+              <button
+                type="button"
+                onClick={submitContact}
+                disabled={loading}
+                className="flex items-center gap-1.5 bg-[#00C896] text-[#0B1E3D] font-bold text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all duration-200 disabled:opacity-60"
+              >
+                {loading && (
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                )}
+                {loading ? "Envoi…" : "Choisir mon créneau →"}
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── PAGE ROOT ────────────────────────────────────────────────────────────────
 
 export default function Home() {
   return (
     <main className="bg-[#0B1E3D]" style={{ fontFamily: "var(--font-poppins), sans-serif" }}>
+      <FunnelModal />
       <Navbar />
       <Hero />
       <ProblemeSolution />
@@ -861,6 +1345,7 @@ export default function Home() {
       <Process />
       <Offres />
       <Engagements />
+      <Certifications />
       <FAQ />
       <CTAFinal />
       <Footer />
