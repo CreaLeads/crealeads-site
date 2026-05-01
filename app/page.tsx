@@ -1112,8 +1112,10 @@ function FunnelModal() {
     gsap.to(panelRef.current, { opacity: 0, y: 32, duration: 0.25, onComplete: () => setOpen(false) });
   };
 
-  const selectOption = (key: keyof Answers, value: string) =>
+  const selectOption = (key: keyof Answers, value: string) => {
     setAnswers(prev => ({ ...prev, [key]: value }));
+    animateStep(step + 1);
+  };
 
   const validateContact = (): boolean => {
     const errs: Partial<ContactInfo> = {};
@@ -1303,23 +1305,7 @@ function FunnelModal() {
               </button>
             ) : <div />}
 
-            {step <= 4 && (
-              <button
-                type="button"
-                onClick={() => currentAnswer && animateStep(step + 1)}
-                disabled={!currentAnswer}
-                className={`flex items-center gap-1.5 font-bold text-sm px-5 py-2.5 rounded-full transition-all duration-200 ${
-                  currentAnswer
-                    ? "bg-[#00C896] text-[#0B1E3D] hover:brightness-110"
-                    : "bg-white/10 text-white/30 cursor-not-allowed"
-                }`}
-              >
-                Suivant
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </button>
-            )}
+            {/* Pas de bouton Suivant pour les étapes QCM — la sélection avance automatiquement */}
 
             {step === 5 && (
               <button
