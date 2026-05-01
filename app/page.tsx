@@ -978,9 +978,6 @@ function Footer() {
           </div>
           <div className="text-center md:text-right space-y-2">
             <p className="text-[#A0B4C8] text-sm">
-              <a href="tel:0663675254" className="hover:text-white transition-colors">06 63 67 52 54</a>
-            </p>
-            <p className="text-[#A0B4C8] text-sm">
               <a href="mailto:contact.crealeads@gmail.com" className="hover:text-white transition-colors">
                 contact.crealeads@gmail.com
               </a>
@@ -1134,21 +1131,36 @@ function FunnelModal() {
     if (!validateContact()) return;
     setLoading(true);
     setSendError("");
-    try {
-      const url = process.env.NEXT_PUBLIC_MAKE_WEBHOOK;
-      if (url) {
+
+    const url = process.env.NEXT_PUBLIC_MAKE_WEBHOOK;
+    const payload = {
+      prenom: contact.prenom,
+      nom: contact.nom,
+      email: contact.email,
+      telephone: contact.telephone,
+      secteur: answers.secteur,
+      employes: answers.employes,
+      budget_pub: answers.budget_pub,
+      probleme: answers.probleme,
+      date: new Date().toISOString(),
+    };
+
+    if (!url) {
+      console.error("[CreaLeads] NEXT_PUBLIC_MAKE_WEBHOOK non défini — données non envoyées :", payload);
+    } else {
+      try {
         await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...contact, ...answers, date: new Date().toISOString() }),
+          body: JSON.stringify(payload),
         });
+      } catch (err) {
+        console.error("[CreaLeads] Échec envoi webhook :", err);
       }
-      animateStep(6);
-    } catch {
-      setSendError("Erreur lors de l'envoi. Contacte-nous directement.");
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
+    animateStep(6); // toujours avancer, même si le webhook échoue
   };
 
   const currentQ = step >= 1 && step <= 4 ? FUNNEL_QUESTIONS[step - 1] : null;
