@@ -16,13 +16,16 @@ export const metadata: Metadata = {
   keywords: "leads artisans, lead ads meta, acquisition digitale bâtiment, leads qualifiés",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-v2.ico", sizes: "32x32", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
     apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
   },
   openGraph: {
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+  },
+  other: {
+    "cache-control": "no-cache, no-store, must-revalidate",
   },
 };
 
