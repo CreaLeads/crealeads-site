@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CreaLeads — Call Launcher v2</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0D1B2A;--navy2:#162233;--navy3:#152030;
+  --green:#00C896;--green2:#009E76;
+  --gray:#8492A6;--border:#263548;
+  --orange:#E67E22;--red:#E53E3E;--purple:#6B46C1;
+}
+body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-height:100vh;padding:20px;color:white;}
+
+/* HEADER */
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.logo{font-size:22px;font-weight:800;color:white;}
+.logo span{color:var(--green);}
+.subtitle{font-size:11px;color:var(--gray);margin-top:3px;}
+.timer-box{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:10px 18px;text-align:center;}
+#timer{font-size:28px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;letter-spacing:2px;}
+.timer-label{font-size:10px;color:var(--gray);margin-top:2px;}
+.timer-btns{display:flex;gap:6px;margin-top:8px;justify-content:center;}
+.timer-btns button{background:var(--border);border:none;color:var(--gray);padding:4px 10px;border-radius:5px;font-size:11px;cursor:pointer;font-family:inherit;transition:.15s;}
+.timer-btns button:hover{background:#2e4057;color:white;}
+
+/* STATUS BAR */
+.status-bar{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:8px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.status-text{font-size:12px;color:white;font-weight:600;}
+.status-sub{font-size:11px;color:var(--gray);}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+
+/* CARDS */
+.card{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.card-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:12px;}
+
+/* BUTTONS */
+.btn{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border:none;border-radius:9px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;margin-bottom:8px;transition:filter .15s,transform .1s;}
+.btn:last-child{margin-bottom:0;}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0;}
+.btn-info .btn-main{font-size:13px;font-weight:600;}
+.btn-info .btn-sub{font-size:10px;opacity:.75;margin-top:1px;}
+.btn-green{background:var(--green);color:var(--navy);}
+.btn-navy{background:#1e3a5f;color:white;}
+.btn-orange{background:var(--orange);color:white;}
+.btn-gray{background:var(--border);color:white;}
+.btn-red{background:var(--red);color:white;}
+.btn-purple{background:var(--purple);color:white;}
+.btn-calcom{background:#111827;border:1px solid var(--green);color:var(--green);}
+
+/* PHASES */
+.phases{display:flex;flex-direction:column;gap:5px;}
+.phase-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--navy3);border-radius:8px;cursor:pointer;border:1px solid transparent;transition:.15s;}
+.phase-item:hover{border-color:var(--border);}
+.phase-item.active{border-color:var(--green);background:#0d2218;}
+.phase-item.done{opacity:.42;}
+.phase-num{font-size:11px;font-weight:800;color:var(--green);min-width:22px;}
+.phase-name{font-size:12px;font-weight:600;color:white;flex:1;}
+.phase-time{font-size:10px;color:var(--gray);}
+.phase-check{font-size:13px;}
+
+/* INPUTS */
+.prospect-inputs{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.prospect-inputs input{background:var(--navy3);border:1px solid var(--border);border-radius:7px;color:white;font-family:inherit;font-size:12px;padding:9px 12px;width:100%;transition:border .2s;}
+.prospect-inputs input::placeholder{color:#3d5166;}
+.prospect-inputs input:focus{outline:none;border-color:var(--green);}
+.notes-area{width:100%;background:var(--navy3);border:1px solid var(--border);border-radius:8px;color:white;font-family:inherit;font-size:12px;padding:12px;resize:none;line-height:1.5;}
+.notes-area::placeholder{color:#3d5166;}
+.notes-area:focus{outline:none;border-color:var(--green);}
+
+/* CHECKLIST */
+.check-list{display:flex;flex-direction:column;gap:5px;}
+.check-item{display:flex;align-items:center;gap:10px;font-size:12px;color:#b0bec5;cursor:pointer;padding:4px 0;transition:.15s;}
+.check-item input[type=checkbox]{accent-color:var(--green);width:15px;height:15px;cursor:pointer;flex-shrink:0;}
+.check-item.checked{color:var(--gray);text-decoration:line-through;}
+
+/* OBJECTIONS */
+.obj-item{background:var(--navy3);border:1px solid var(--border);border-left:3px solid var(--orange);border-radius:8px;padding:9px 12px;margin-bottom:7px;cursor:pointer;transition:.18s;}
+.obj-item:last-child{margin-bottom:0;}
+.obj-item:hover{border-left-color:var(--green);}
+.obj-q{font-size:12px;font-weight:700;color:#fbd38d;}
+.obj-a{font-size:11px;color:#b0bec5;line-height:1.55;display:none;margin-top:6px;padding-top:6px;border-top:1px solid var(--border);}
+.obj-item.open .obj-a{display:block;}
+
+/* LINK CONFIG */
+.link-config{display:flex;flex-direction:column;gap:6px;}
+.link-row{display:flex;gap:6px;align-items:center;}
+.link-row label{font-size:11px;color:var(--gray);min-width:80px;flex-shrink:0;}
+.link-row input{flex:1;background:var(--navy3);border:1px solid var(--border);border-radius:6px;color:white;font-family:inherit;font-size:11px;padding:7px 10px;transition:border .2s;}
+.link-row input:focus{outline:none;border-color:var(--green);}
+.divider{border:none;border-top:1px solid #1e3040;margin:12px 0;}
+.section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:8px;}
+
+/* PACK OFFER */
+.offer-item{background:var(--navy3);border:1px solid var(--border);border-radius:7px;padding:8px 12px;font-size:12px;color:#b0bec5;margin-bottom:6px;}
+.offer-item strong{color:white;}
+.offer-item:last-child{margin-bottom:0;}
+.price-banner{margin-top:10px;background:rgba(0,200,150,.08);border:1px solid var(--green);border-radius:8px;padding:10px;text-align:center;}
+.price-main{font-size:22px;font-weight:900;color:var(--green);}
+.price-sub{font-size:10px;color:var(--gray);}
+.price-monthly{font-size:14px;font-weight:700;color:#fbd38d;margin-top:3px;}
+.closing-phrase{background:var(--navy3);border-radius:7px;padding:10px 12px;font-size:11px;color:#b0bec5;line-height:1.6;font-style:italic;}
+
+/* PACK TABS */
+.pack-tabs{display:flex;gap:6px;margin-bottom:12px;}
+.pack-tab{flex:1;padding:8px 4px;border:1px solid var(--border);border-radius:7px;text-align:center;cursor:pointer;transition:.15s;background:var(--navy3);}
+.pack-tab:hover{border-color:var(--gray);}
+.pack-tab.active-ess{border-color:#4a5568;background:rgba(74,85,104,.2);}
+.pack-tab.active-gro{border-color:var(--green);background:rgba(0,200,150,.1);}
+.pack-tab.active-ful{border-color:#48bb78;background:rgba(72,187,120,.1);}
+.pack-tab-name{font-size:11px;font-weight:700;color:white;}
+.pack-tab-price{font-size:10px;color:var(--gray);margin-top:2px;}
+
+/* WARMUP STATUS */
+.warmup-status{font-size:11px;padding:6px 10px;border-radius:6px;margin-top:8px;display:none;}
+.warmup-ok{background:#0d2218;border:1px solid var(--green);color:var(--green);}
+.warmup-err{background:#2d1515;border:1px solid var(--red);color:#fc8181;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;overflow-y:auto;padding:20px;}
+.modal-box{max-width:600px;margin:0 auto;background:var(--navy2);border-radius:14px;border:1px solid var(--border);overflow:hidden;}
+.modal-head{padding:16px 20px;background:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.modal-head-title{font-size:15px;font-weight:800;color:white;}
+.modal-head-sub{font-size:11px;color:var(--gray);margin-top:2px;}
+.modal-close-btn{background:var(--border);border:none;color:var(--gray);width:28px;height:28px;border-radius:6px;font-size:16px;cursor:pointer;font-family:inherit;flex-shrink:0;}
+.modal-body{padding:20px;display:flex;flex-direction:column;gap:12px;}
+.field-label{font-size:11px;color:var(--gray);display:block;margin-bottom:4px;}
+.field-input{width:100%;background:var(--navy);border:1px solid var(--border);border-radius:7px;color:white;font-family:inherit;font-size:12px;padding:9px 12px;transition:border .2s;}
+.field-input:focus{outline:none;border-color:var(--green);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.modal-status{display:none;border-radius:7px;padding:10px 14px;font-size:12px;}
+.modal-status.ok{display:block;background:#0d2218;border:1px solid var(--green);color:var(--green);}
+.modal-status.err{display:block;background:#2d1515;border:1px solid var(--red);color:#fc8181;}
+.modal-actions{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap;}
+.modal-btn{flex:1;border:none;border-radius:8px;padding:12px;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;transition:.2s;min-width:100px;}
+.modal-btn-green{background:var(--green);color:var(--navy);}
+.modal-btn-purple{background:var(--purple);color:white;}
+.modal-btn-orange{background:var(--orange);color:white;}
+.modal-btn-gray{background:var(--border);color:#b0bec5;font-weight:600;}
+.modal-btn:hover{filter:brightness(1.1);}
+
+/* TARIF BTN */
+.tarif-btn{background:#152030;border:2px solid #263548;border-radius:9px;padding:10px 6px;text-align:center;cursor:pointer;transition:.2s;}
+.tarif-btn:hover{border-color:var(--gray);}
+
+/* RDV PREVIEW */
+.rdv-preview-box{background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.rdv-preview-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:8px;}
+#rdv-preview{font-size:11px;color:#b0bec5;line-height:1.7;white-space:pre-wrap;}
+
+/* CALCOM BOX */
+.calcom-box{background:rgba(0,200,150,.07);border:1px solid var(--green);border-radius:8px;padding:10px 12px;margin-top:8px;}
+.calcom-box-title{font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="logo">CreaLeads<span>:</span></div>
+    <div class="subtitle">Call Launcher v2 — Ouvre cette page avant chaque appel</div>
+  </div>
+  <div class="timer-box">
+    <div id="timer">00:00</div>
+    <div class="timer-label">durée de l'appel</div>
+    <div class="timer-btns">
+      <button onclick="startTimer()">▶ Start</button>
+      <button onclick="resetTimer()">↺ Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div>
+    <span class="status-dot"></span>
+    <span class="status-text">Prospect : </span>
+    <span id="prospect-display" style="color:var(--green);font-size:13px;font-weight:700;">[Remplis ci-dessous]</span>
+  </div>
+  <span class="status-sub">Objectif : signature + virement avant de raccrocher</span>
+</div>
+
+<!-- ROW 1 : PROSPECT + PHASES -->
+<div class="grid">
+  <div class="card">
+    <div class="card-title">👤 Info prospect</div>
+    <div class="prospect-inputs">
+      <input id="prospect-name"    type="text"  placeholder="Prénom Nom" oninput="updateProspect()">
+      <input id="prospect-metier"  type="text"  placeholder="Métier (carreleur, peintre…)">
+      <input id="prospect-zone"    type="text"  placeholder="Zone géographique">
+      <input id="prospect-problem" type="text"  placeholder="Problème principal (formulaire)">
+      <input id="prospect-email"   type="email" placeholder="Email prospect">
+      <input id="prospect-tel"     type="text"  placeholder="Téléphone prospect">
+    </div>
+    <textarea class="notes-area" id="notes-live" rows="3" placeholder="Notes live pendant l'appel…" oninput="saveNotes()"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📍 Avancement call</div>
+    <div class="phases" id="phases">
+      <div class="phase-item active" onclick="setPhase(0)">
+        <span class="phase-num">01</span><span class="phase-name">Ouverture — Pose le cadre</span>
+        <span class="phase-time">2 min</span><span class="phase-check" id="check-0">○</span>
+      </div>
+      <div class="phase-item" onclick="setPhase(1)">
+        <span class="phase-num">02</span><span class="phase-name">Découverte — Son monde</span>
+        <span class="phase-time">8 min</span><span class="phase-check" id="check-1">○</span>
+      </div>
+      <div class="phase-item" onclick="setPhase(2)">
+        <span class="phase-num">03</span><span class="phase-name">Creuse &amp; quantifie la douleur</span>
+        <span class="phase-time">5 min</span><span class="phase-check" id="check-2">○</span>
+      </div>
+      <div class="phase-item" onclick="setPhase(3)">
+        <span class="phase-num">04</span><span class="phase-name">Projette dans la solution</span>
+        <span class="phase-time">3 min</span><span class="phase-check" id="check-3">○</span>
+      </div>
+      <div class="phase-item" onclick="setPhase(4)">
+        <span class="phase-num">05</span><span class="phase-name">Présente l'offre (Growth par défaut)</span>
+        <span class="phase-time">4 min</span><span class="phase-check" id="check-4">○</span>
+      </div>
+      <div class="phase-item" onclick="setPhase(5)">
+        <span class="phase-num">06</span><span class="phase-name">Obtenir les oui</span>
+        <span class="phase-time">3 min</span><span class="phase-check" id="check-5">○</span>
+      </div>
+      <div class="phase-item" onclick="setPhase(6)">
+        <span class="phase-num">07</span><span class="phase-name">Traite les freins</span>
+        <span class="phase-time">5 min</span><span class="phase-check" id="check-6">○</span>
+      </div>
+      <div class="phase-item" onclick="setPhase(7)">
+        <span class="phase-num">08</span><span class="phase-name">Closing — Signature live</span>
+        <span class="phase-time">3 min</span><span class="phase-check" id="check-7">○</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROW 2 : ACTIONS -->
+<div class="grid-3">
+
+  <div class="card">
+    <div class="card-title">📤 Envoyer pendant le call</div>
+    <button class="btn btn-green" onclick="openContractModal()">
+      <span class="btn-icon">✍️</span>
+      <div class="btn-info"><div class="btn-main">Générer &amp; envoyer le contrat</div><div class="btn-sub">Essentiel 990€ / Growth 1 500€+300€/m / Full 2 200€+650€/m</div></div>
+    </button>
+    <button class="btn btn-calcom" onclick="sendCalcomLink()">
+      <span class="btn-icon">📅</span>
+      <div class="btn-info"><div class="btn-main">Envoyer lien Cal.com + déclencher warmup</div><div class="btn-sub">WhatsApp auto → séquence J-1 / J-0 via Make.com</div></div>
+    </button>
+    <button class="btn btn-purple" onclick="openRDVModal()">
+      <span class="btn-icon">📆</span>
+      <div class="btn-info"><div class="btn-main">Caler RDV manuellement</div><div class="btn-sub">Mail + Google Calendar + warmup Make.com</div></div>
+    </button>
+    <button class="btn btn-gray" onclick="openLink('offre')">
+      <span class="btn-icon">📄</span>
+      <div class="btn-info"><div class="btn-main">Partager le PDF offre</div><div class="btn-sub">Google Drive / lien direct</div></div>
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🖥️ Montrer à l'écran</div>
+    <button class="btn btn-gray" onclick="window.open('https://meet.google.com/new','_blank')">
+      <span class="btn-icon">🎥</span>
+      <div class="btn-info"><div class="btn-main">Lancer Google Meet</div><div class="btn-sub">Visio instantanée</div></div>
+    </button>
+    <button class="btn btn-navy" onclick="openLink('site')">
+      <span class="btn-icon">🌐</span>
+      <div class="btn-info"><div class="btn-main">Site vitrine exemple</div><div class="btn-sub">Partage ton écran — preuve</div></div>
+    </button>
+    <button class="btn btn-navy" onclick="openLink('resultats')">
+      <span class="btn-icon">📊</span>
+      <div class="btn-info"><div class="btn-main">Résultats client</div><div class="btn-sub">Screenshots / stats réelles</div></div>
+    </button>
+    <button class="btn btn-gray" onclick="openLink('script')">
+      <span class="btn-icon">📋</span>
+      <div class="btn-info"><div class="btn-main">Script de vente</div><div class="btn-sub">Référence interne</div></div>
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✅ Check avant appel</div>
+    <div class="check-list">
+      <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Formulaire prospect lu</label>
+      <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Prénom / métier / zone notés</label>
+      <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Site vitrine ouvert</label>
+      <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Résultats client prêts</label>
+      <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> PDF offre prêt</label>
+      <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> IBAN dans le contrat ✓</label>
+      <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Lien Cal.com prêt</label>
+    </div>
+    <hr class="divider">
+    <div class="section-label">⏳ Phrase de closing</div>
+    <div class="closing-phrase">"Je retiens ta place jusqu'à ce soir.<br>Un concurrent prend ta zone si tu attends."</div>
+    <hr class="divider">
+    <div class="section-label">🚫 Règle absolue</div>
+    <div class="closing-phrase" style="border-left:3px solid var(--red);border-radius:0 7px 7px 0;color:#fc8181;">Zéro remise spontanée.<br>Budget serré → Essentiel 990€ seulement.</div>
+  </div>
+</div>
+
+<!-- ROW 3 : OFFRE + OBJECTIONS -->
+<div class="grid">
+  <div class="card">
+    <div class="card-title">🎯 Offre CreaLeads — sélectionne le pack à présenter</div>
+    <div class="pack-tabs">
+      <div class="pack-tab" id="tab-ess" onclick="showPack('essentiel')">
+        <div class="pack-tab-name">ESSENTIEL</div>
+        <div class="pack-tab-price">990€ one-shot</div>
+      </div>
+      <div class="pack-tab active-gro" id="tab-gro" onclick="showPack('growth')">
+        <div class="pack-tab-name">⭐ GROWTH</div>
+        <div class="pack-tab-price">1 500€ + 300€/mois</div>
+      </div>
+      <div class="pack-tab" id="tab-ful" onclick="showPack('full')">
+        <div class="pack-tab-name">FULL</div>
+        <div class="pack-tab-price">2 200€ + 650€/mois</div>
+      </div>
+    </div>
+    <div id="pack-content"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💬 Objections → Réponses (clique pour développer)</div>
+    <div class="obj-item" onclick="this.classList.toggle('open')">
+      <div class="obj-q">💰 « C'est trop cher »</div>
+      <div class="obj-a">« 1 500€ c'est un investissement. Un seul chantier en plus et c'est amorti. La vraie question c'est pas le coût — c'est le retour.<br><br>Si budget vraiment serré : "On a aussi une formule à 990€ sans abonnement — même système, tu gères seul après. Ça tient ?" »</div>
+    </div>
+    <div class="obj-item" onclick="this.classList.toggle('open')">
+      <div class="obj-q">🤔 « J'ai besoin d'y réfléchir »</div>
+      <div class="obj-a">« Réfléchir à quoi exactement ? C'est le budget qui coince ou il y a autre chose ? Dis-moi franchement, on regarde ça ensemble maintenant.<br><br>Pendant que tu réfléchis, un concurrent prend ta place dans ta zone — on n'en prend qu'un par métier. »</div>
+    </div>
+    <div class="obj-item" onclick="this.classList.toggle('open')">
+      <div class="obj-q">📊 « Pas de résultats garantis »</div>
+      <div class="obj-a">« Je garantis le système — livraison en 7-14 jours, campagnes qui tournent, suivi mensuel pour optimiser le CPL.<br><br>Ce que je garantis pas : tes chantiers — ça c'est ton job de vendre quand les leads arrivent. Moi je t'amène les prospects à la porte. »</div>
+    </div>
+    <div class="obj-item" onclick="this.classList.toggle('open')">
+      <div class="obj-q">🕐 « C'est pas le bon moment »</div>
+      <div class="obj-a">« C'est quand le bon moment ? Si t'attends que les chantiers ralentissent, c'est déjà trop tard. Le système prend 7-14 jours à livrer. C'est maintenant qu'il faut l'allumer. »</div>
+    </div>
+    <div class="obj-item" onclick="this.classList.toggle('open')">
+      <div class="obj-q">🌐 « J'ai déjà quelqu'un pour ça »</div>
+      <div class="obj-a">« Ça tourne bien ? Tu génères combien de leads par mois en ce moment ?<br><br>Si c'est pas mesurable et prévisible chaque semaine — c'est pas un système, c'est juste des outils. »</div>
+    </div>
+    <div class="obj-item" onclick="this.classList.toggle('open')">
+      <div class="obj-q">😨 « Je connais pas le Lead Ads »</div>
+      <div class="obj-a">« C'est exactement pour ça que t'as besoin de nous. T'as rien à comprendre techniquement — toi tu reçois les leads sur ton téléphone, on s'occupe de tout le reste. »</div>
+    </div>
+    <div class="obj-item" onclick="this.classList.toggle('open')">
+      <div class="obj-q">👨‍👩 « Il faut que j'en parle à ma femme »</div>
+      <div class="obj-a">« C'est normal. Est-ce que c'est toi qui décides des investissements de moins de 2 000€ pour ton activité ?<br><br>Si oui, pas besoin d'attendre. Si non, dis-moi quand vous êtes dispos tous les deux — je vous fais le point en 10 min. »</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIG LIENS + EMAILJS + MAKE + CAL.COM -->
+<div class="card" style="margin-bottom:14px;">
+  <div class="card-title">⚙️ Configuration — remplis une fois, sauvegardé dans ce navigateur</div>
+  <div class="grid" style="gap:10px;margin-bottom:0;">
+    <div class="link-config">
+      <div class="link-row"><label>PDF offre</label><input id="link-offre" type="text" placeholder="https://drive.google.com/…" oninput="saveLinks()"></div>
+      <div class="link-row"><label>Site vitrine</label><input id="link-site" type="text" placeholder="https://surfacebeton.fr/" value="https://surfacebeton.fr/" oninput="saveLinks()"></div>
+      <div class="link-row"><label>Résultats</label><input id="link-resultats" type="text" placeholder="https://drive.google.com/…" oninput="saveLinks()"></div>
+      <div class="link-row"><label>Script PDF</label><input id="link-script" type="text" placeholder="https://drive.google.com/…" oninput="saveLinks()"></div>
+    </div>
+    <div class="link-config">
+      <div class="link-row"><label>🗓 Lien Cal.com</label><input id="link-calcom" type="text" placeholder="https://cal.com/enzo-crealeads/…" oninput="saveLinks()"></div>
+      <div class="link-row"><label>⚡ Make Webhook</label><input id="link-make-webhook" type="text" placeholder="https://hook.eu1.make.com/…" oninput="saveLinks()"></div>
+      <div style="font-size:10px;color:#3d5166;margin-top:2px;line-height:1.5;">Le webhook Make.com reçoit : name / phone / email / rdv_date / rdv_time → déclenche la séquence warmup WhatsApp J-1 et J-0</div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="card-title" style="margin-bottom:10px;">⚡ EmailJS — Confirmation mail RDV automatique</div>
+  <div class="grid" style="gap:10px;margin-bottom:0;">
+    <div class="link-config">
+      <div class="link-row"><label>Public Key</label><input id="ejs-pubkey" type="text" placeholder="Colle ta Public Key EmailJS" value="McSnlJVhqWV1yW2KM" oninput="saveEJS()"></div>
+      <div class="link-row"><label>Service ID</label><input id="ejs-service" type="text" placeholder="service_xxxxxxx" value="service_ub48h0q" oninput="saveEJS()"></div>
+    </div>
+    <div class="link-config">
+      <div class="link-row"><label>Template ID</label><input id="ejs-template" type="text" placeholder="template_xxxxxxx" value="template_nqjukqs" oninput="saveEJS()"></div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;">
+    <button onclick="testEmailJS()" style="background:var(--purple);color:white;border:none;border-radius:7px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;">🧪 Tester EmailJS</button>
+    <span id="ejs-status" style="font-size:11px;color:var(--green);">✓ EmailJS initialisé (non testé)</span>
+  </div>
+</div>
+
+
+<!-- ═══ MODAL RDV ═══ -->
+<div id="rdv-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head" style="border-bottom:3px solid var(--purple);">
+      <div>
+        <div class="modal-head-title">📅 Caler un RDV manuellement</div>
+        <div class="modal-head-sub">Mail de confirmation + Google Calendar + warmup Make.com automatique</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal('rdv-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field-row">
+        <div><label class="field-label">Prénom Nom client *</label><input id="rdv-nom" class="field-input" type="text" placeholder="Jean Dupont" oninput="updateRDVPreview()"></div>
+        <div><label class="field-label">Email client *</label><input id="rdv-email" class="field-input" type="email" placeholder="client@email.fr" oninput="updateRDVPreview()"></div>
+      </div>
+      <div class="field-row">
+        <div><label class="field-label">Téléphone (pour warmup WhatsApp)</label><input id="rdv-tel" class="field-input" type="text" placeholder="0612345678" oninput="updateRDVPreview()"></div>
+        <div></div>
+      </div>
+      <div class="field-row">
+        <div><label class="field-label">Date du RDV *</label><input id="rdv-date" class="field-input" type="date" oninput="updateRDVPreview()"></div>
+        <div><label class="field-label">Heure *</label><input id="rdv-heure" class="field-input" type="time" oninput="updateRDVPreview()"></div>
+      </div>
+      <div class="rdv-preview-box">
+        <div class="rdv-preview-label">Aperçu du mail client</div>
+        <div id="rdv-preview"></div>
+      </div>
+      <div class="calcom-box">
+        <div class="calcom-box-title">🤖 Warmup automatique Make.com</div>
+        <div style="font-size:11px;color:#b0bec5;line-height:1.6;">Quand tu cliques "Envoyer", Make.com reçoit les infos du RDV et programme automatiquement :<br>📱 WhatsApp J-1 à 19h · 📱 WhatsApp J-0 à 2h avant l'appel<br><span style="color:var(--gray);">Assure-toi d'avoir rempli le webhook Make.com dans la config ⚙️ en bas.</span></div>
+      </div>
+      <div id="rdv-status" class="modal-status"></div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-purple" onclick="sendRDV()">📅 Mail + Agenda + Warmup</button>
+        <button class="modal-btn modal-btn-gray" onclick="fallbackMailto()" style="flex:0;white-space:nowrap;padding:12px 14px;">✉️ Gmail seul</button>
+        <button class="modal-btn modal-btn-gray" onclick="closeModal('rdv-modal')" style="flex:0;padding:12px 16px;">Annuler</button>
+      </div>
+      <div style="font-size:10px;color:#3d5166;text-align:center;line-height:1.6;">S'ouvre sur contact.crealeads@gmail.com — clique "Enregistrer" dans Google Cal pour envoyer les invitations.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ MODAL CONTRAT ═══ -->
+<div id="contract-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box" style="max-width:640px;">
+    <div class="modal-head" style="border-bottom:3px solid var(--green);">
+      <div>
+        <div class="modal-head-title">✍️ Personnaliser le contrat</div>
+        <div class="modal-head-sub">Choisis le pack → remplis les infos → génère le PDF → Yousign</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal('contract-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- PACK SELECTOR -->
+      <div>
+        <label class="field-label" style="margin-bottom:8px;display:block;font-size:12px;font-weight:700;color:white;">Pack / Formule *</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div class="tarif-btn" id="tarif-ess" onclick="selectPack('essentiel')">
+            <div style="font-size:15px;font-weight:900;color:#00C896;">990 €</div>
+            <div style="font-size:9px;color:#8492A6;margin-top:2px;">One-shot</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">ESSENTIEL</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">Paiement unique</div>
+          </div>
+          <div class="tarif-btn" id="tarif-gro" onclick="selectPack('growth')" style="border-color:#00C896;background:rgba(0,200,150,.1);">
+            <div style="font-size:15px;font-weight:900;color:#00C896;">1 500 € <span style="font-size:10px;">setup</span></div>
+            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 300 €/mois</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">⭐ GROWTH</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">3 mois min · 2 × 750€</div>
+          </div>
+          <div class="tarif-btn" id="tarif-ful" onclick="selectPack('full')">
+            <div style="font-size:15px;font-weight:900;color:#00C896;">2 200 € <span style="font-size:10px;">setup</span></div>
+            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 650 €/mois</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">FULL</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">3 mois min · 2 × 1 100€</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" style="margin:2px 0;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray);">Infos client</div>
+      <div class="field-row">
+        <div><label class="field-label">Prénom Nom *</label><input id="c-nom" class="field-input" type="text" placeholder="Jean Dupont"></div>
+        <div><label class="field-label">Société (si pro)</label><input id="c-societe" class="field-input" type="text" placeholder="Dupont Rénovation"></div>
+      </div>
+      <div><label class="field-label">Adresse complète *</label><input id="c-adresse" class="field-input" type="text" placeholder="12 rue de la Paix, 75001 Paris"></div>
+      <div class="field-row">
+        <div><label class="field-label">Email *</label><input id="c-email" class="field-input" type="text" placeholder="client@email.fr"></div>
+        <div><label class="field-label">Téléphone</label><input id="c-tel" class="field-input" type="text" placeholder="06 00 00 00 00"></div>
+      </div>
+      <div><label class="field-label">N° SIRET (si pro)</label><input id="c-siret" class="field-input" type="text" placeholder="123 456 789 00010"></div>
+      <hr class="divider" style="margin:4px 0;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray);">Tes infos</div>
+      <div class="field-row">
+        <div><label class="field-label">Ton Prénom Nom</label><input id="c-moi-nom" class="field-input" type="text" placeholder="Wagner Enzo" oninput="saveMyInfo()"></div>
+        <div><label class="field-label">Ville (juridiction)</label><input id="c-moi-ville" class="field-input" type="text" placeholder="Paris" oninput="saveMyInfo()"></div>
+      </div>
+      <div id="modal-error" style="display:none;background:#2d1515;border:1px solid var(--red);border-radius:7px;padding:10px 14px;font-size:12px;color:#fc8181;"></div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-green" onclick="generateContract()">⚡ Générer le contrat PDF</button>
+        <button class="modal-btn modal-btn-gray" onclick="closeModal('contract-modal')" style="flex:0;padding:12px 16px;">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ JS ═══ -->
+<script>
+// ── TIMER ──
+let timerInterval=null,timerSeconds=0,running=false;
+function startTimer(){
+  if(running){clearInterval(timerInterval);running=false;return;}
+  running=true;
+  timerInterval=setInterval(()=>{
+    timerSeconds++;
+    document.getElementById('timer').textContent=
+      String(Math.floor(timerSeconds/60)).padStart(2,'0')+':'+
+      String(timerSeconds%60).padStart(2,'0');
+  },1000);
+}
+function resetTimer(){clearInterval(timerInterval);running=false;timerSeconds=0;document.getElementById('timer').textContent='00:00';}
+
+// ── PHASES ──
+let currentPhase=0,donePhases=new Set();
+function setPhase(i){
+  if(!donePhases.has(currentPhase)){
+    donePhases.add(currentPhase);
+    document.getElementById('check-'+currentPhase).textContent='✓';
+  }
+  currentPhase=i;
+  document.querySelectorAll('.phase-item').forEach((el,idx)=>{
+    el.classList.toggle('active',idx===i);
+    el.classList.toggle('done',donePhases.has(idx)&&idx!==i);
+  });
+}
+
+// ── PROSPECT ──
+function updateProspect(){
+  const v=document.getElementById('prospect-name').value;
+  document.getElementById('prospect-display').textContent=v||'[Remplis ci-dessous]';
+  const dot=document.querySelector('.status-dot');
+  if(dot)dot.style.background=v?'var(--green)':'var(--gray)';
+}
+
+// ── CHECK ──
+function toggleCheck(el){el.closest('label').classList.toggle('checked',el.checked);}
+
+// ── NOTES ──
+function saveNotes(){localStorage.setItem('cl_notes',document.getElementById('notes-live').value);}
+function loadNotes(){const v=localStorage.getItem('cl_notes');if(v)document.getElementById('notes-live').value=v;}
+
+// ── LINKS ──
+const LINK_KEYS=['contrat','offre','site','resultats','script','calcom','make-webhook'];
+function saveLinks(){LINK_KEYS.forEach(k=>{const el=document.getElementById('link-'+k);if(el)localStorage.setItem('cl_'+k,el.value);});}
+function loadLinks(){
+  LINK_KEYS.forEach(k=>{
+    const saved=localStorage.getItem('cl_'+k);
+    const el=document.getElementById('link-'+k);
+    if(saved&&el)el.value=saved;
+  });
+}
+function openLink(key){
+  const el=document.getElementById('link-'+key);
+  const url=el?el.value.trim():'';
+  if(url)window.open(url,'_blank');
+  else alert('Lien "'+key+'" non configuré — remplis-le dans la section config ⚙️.');
+}
+
+// ── PACK DISPLAY ──
+const PACKS={
+  essentiel:{
+    items:[
+      '🎯 1 campagne Lead Ads Meta + formulaire instantané',
+      '📍 Ciblage zone géographique + métier précis',
+      '📱 Notification WhatsApp à chaque lead',
+      '📋 CRM Google Sheets template (gestion manuelle)',
+      '🌐 Page de crédibilité simple (carrd.co)',
+      '🖼️ Tes photos formatées (3 formats Meta)',
+      '💬 Support WhatsApp 48h — 1 mois',
+      '📞 Kickoff call 20 min'
+    ],
+    price:'990 €',
+    monthly:null,
+    sub:'One-shot · sans abonnement · Paiement unique',
+    note:''
+  },
+  growth:{
+    items:[
+      '✅ Tout le pack Essentiel',
+      '🔄 2 campagnes (prospection + retargeting)',
+      '🤖 Make.com : lead → CRM auto en 30 sec',
+      '📊 CRM Google Sheets 100% automatisé',
+      '🎨 2-3 visuels publicitaires créés par nous',
+      '📈 Optimisation mensuelle des campagnes',
+      '📋 Rapport mensuel complet',
+      '💬 Support WhatsApp 24h continu',
+      '📞 Kickoff call 30 min'
+    ],
+    price:'1 500 €',
+    monthly:'+ 300 €/mois',
+    sub:'Setup 2 × 750€ · Mensuel au lancement · 3 mois min',
+    note:'⭐ Pack le plus choisi'
+  },
+  full:{
+    items:[
+      '✅ Tout le pack Growth',
+      '🚀 3 campagnes + audience lookalike',
+      '🎨 5 visuels pro tous formats',
+      '📊 CRM avancé + alertes couleurs auto (App Script)',
+      '📋 Rapport premium mensuel',
+      '📞 Appel de suivi mensuel inclus',
+      '💬 Support WhatsApp prioritaire 4h',
+      '📅 Kickoff call 45 min'
+    ],
+    price:'2 200 €',
+    monthly:'+ 650 €/mois',
+    sub:'Setup 2 × 1 100€ · Mensuel au lancement · 3 mois min',
+    note:'Pour artisans avec équipe ou fort volume'
+  }
+};
+let activePack='growth';
+function showPack(pack){
+  activePack=pack;
+  // Tabs
+  ['essentiel','growth','full'].forEach(p=>{
+    const tab=document.getElementById('tab-'+p.slice(0,3));
+    if(!tab)return;
+    tab.className='pack-tab'+(p===pack?' active-'+(p==='essentiel'?'ess':p==='growth'?'gro':'ful'):'');
+  });
+  const d=PACKS[pack];
+  let html='';
+  d.items.forEach(item=>{html+=`<div class="offer-item">${item}</div>`;});
+  html+=`<div class="price-banner">`;
+  if(d.note)html+=`<div style="font-size:10px;color:var(--green);margin-bottom:4px;">${d.note}</div>`;
+  html+=`<div class="price-main">${d.price}</div>`;
+  if(d.monthly)html+=`<div class="price-monthly">${d.monthly}</div>`;
+  html+=`<div class="price-sub">${d.sub}</div></div>`;
+  document.getElementById('pack-content').innerHTML=html;
+  // Sync selected pack for contract
+  selectedPack=pack;
+}
+
+// ── MODALS ──
+function closeModal(id){document.getElementById(id).style.display='none';}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.modal-overlay').forEach(o=>{
+    o.addEventListener('click',e=>{if(e.target===o)o.style.display='none';});
+  });
+  showPack('growth');
+  loadLinks();loadEJS();loadNotes();loadMyInfo();
+  if(location.protocol==='file:')console.warn('[CreaLeads] file:// — EmailJS peut échouer.');
+  if(!isEmailjsLoaded())setEJSStatus('❌ Librairie non chargée (CDN bloqué ?)','#fc8181');
+});
+
+function openRDVModal(){
+  const name=document.getElementById('prospect-name').value;
+  const email=document.getElementById('prospect-email').value;
+  const tel=document.getElementById('prospect-tel').value;
+  if(name)document.getElementById('rdv-nom').value=name;
+  if(email)document.getElementById('rdv-email').value=email;
+  if(tel)document.getElementById('rdv-tel').value=tel;
+  const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
+  document.getElementById('rdv-date').value=tomorrow.toISOString().split('T')[0];
+  document.getElementById('rdv-heure').value='10:00';
+  const st=document.getElementById('rdv-status');st.className='modal-status';st.textContent='';
+  document.getElementById('rdv-modal').style.display='block';
+  updateRDVPreview();
+}
+
+function openContractModal(){
+  const name=document.getElementById('prospect-name').value;
+  const email=document.getElementById('prospect-email').value;
+  if(name)document.getElementById('c-nom').value=name;
+  if(email)document.getElementById('c-email').value=email;
+  document.getElementById('c-moi-nom').value=localStorage.getItem('cl_moi_nom')||'Wagner Enzo';
+  document.getElementById('c-moi-ville').value=localStorage.getItem('cl_moi_ville')||'Paris';
+  const errEl=document.getElementById('modal-error');
+  if(errEl)errEl.style.display='none';
+  selectPack(selectedPack||'growth');
+  document.getElementById('contract-modal').style.display='block';
+}
+
+// ── PACK / TARIF SELECTION (contract modal) ──
+let selectedPack='growth';
+function selectPack(pack){
+  selectedPack=pack;
+  ['essentiel','growth','full'].forEach(p=>{
+    const btn=document.getElementById('tarif-'+p.slice(0,3));
+    if(!btn)return;
+    const active=(p===pack);
+    btn.style.background=active?'rgba(0,200,150,.1)':'#152030';
+    btn.style.borderColor=active?'#00C896':'#263548';
+  });
+}
+
+function saveMyInfo(){
+  localStorage.setItem('cl_moi_nom',document.getElementById('c-moi-nom').value);
+  localStorage.setItem('cl_moi_ville',document.getElementById('c-moi-ville').value);
+}
+function loadMyInfo(){
+  const nom=localStorage.getItem('cl_moi_nom');
+  const ville=localStorage.getItem('cl_moi_ville');
+  const n=document.getElementById('c-moi-nom');
+  const v=document.getElementById('c-moi-ville');
+  if(nom&&n)n.value=nom;
+  if(ville&&v)v.value=ville;
+}
+
+// ── CALCOM LINK SEND ──
+function sendCalcomLink(){
+  const calcomUrl=document.getElementById('link-calcom').value.trim();
+  if(!calcomUrl){alert('Configure ton lien Cal.com dans la section ⚙️ en bas.');return;}
+  const name=document.getElementById('prospect-name').value.trim()||'';
+  const prenom=name?name.split(' ')[0]:'';
+  const rawTel=document.getElementById('prospect-tel').value.trim().replace(/\s/g,'');
+  if(!rawTel){alert('Remplis le téléphone du prospect dans "Info prospect" pour ouvrir WhatsApp directement.');return;}
+  // Convertir numéro FR en format international (0612... → 33612...)
+  let tel=rawTel;
+  if(tel.startsWith('0'))tel='33'+tel.slice(1);
+  else if(tel.startsWith('+'))tel=tel.slice(1);
+  const bonjour=prenom?`Bonjour ${prenom} 👋`:'Bonjour 👋';
+  const msg=`${bonjour}\n\nC'est Enzo de CreaLeads.\n\nPour qu'on se parle et que je prépare quelque chose de concret pour ta zone, réserve un créneau de 20 min ici 👇\n\n📅 ${calcomUrl}\n\nDès que tu as réservé, je reçois une notification et je prépare l'appel.\n\nÀ très vite !\n— Enzo, CreaLeads`;
+  // Ouvrir WhatsApp Web avec le message pré-rempli + bon numéro
+  // L'utilisateur n'a plus qu'à cliquer "Envoyer"
+  window.open('https://wa.me/'+tel+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ── MAKE.COM WARMUP WEBHOOK ──
+async function triggerWarmupWebhook(nom,tel,email,date,heure){
+  const webhookUrl=document.getElementById('link-make-webhook').value.trim();
+  if(!webhookUrl){
+    console.log('[CreaLeads] Webhook Make.com non configuré — warmup ignoré.');
+    return false;
+  }
+  try{
+    await fetch(webhookUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:nom,phone:tel,email:email,rdv_date:date,rdv_time:heure,source:'call_launcher'})
+    });
+    return true;
+  }catch(e){
+    console.error('[CreaLeads] Webhook Make.com échoué :',e);
+    return false;
+  }
+}
+
+// ── EMAILJS ──
+let ejsInitialized=false,ejsInitKey=null;
+function getEJS(){return{pubkey:(document.getElementById('ejs-pubkey').value||'').trim(),service:(document.getElementById('ejs-service').value||'').trim(),template:(document.getElementById('ejs-template').value||'').trim()};}
+function setEJSStatus(msg,color){const el=document.getElementById('ejs-status');if(!el)return;el.textContent=msg;el.style.color=color||'var(--gray)';}
+function isEmailjsLoaded(){return typeof emailjs!=='undefined'&&emailjs&&typeof emailjs.send==='function';}
+function initEmailJS(){
+  if(!isEmailjsLoaded()){setEJSStatus('❌ Librairie EmailJS non chargée (CDN bloqué ?)','#fc8181');return false;}
+  const{pubkey}=getEJS();
+  if(!pubkey){setEJSStatus('⚠ Public Key manquante','#E67E22');return false;}
+  if(ejsInitialized&&ejsInitKey===pubkey)return true;
+  try{emailjs.init(pubkey);ejsInitialized=true;ejsInitKey=pubkey;setEJSStatus('✓ EmailJS initialisé (non testé)','var(--green)');return true;}
+  catch(e){setEJSStatus('❌ Init échoué : '+(e.message||e),'#fc8181');return false;}
+}
+function saveEJS(){['pubkey','service','template'].forEach(k=>localStorage.setItem('ejs_'+k,document.getElementById('ejs-'+k).value));ejsInitialized=false;initEmailJS();}
+function loadEJS(){['pubkey','service','template'].forEach(k=>{const saved=localStorage.getItem('ejs_'+k);if(saved)document.getElementById('ejs-'+k).value=saved;});initEmailJS();}
+async function testEmailJS(){
+  if(!isEmailjsLoaded()){setEJSStatus('❌ Librairie non chargée','#fc8181');return;}
+  const{pubkey,service,template}=getEJS();
+  if(!pubkey||!service||!template){setEJSStatus('⚠ Remplis Public Key + Service ID + Template ID','#E67E22');return;}
+  if(!initEmailJS())return;
+  setEJSStatus('⏳ Envoi test…','var(--gray)');
+  try{
+    await emailjs.send(service,template,{name:'TEST CreaLeads',email:'contact.crealeads@gmail.com',reply_to:'contact.crealeads@gmail.com',from_name:'Enzo — CreaLeads (TEST)',meeting_date:'TEST',meeting_time:'TEST',message:'Test automatique Call Launcher ✓'});
+    setEJSStatus('✅ Test réussi — mail envoyé à contact.crealeads@gmail.com','var(--green)');
+  }catch(e){
+    const txt=(e&&(e.text||e.message))||JSON.stringify(e);
+    setEJSStatus('❌ Test échoué : '+txt+(location.protocol==='file:'?' (file:// → autorise "null" dans EmailJS Security)':''),'#fc8181');
+  }
+}
+
+// ── RDV ──
+function formatDateFR(dateStr){
+  if(!dateStr)return'—';
+  const[y,m,d]=dateStr.split('-');
+  const months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  return`${parseInt(d)} ${months[parseInt(m)-1]} ${y}`;
+}
+function buildRDVEmailBody(nom,date,heure){
+  const prenom=nom?nom.split(' ')[0]:'vous';
+  return`Bonjour ${prenom},\n\nSuite à notre échange, voici la confirmation de votre Rendez-vous Découverte CreaLeads.\n\n📅  Date : ${formatDateFR(date)}\n⏰  Heure : ${heure||'—'}\n⏱️  Durée : 25 minutes\n📍  Format : Appel téléphonique / Google Meet\n\n─────────────────────────────\nAu programme :\n• Audit de votre situation actuelle\n• Présentation du Système CreaLeads\n• Stratégie clé en main pour votre zone\n• Plan d'action personnalisé\n─────────────────────────────\n\nMerci de confirmer votre présence en répondant à ce mail.\n\nÀ très vite,\nEnzo — CreaLeads\ncontact.crealeads@gmail.com`;
+}
+function updateRDVPreview(){document.getElementById('rdv-preview').textContent=buildRDVEmailBody(document.getElementById('rdv-nom').value||'[Prénom Nom]',document.getElementById('rdv-date').value,document.getElementById('rdv-heure').value);}
+function buildGCalLink(nom,email,date,heure){
+  if(!date||!heure)return null;
+  const[y,m,d]=date.split('-');const[h,min]=heure.split(':');
+  const pad=n=>String(n).padStart(2,'0');
+  const startDT=`${y}${m}${d}T${pad(h)}${pad(min)}00`;
+  const endDate=new Date(`${date}T${heure}:00`);endDate.setMinutes(endDate.getMinutes()+30);
+  const endDT=`${endDate.getFullYear()}${pad(endDate.getMonth()+1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
+  const title=encodeURIComponent(`RDV Découverte CreaLeads — ${nom}`);
+  const details=encodeURIComponent(`Rendez-vous découverte CreaLeads (30 min)\n\nAu programme :\n• Audit de votre visibilité\n• Présentation du Système CreaLeads\n• Plan d'action clé en main\n\nContact : contact.crealeads@gmail.com`);
+  const guests=encodeURIComponent(`${email},contact.crealeads@gmail.com`);
+  return`https://calendar.google.com/calendar/r/eventedit?authuser=contact.crealeads%40gmail.com&action=TEMPLATE&text=${title}&dates=${startDT}/${endDT}&details=${details}&add=${guests}&sf=true`;
+}
+function showRDVStatus(msg,ok){const el=document.getElementById('rdv-status');el.className='modal-status '+(ok?'ok':'err');el.textContent=msg;}
+function openGmailRDV(nom,email,date,heure){const subj=encodeURIComponent('Confirmation RDV Découverte CreaLeads');const body=encodeURIComponent(buildRDVEmailBody(nom,date,heure));window.open('https://mail.google.com/mail/?authuser=contact.crealeads%40gmail.com&view=cm&fs=1&to='+encodeURIComponent(email)+'&su='+subj+'&body='+body,'_blank');}
+function fallbackMailto(){
+  const nom=document.getElementById('rdv-nom').value.trim();
+  const email=document.getElementById('rdv-email').value.trim();
+  const date=document.getElementById('rdv-date').value;
+  const heure=document.getElementById('rdv-heure').value;
+  if(!nom||!date||!heure){showRDVStatus("Remplis le nom, la date et l'heure.",false);return;}
+  if(!email||!email.includes('@')){showRDVStatus('Email invalide.',false);return;}
+  const gcalUrl=buildGCalLink(nom,email,date,heure);
+  if(gcalUrl)window.open(gcalUrl,'_blank');
+  openGmailRDV(nom,email,date,heure);
+  showRDVStatus('📤 Gmail + Google Calendar ouverts.',true);
+}
+async function sendRDV(){
+  const nom=document.getElementById('rdv-nom').value.trim();
+  const email=document.getElementById('rdv-email').value.trim();
+  const tel=document.getElementById('rdv-tel').value.trim();
+  const date=document.getElementById('rdv-date').value;
+  const heure=document.getElementById('rdv-heure').value;
+  if(!nom||!date||!heure){showRDVStatus("Remplis le nom, la date et l'heure.",false);return;}
+  if(!email||!email.includes('@')||!email.includes('.')){showRDVStatus('Email client invalide.',false);return;}
+  const{pubkey,service,template}=getEJS();
+  // Envoi email
+  if(!isEmailjsLoaded()||!pubkey||!service||!template){
+    showRDVStatus('⚠ EmailJS non configuré — ouverture Gmail…',false);
+    setTimeout(()=>fallbackMailto(),600);
+    return;
+  }
+  if(!initEmailJS()){showRDVStatus('❌ Init EmailJS échoué — ouverture Gmail…',false);setTimeout(()=>fallbackMailto(),800);return;}
+  showRDVStatus('⏳ Envoi mail + déclenchement warmup…',true);
+  try{
+    await emailjs.send(service,template,{name:nom,email:email,to_email:email,reply_to:'contact.crealeads@gmail.com',from_name:'Enzo — CreaLeads',meeting_date:formatDateFR(date),meeting_time:heure,message:buildRDVEmailBody(nom,date,heure)});
+    // Ouvrir Google Calendar
+    const gcalUrl=buildGCalLink(nom,email,date,heure);
+    if(gcalUrl)setTimeout(()=>window.open(gcalUrl,'_blank'),400);
+    // Déclencher le warmup Make.com
+    let warmupMsg='';
+    if(tel){
+      const ok=await triggerWarmupWebhook(nom,tel,email,date,heure);
+      warmupMsg=ok?' ✅ Warmup Make.com déclenché (J-1 + J-0 programmés)':' ⚠️ Webhook Make.com non configuré (warmup ignoré)';
+    }else{
+      warmupMsg=' ⚠️ Pas de téléphone → warmup WhatsApp ignoré';
+    }
+    showRDVStatus('✅ Mail envoyé à '+email+' — Agenda ouvert.'+warmupMsg,true);
+  }catch(e){
+    const txt=(e&&(e.text||e.message))||JSON.stringify(e);
+    showRDVStatus('❌ Mail non envoyé : '+txt+(location.protocol==='file:'?' (file:// → autorise "null" dans EmailJS Security)':'')+'  — ouverture Gmail…',false);
+    setTimeout(()=>fallbackMailto(),1200);
+  }
+}
+
+// ── CONTRACT GENERATOR ──
+function getPackServices(pack){
+  if(pack==='essentiel')return[
+    '01 · Création de la campagne Lead Ads Meta avec formulaire instantané',
+    '02 · Ciblage zone géographique + métier + comportements (audience Advantage+)',
+    '03 · Configuration de la notification WhatsApp à chaque nouveau lead (via Make.com basique)',
+    '04 · Fourniture du template CRM Google Sheets (remplissage manuel par le Client)',
+    '05 · Création de la page de crédibilité simple (carrd.co — URL personnalisée)',
+    '06 · Formatage des photos fournies par le Client en 3 formats publicitaires Meta',
+    '07 · Support WhatsApp 48h pendant 1 mois post-livraison',
+  ];
+  if(pack==='growth')return[
+    '01 · Tout le contenu du pack Essentiel',
+    '02 · 2 campagnes Lead Ads Meta : prospection principale + retargeting',
+    '03 · CRM Google Sheets 100% automatisé via Make.com (lead → CRM en 30 secondes)',
+    '04 · Configuration complète Make.com : lead → WhatsApp client + ajout automatique CRM',
+    '05 · Création de 2 à 3 visuels publicitaires par CreaLeads (formats Meta : carré, vertical, horizontal)',
+    '06 · Optimisation mensuelle des campagnes (CPL, rotation visuels, audiences)',
+    '07 · Rapport mensuel complet avec KPIs : leads générés, CPL, budget consommé',
+    '08 · Support WhatsApp 24h continu pendant toute la durée du contrat',
+  ];
+  return[
+    '01 · Tout le contenu du pack Growth',
+    '02 · 3 campagnes Lead Ads Meta : prospection + retargeting + audience similaire (lookalike)',
+    '03 · Création de 5 visuels publicitaires professionnels tous formats Meta',
+    '04 · CRM Google Sheets avancé avec alertes couleurs automatiques (App Script)',
+    '05 · Rapport mensuel premium avec analyse d\'évolution et recommandations stratégiques',
+    '06 · Appel de suivi mensuel inclus (20 à 30 min)',
+    '07 · Support WhatsApp prioritaire — réponse garantie sous 4h',
+  ];
+}
+function getPackFinancials(pack){
+  if(pack==='essentiel')return{setup:990,acompte:null,solde:null,monthly:null,engagement:null,single:true};
+  if(pack==='growth')return{setup:1500,acompte:750,solde:750,monthly:300,engagement:3};
+  return{setup:2200,acompte:1100,solde:1100,monthly:650,engagement:3};
+}
+function getPackName(pack){return pack==='essentiel'?'ESSENTIEL':pack==='growth'?'GROWTH':'FULL';}
+
+function generateContract(){
+  const nom=document.getElementById('c-nom').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  const adresse=document.getElementById('c-adresse').value.trim();
+  const err=document.getElementById('modal-error');
+  if(!nom||!email||!adresse){err.textContent='⚠️ Remplis au minimum : Prénom Nom, Email et Adresse.';err.style.display='block';return;}
+  err.style.display='none';
+  const societe=document.getElementById('c-societe').value.trim();
+  const tel=document.getElementById('c-tel').value.trim()||'—';
+  const siret=document.getElementById('c-siret').value.trim()||'—';
+  const moi_nom=document.getElementById('c-moi-nom').value.trim()||'Wagner Enzo';
+  const moi_ville=document.getElementById('c-moi-ville').value.trim()||'Paris';
+  const nomSociete=societe?`${nom} / ${societe}`:nom;
+  const today=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+  const fin=getPackFinancials(selectedPack);
+  const services=getPackServices(selectedPack);
+  const packName=getPackName(selectedPack);
+
+  let serviceRows=services.map(s=>`<tr><td class="num">${s.slice(0,2)}</td><td>${s.slice(5)}</td></tr>`).join('');
+  let priceBlock;
+  if(fin.single){
+    priceBlock=`
+    <tr><td class="label-col">Prestation complète</td><td class="total">${fin.setup.toLocaleString('fr-FR')} EUR</td><td>—</td><td>—</td></tr>
+    <tr><td class="label-col">Paiement unique</td><td class="green">${fin.setup.toLocaleString('fr-FR')} EUR</td><td>Virement bancaire</td><td>À la signature</td></tr>
+    `;
+  }else{
+    priceBlock=`
+    <tr><td class="label-col">Frais de mise en place (setup)</td><td class="total">${fin.setup.toLocaleString('fr-FR')} EUR</td><td>—</td><td>—</td></tr>
+    <tr><td class="label-col">Acompte (50% setup)</td><td class="green">${fin.acompte.toLocaleString('fr-FR')} EUR</td><td>Virement bancaire</td><td>À la signature</td></tr>
+    <tr><td class="label-col">Solde (50% setup)</td><td>${fin.solde.toLocaleString('fr-FR')} EUR</td><td>Virement bancaire</td><td>À la livraison</td></tr>
+    `;
+  }
+  let monthlyClause='';
+  if(fin.monthly){
+    priceBlock+=`<tr><td class="label-col">Mensualité (gestion continue)</td><td class="green">${fin.monthly.toLocaleString('fr-FR')} EUR/mois</td><td>Virement bancaire</td><td>Au lancement + chaque mois</td></tr>`;
+    monthlyClause=`
+      <div class="section-title">4b. MODALITÉS ABONNEMENT MENSUEL</div>
+      <p class="article">Le présent contrat inclut une prestation mensuelle de gestion et d'optimisation d'un montant de <strong>${fin.monthly.toLocaleString('fr-FR')} EUR HT par mois</strong>, débutant à la date de lancement des campagnes.</p>
+      <p class="article"><strong>Durée d'engagement minimum :</strong> ${fin.engagement} mois à compter du lancement. Passé cette période, résiliation possible avec un préavis de 30 jours par email recommandé.</p>
+      <p class="article"><strong>Révision tarifaire :</strong> CreaLeads se réserve le droit de modifier le tarif mensuel avec un préavis de 60 jours par email.</p>
+    `;
+  }
+
+  const html=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/><title>Contrat CreaLeads — ${nomSociete}</title>
+  <style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:Arial,sans-serif;font-size:9.5pt;color:#2D3748;background:white;padding:12mm 14mm 20mm 14mm;}
+  .header{background:#0D1B2A;padding:8mm 12mm;display:flex;justify-content:space-between;align-items:center;margin:-12mm -14mm 8mm -14mm;}
+  .logo{font-size:20pt;font-weight:800;color:white;} .logo span{color:#00C896;}
+  .tagline{font-size:7.5pt;color:#00C896;margin-top:3px;}
+  .doc-title{text-align:right;} .doc-title h2{font-size:10pt;font-weight:700;color:white;} .doc-title p{font-size:7.5pt;color:#8492A6;margin-top:3px;}
+  .pack-badge{display:inline-block;background:#00C896;color:#0D1B2A;font-weight:800;font-size:9pt;padding:2px 8px;border-radius:4px;margin-top:4px;}
+  .header-border{height:2.5px;background:#00C896;margin:-8mm -14mm 7mm -14mm;}
+  .section-title{font-size:10.5pt;font-weight:700;color:#0D1B2A;border-bottom:2px solid #00C896;padding-bottom:3px;margin:7mm 0 3mm 0;}
+  .field-table{width:100%;border-collapse:collapse;margin-bottom:2.5mm;}
+  .field-table td{border:1px solid #E2E8F0;padding:2.5mm 3.5mm;font-size:8.5pt;vertical-align:top;}
+  .field-table .label{background:#F5F7FA;font-weight:700;color:#0D1B2A;width:30%;}
+  .article{font-size:8.5pt;line-height:1.6;margin-bottom:2mm;}
+  .sub-title{font-weight:700;font-size:9pt;color:#0D1B2A;margin:3mm 0 1.5mm 0;}
+  .service-table{width:100%;border-collapse:collapse;margin-bottom:2.5mm;}
+  .service-table td{border:1px solid #E2E8F0;padding:2.5mm 3.5mm;font-size:8.5pt;}
+  .service-table .num{background:#F0FDF9;font-weight:700;color:#00C896;width:5%;text-align:center;}
+  .price-table{width:100%;border-collapse:collapse;margin-bottom:2.5mm;}
+  .price-table th{background:#0D1B2A;color:white;padding:2.5mm 3.5mm;font-size:8.5pt;text-align:center;}
+  .price-table .th-left{text-align:left;}
+  .price-table td{border:1px solid #E2E8F0;padding:2.5mm 3.5mm;font-size:8.5pt;text-align:center;}
+  .price-table .label-col{text-align:left;font-weight:700;color:#0D1B2A;background:#F5F7FA;}
+  .price-table .total{font-size:11pt;font-weight:800;color:#0D1B2A;}
+  .price-table .green{color:#00C896;font-weight:700;}
+  .sig-table{width:100%;border-collapse:collapse;margin-top:5mm;}
+  .sig-table td{border:1px solid #E2E8F0;padding:3.5mm 4mm;width:50%;vertical-align:top;}
+  .sig-header{background:#F5F7FA;font-weight:700;color:#0D1B2A;font-size:9pt;}
+  .sig-line{border-bottom:1px solid #2D3748;margin:7mm 0 1.5mm 0;}
+  .btn-bar{position:fixed;bottom:16px;right:16px;display:flex;gap:10px;}
+  .print-btn{background:#00C896;color:#0D1B2A;border:none;border-radius:9px;padding:11px 18px;font-weight:800;font-size:12px;cursor:pointer;font-family:Arial;}
+  .sign-btn{background:#0D1B2A;color:white;border:2px solid #00C896;border-radius:9px;padding:11px 18px;font-weight:800;font-size:12px;cursor:pointer;font-family:Arial;}
+  @media print{.btn-bar{display:none!important;}body{padding:8mm 10mm;}.header{margin:-8mm -10mm 6mm -10mm;}.header-border{margin:-6mm -10mm 5mm -10mm;}}
+  </style></head><body>
+  <div class="header">
+    <div><div class="logo">CreaLeads<span>:</span></div><div class="tagline">Acquisition digitale clé en main</div></div>
+    <div class="doc-title"><h2>CONTRAT DE PRESTATION</h2><p>de Services Digitaux</p><div class="pack-badge">Pack ${packName}</div></div>
+  </div>
+  <div class="header-border"></div>
+  <div class="section-title">1. IDENTIFICATION DES PARTIES</div>
+  <p class="sub-title">Prestataire</p>
+  <table class="field-table">
+    <tr><td class="label">Société</td><td>CreaLeads — EI Wagner Enzo — SIRET 941 907 347</td></tr>
+    <tr><td class="label">Représentant</td><td>${moi_nom}</td></tr>
+    <tr><td class="label">Email</td><td>contact.crealeads@gmail.com</td></tr>
+  </table>
+  <p class="sub-title">Client</p>
+  <table class="field-table">
+    <tr><td class="label">Nom / Société</td><td>${nomSociete}</td></tr>
+    <tr><td class="label">Adresse</td><td>${adresse}</td></tr>
+    <tr><td class="label">Email</td><td>${email}</td></tr>
+    <tr><td class="label">Téléphone</td><td>${tel}</td></tr>
+    <tr><td class="label">N° SIRET</td><td>${siret}</td></tr>
+  </table>
+  <div class="section-title">2. OBJET DU CONTRAT</div>
+  <p class="article">Le présent contrat a pour objet la réalisation d'un système d'acquisition digitale clé en main par CreaLeads au bénéfice du Client, dans le cadre du pack <strong>${packName}</strong>, comprenant les prestations détaillées à l'article 3.</p>
+  <div class="section-title">3. PRESTATIONS INCLUSES — Pack ${packName}</div>
+  <table class="service-table">${serviceRows}</table>
+  <p class="sub-title">Exclusions — à la charge exclusive du Client</p>
+  <table class="service-table">
+    <tr><td class="num" style="background:#FFF8F0;color:#E67E22;">⚠</td><td><strong>Budget publicitaire Meta</strong> — Réglé directement par le Client à Meta. Distinct de la présente prestation. CreaLeads ne perçoit aucune commission sur ce budget.</td></tr>
+    <tr><td class="num" style="background:#FFF8F0;color:#E67E22;">⚠</td><td><strong>Nom de domaine</strong> (si applicable) — Acquis et réglé directement par le Client.</td></tr>
+  </table>
+  <div class="section-title">4. CONDITIONS FINANCIÈRES</div>
+  <table class="price-table">
+    <tr><th class="th-left">Désignation</th><th>Montant HT</th><th>Modalité</th><th>Échéance</th></tr>
+    ${priceBlock}
+  </table>
+  <p class="article"><strong>TVA :</strong> Non applicable — Article 293 B du CGI (franchise en base de TVA).</p>
+  <p class="article"><strong>Mode de règlement :</strong> Paiement exclusivement par virement bancaire aux coordonnées ci-dessous.</p>
+  <div style="background:#F0FDF9;border:2px solid #00C896;border-radius:6px;padding:4mm 5mm;margin:3mm 0 2mm 0;">
+    <div style="font-size:9pt;font-weight:700;color:#0D1B2A;margin-bottom:2.5mm;">Coordonnées bancaires — CreaLeads (EI Wagner Enzo)</div>
+    <div style="font-size:8.5pt;color:#2D3748;margin-bottom:1.5mm;"><strong>Titulaire :</strong> EI - WAGNER ENZO / CREALEADS</div>
+    <div style="font-size:8.5pt;color:#2D3748;margin-bottom:1.5mm;"><strong>IBAN :</strong> FR76 1695 8000 0177 5657 2509 796</div>
+    <div style="font-size:8.5pt;color:#2D3748;margin-bottom:1.5mm;"><strong>BIC/SWIFT :</strong> QNTOFRP1XXX</div>
+    <div style="font-size:8.5pt;color:#2D3748;margin-bottom:1.5mm;"><strong>Banque :</strong> Qonto (Olinda SAS) — 18 rue de Navarin, 75009 Paris</div>
+  </div>
+  ${monthlyClause}
+  <div class="section-title">5. DÉLAIS DE RÉALISATION</div>
+  <p class="article">La prestation est livrée dans un délai de 7 à 14 jours ouvrés à compter de la réception du paiement et des éléments transmis par le Client (photos, accès, informations).</p>
+  <p class="article">Le Client s'engage à fournir les éléments demandés dans un délai de 5 jours ouvrés. Tout retard entraîne un report équivalent du délai de livraison.</p>
+  <div class="section-title">6. OBLIGATIONS DES PARTIES</div>
+  <p class="article"><strong>CreaLeads s'engage à :</strong><br/>— Réaliser les prestations définies à l'article 3 avec soin et professionnalisme.<br/>— Livrer dans le délai contractuel de 7 à 14 jours.<br/>— Respecter la confidentialité des informations transmises par le Client.</p>
+  <p class="article"><strong>Le Client s'engage à :</strong><br/>— Fournir les accès et informations nécessaires dans les délais convenus.<br/>— Assurer le traitement des leads générés dans les meilleurs délais.<br/>— Régler les sommes dues aux échéances prévues.</p>
+  <div class="section-title">7. PROPRIÉTÉ ET CONFIDENTIALITÉ</div>
+  <p class="article">À compter du paiement intégral du setup, le Client devient propriétaire de l'ensemble des livrables (campagnes, visuels, CRM, pages). Les deux parties s'engagent à garder confidentielles les informations échangées.</p>
+  <div class="section-title">8. RÉSILIATION</div>
+  <p class="article">${fin.monthly?`En cas de résiliation avant la fin de la période d'engagement minimum (${fin.engagement} mois), le Client reste redevable des mensualités correspondant à la période d'engagement restante. Au-delà de cette période, résiliation possible avec préavis de 30 jours par email.`:'En cas de résiliation après démarrage de la prestation, l\'acompte versé reste acquis à CreaLeads à titre de dédommagement pour le travail réalisé.'}</p>
+  <div class="section-title">9. LOI APPLICABLE</div>
+  <p class="article">Le présent contrat est soumis au droit français. Tout litige sera soumis, à défaut d'accord amiable, aux juridictions compétentes du ressort de ${moi_ville}.</p>
+  <div class="section-title">10. SIGNATURES</div>
+  <p class="article" style="font-style:italic;">Les parties reconnaissent avoir lu et accepté les termes du présent contrat. Fait à ${moi_ville}, le ${today}.</p>
+  <table class="sig-table">
+    <tr><td class="sig-header">Prestataire — CreaLeads</td><td class="sig-header">Client — ${nom}</td></tr>
+    <tr>
+      <td>Nom : ${moi_nom}<div class="sig-line"></div><div style="margin-top:4mm;font-size:9pt;">Date : <strong>${today}</strong></div><div style="margin-top:6mm;font-size:8pt;color:#8492A6;">Signature :</div><div style="height:20mm;"></div></td>
+      <td>Nom : ${nom}<div class="sig-line"></div><div style="margin-top:4mm;font-size:9pt;">Date :</div><div style="margin-top:6mm;font-size:8pt;color:#8492A6;">Signature :</div><div style="height:20mm;"></div></td>
+    </tr>
+  </table>
+  <div class="btn-bar">
+    <button class="sign-btn" onclick="window.open('https://yousign.app/auth/workspace/requests','_blank')">✍️ Ouvrir Yousign</button>
+    <button class="print-btn" onclick="window.print()">🖨️ Sauvegarder en PDF</button>
+  </div>
+  </body></html>`;
+
+  // Ouvrir dans un nouvel onglet via blob → PDF nommé "CreaLeads — [Client]"
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const blobUrl=URL.createObjectURL(blob);
+  const newTab=window.open(blobUrl,'_blank');
+  if(newTab)setTimeout(()=>URL.revokeObjectURL(blobUrl),5000);
+  else alert('Popup bloqué — autorise les popups pour ce site dans ton navigateur.');
+  closeModal('contract-modal');
+}
+</script>
+
+</body>
+</html>
