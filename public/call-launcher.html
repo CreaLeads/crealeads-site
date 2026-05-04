@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -252,7 +252,7 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
     <div class="card-title">📤 Envoyer pendant le call</div>
     <button class="btn btn-green" onclick="openContractModal()">
       <span class="btn-icon">✍️</span>
-      <div class="btn-info"><div class="btn-main">Générer &amp; envoyer le contrat</div><div class="btn-sub">Essentiel 990€ / Growth 1 500€+300€/m / Full 2 200€+650€/m</div></div>
+      <div class="btn-info"><div class="btn-main">Générer &amp; envoyer le contrat</div><div class="btn-sub">Essentiel 990€ / Growth 1 500€ one-shot / Full 2 500€ setup + 500€/m</div></div>
     </button>
     <button class="btn btn-calcom" onclick="sendCalcomLink()">
       <span class="btn-icon">📅</span>
@@ -312,19 +312,26 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
 <div class="grid">
   <div class="card">
     <div class="card-title">🎯 Offre CreaLeads — sélectionne le pack à présenter</div>
-    <div class="pack-tabs">
-      <div class="pack-tab" id="tab-ess" onclick="showPack('essentiel')">
-        <div class="pack-tab-name">ESSENTIEL</div>
-        <div class="pack-tab-price">990€ one-shot</div>
-      </div>
+    <div class="pack-tabs" id="main-pack-tabs">
       <div class="pack-tab active-gro" id="tab-gro" onclick="showPack('growth')">
         <div class="pack-tab-name">⭐ GROWTH</div>
-        <div class="pack-tab-price">1 500€ + 300€/mois</div>
+        <div class="pack-tab-price">1 500€ one-shot</div>
       </div>
       <div class="pack-tab" id="tab-ful" onclick="showPack('full')">
         <div class="pack-tab-name">FULL</div>
-        <div class="pack-tab-price">2 200€ + 650€/mois</div>
+        <div class="pack-tab-price">2 500€ setup + 500€/m</div>
       </div>
+    </div>
+    <div id="essentiel-tab-row" style="display:none;margin-bottom:8px;">
+      <div class="pack-tabs" style="margin-bottom:0;">
+        <div class="pack-tab" id="tab-ess" onclick="showPack('essentiel')" style="max-width:220px;">
+          <div class="pack-tab-name">ESSENTIEL</div>
+          <div class="pack-tab-price">990€ one-shot</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-bottom:10px;">
+      <span id="essentiel-toggle-link" onclick="toggleEssentiel()" style="font-size:11px;color:var(--gray);cursor:pointer;opacity:0.65;text-decoration:underline;">Budget serré ? Voir l'offre Essentiel →</span>
     </div>
     <div id="pack-content"></div>
   </div>
@@ -462,16 +469,16 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
             <div style="font-size:8px;color:#3d5166;margin-top:2px;">Paiement unique</div>
           </div>
           <div class="tarif-btn" id="tarif-gro" onclick="selectPack('growth')" style="border-color:#00C896;background:rgba(0,200,150,.1);">
-            <div style="font-size:15px;font-weight:900;color:#00C896;">1 500 € <span style="font-size:10px;">setup</span></div>
-            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 300 €/mois</div>
+            <div style="font-size:15px;font-weight:900;color:#00C896;">1 500 €</div>
+            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">One-shot</div>
             <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">⭐ GROWTH</div>
-            <div style="font-size:8px;color:#3d5166;margin-top:2px;">3 mois min · 2 × 750€</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">Paiement unique à la signature</div>
           </div>
           <div class="tarif-btn" id="tarif-ful" onclick="selectPack('full')">
-            <div style="font-size:15px;font-weight:900;color:#00C896;">2 200 € <span style="font-size:10px;">setup</span></div>
-            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 650 €/mois</div>
+            <div style="font-size:15px;font-weight:900;color:#00C896;">2 500 € <span style="font-size:10px;">setup</span></div>
+            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 500 €/mois</div>
             <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">FULL</div>
-            <div style="font-size:8px;color:#3d5166;margin-top:2px;">3 mois min · 2 × 1 100€</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">3 mois min · 2 × 1 250€</div>
           </div>
         </div>
       </div>
@@ -597,8 +604,8 @@ const PACKS={
       '📞 Kickoff call 30 min'
     ],
     price:'1 500 €',
-    monthly:'+ 300 €/mois',
-    sub:'Setup 2 × 750€ · Mensuel au lancement · 3 mois min',
+    monthly:null,
+    sub:'Paiement unique · Sans engagement',
     note:'⭐ Pack le plus choisi'
   },
   full:{
@@ -612,9 +619,9 @@ const PACKS={
       '💬 Support WhatsApp prioritaire 4h',
       '📅 Kickoff call 45 min'
     ],
-    price:'2 200 €',
-    monthly:'+ 650 €/mois',
-    sub:'Setup 2 × 1 100€ · Mensuel au lancement · 3 mois min',
+    price:'2 500 €',
+    monthly:'+ 500 €/mois',
+    sub:'Setup 2 × 1 250€ · Mensuel au lancement · 3 mois min',
     note:'Pour artisans avec équipe ou fort volume'
   }
 };
@@ -851,6 +858,16 @@ async function sendRDV(){
   }
 }
 
+// ── ESSENTIEL TOGGLE ──
+function toggleEssentiel(){
+  const row=document.getElementById('essentiel-tab-row');
+  const link=document.getElementById('essentiel-toggle-link');
+  const visible=row.style.display!=='none';
+  row.style.display=visible?'none':'block';
+  link.textContent=visible?"Budget serré ? Voir l'offre Essentiel →":'▲ Masquer l\'offre Essentiel';
+  if(!visible)showPack('essentiel');
+}
+
 // ── CONTRACT GENERATOR ──
 function getPackServices(pack){
   if(pack==='essentiel')return[
@@ -884,8 +901,8 @@ function getPackServices(pack){
 }
 function getPackFinancials(pack){
   if(pack==='essentiel')return{setup:990,acompte:null,solde:null,monthly:null,engagement:null,single:true};
-  if(pack==='growth')return{setup:1500,acompte:750,solde:750,monthly:300,engagement:3};
-  return{setup:2200,acompte:1100,solde:1100,monthly:650,engagement:3};
+  if(pack==='growth')return{setup:1500,acompte:null,solde:null,monthly:null,engagement:null,single:true};
+  return{setup:2500,acompte:1250,solde:1250,monthly:500,engagement:3};
 }
 function getPackName(pack){return pack==='essentiel'?'ESSENTIEL':pack==='growth'?'GROWTH':'FULL';}
 
@@ -1020,7 +1037,7 @@ function generateContract(){
   <div class="section-title">7. PROPRIÉTÉ ET CONFIDENTIALITÉ</div>
   <p class="article">À compter du paiement intégral du setup, le Client devient propriétaire de l'ensemble des livrables (campagnes, visuels, CRM, pages). Les deux parties s'engagent à garder confidentielles les informations échangées.</p>
   <div class="section-title">8. RÉSILIATION</div>
-  <p class="article">${fin.monthly?`En cas de résiliation avant la fin de la période d'engagement minimum (${fin.engagement} mois), le Client reste redevable des mensualités correspondant à la période d'engagement restante. Au-delà de cette période, résiliation possible avec préavis de 30 jours par email.`:'En cas de résiliation après démarrage de la prestation, l\'acompte versé reste acquis à CreaLeads à titre de dédommagement pour le travail réalisé.'}</p>
+  <p class="article">${fin.monthly?`En cas de résiliation avant la fin de la période d'engagement minimum (${fin.engagement} mois), le Client reste redevable des mensualités correspondant à la période d'engagement restante. Au-delà de cette période, résiliation possible avec préavis de 30 jours par email.`:'En cas de résiliation après démarrage de la prestation, le paiement versé reste acquis à CreaLeads à titre de dédommagement pour le travail réalisé.'}</p>
   <div class="section-title">9. LOI APPLICABLE</div>
   <p class="article">Le présent contrat est soumis au droit français. Tout litige sera soumis, à défaut d'accord amiable, aux juridictions compétentes du ressort de ${moi_ville}.</p>
   <div class="section-title">10. SIGNATURES</div>
