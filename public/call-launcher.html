@@ -811,6 +811,7 @@ function openGmailRDV(nom,email,date,heure){const subj=encodeURIComponent('Confi
 function fallbackMailto(){
   const nom=document.getElementById('rdv-nom').value.trim();
   const email=document.getElementById('rdv-email').value.trim();
+  const tel=document.getElementById('rdv-tel').value.trim();
   const date=document.getElementById('rdv-date').value;
   const heure=document.getElementById('rdv-heure').value;
   if(!nom||!date||!heure){showRDVStatus("Remplis le nom, la date et l'heure.",false);return;}
@@ -818,6 +819,7 @@ function fallbackMailto(){
   const gcalUrl=buildGCalLink(nom,email,date,heure);
   if(gcalUrl)window.open(gcalUrl,'_blank');
   openGmailRDV(nom,email,date,heure);
+  if(tel)triggerWarmupWebhook(nom,tel,email,date,heure);
   showRDVStatus('📤 Gmail + Google Calendar ouverts.',true);
 }
 async function sendRDV(){
@@ -828,34 +830,37 @@ async function sendRDV(){
   const heure=document.getElementById('rdv-heure').value;
   if(!nom||!date||!heure){showRDVStatus("Remplis le nom, la date et l'heure.",false);return;}
   if(!email||!email.includes('@')||!email.includes('.')){showRDVStatus('Email client invalide.',false);return;}
+
+  // ── Toujours : Google Calendar + warmup Make.com ──
+  const gcalUrl=buildGCalLink(nom,email,date,heure);
+  if(gcalUrl)setTimeout(()=>window.open(gcalUrl,'_blank'),300);
+  if(tel)triggerWarmupWebhook(nom,tel,email,date,heure).then(ok=>{
+    if(ok)console.log('[CreaLeads] Warmup Make.com déclenché ✅');
+  });
+
+  // ── Tentative EmailJS (optionnel) ──
   const{pubkey,service,template}=getEJS();
-  // Envoi email
-  if(!isEmailjsLoaded()||!pubkey||!service||!template){
-    showRDVStatus('⚠ EmailJS non configuré — ouverture Gmail…',false);
-    setTimeout(()=>fallbackMailto(),600);
-    return;
-  }
-  if(!initEmailJS()){showRDVStatus('❌ Init EmailJS échoué — ouverture Gmail…',false);setTimeout(()=>fallbackMailto(),800);return;}
-  showRDVStatus('⏳ Envoi mail + déclenchement warmup…',true);
-  try{
-    await emailjs.send(service,template,{name:nom,email:email,to_email:email,reply_to:'contact.crealeads@gmail.com',from_name:'Enzo — CreaLeads',meeting_date:formatDateFR(date),meeting_time:heure,message:buildRDVEmailBody(nom,date,heure)});
-    // Ouvrir Google Calendar
-    const gcalUrl=buildGCalLink(nom,email,date,heure);
-    if(gcalUrl)setTimeout(()=>window.open(gcalUrl,'_blank'),400);
-    // Déclencher le warmup Make.com
-    let warmupMsg='';
-    if(tel){
-      const ok=await triggerWarmupWebhook(nom,tel,email,date,heure);
-      warmupMsg=ok?' ✅ Warmup Make.com déclenché (J-1 + J-0 programmés)':' ⚠️ Webhook Make.com non configuré (warmup ignoré)';
-    }else{
-      warmupMsg=' ⚠️ Pas de téléphone → warmup WhatsApp ignoré';
+  const ejsOk=isEmailjsLoaded()&&pubkey&&service&&template&&initEmailJS();
+
+  if(ejsOk){
+    showRDVStatus('⏳ Envoi mail en cours…',true);
+    try{
+      await emailjs.send(service,template,{name:nom,email:email,to_email:email,reply_to:'contact.crealeads@gmail.com',from_name:'Enzo — CreaLeads',meeting_date:formatDateFR(date),meeting_time:heure,message:buildRDVEmailBody(nom,date,heure)});
+      const warmupNote=tel?' · Warmup WhatsApp déclenché':' · ⚠️ Pas de tél → warmup ignoré';
+      showRDVStatus('✅ Mail envoyé à '+email+' — Agenda ouvert.'+warmupNote,true);
+      return;
+    }catch(e){
+      const txt=(e&&(e.text||e.message))||JSON.stringify(e);
+      // EmailJS échoué → on passe au fallback Gmail sans bloquer
+      console.warn('[CreaLeads] EmailJS échoué :',txt);
     }
-    showRDVStatus('✅ Mail envoyé à '+email+' — Agenda ouvert.'+warmupMsg,true);
-  }catch(e){
-    const txt=(e&&(e.text||e.message))||JSON.stringify(e);
-    showRDVStatus('❌ Mail non envoyé : '+txt+(location.protocol==='file:'?' (file:// → autorise "null" dans EmailJS Security)':'')+'  — ouverture Gmail…',false);
-    setTimeout(()=>fallbackMailto(),1200);
   }
+
+  // ── Fallback fiable : Gmail compose ──
+  openGmailRDV(nom,email,date,heure);
+  const warmupNote=tel?' · Warmup WhatsApp déclenché':' · ⚠️ Pas de tél → warmup ignoré';
+  const ejsNote=ejsOk?' (EmailJS a échoué — Gmail ouvert à la place)':' (EmailJS non configuré)';
+  showRDVStatus('📤 Gmail ouvert — complète et envoie le mail. Agenda ouvert.'+ejsNote+warmupNote,true);
 }
 
 // ── ESSENTIEL TOGGLE ──
