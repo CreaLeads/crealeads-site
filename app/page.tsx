@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -92,100 +92,306 @@ function Navbar() {
   );
 }
 
+// ─── HERO DATA ───────────────────────────────────────────────────────────────
+
+const HERO_LEADS = [
+  { name: "Mohamed K.",   email: "moh***",  tel: "336 7X XX", sector: "Résine",      budget: "300-600€"  },
+  { name: "Pierre D.",    email: "pier***", tel: "336 8X XX", sector: "Peinture",    budget: "600-1500€" },
+  { name: "Karim B.",     email: "kar***",  tel: "336 9X XX", sector: "Plomberie",   budget: "300-600€"  },
+  { name: "Sarah M.",     email: "sar***",  tel: "337 0X XX", sector: "Résine",      budget: "600-1500€" },
+  { name: "Thomas R.",    email: "tho***",  tel: "336 6X XX", sector: "Électricité", budget: "300-600€"  },
+  { name: "Fatima L.",    email: "fat***",  tel: "336 5X XX", sector: "Rénovation",  budget: "600-1500€" },
+  { name: "Jean-Paul D.", email: "jea***",  tel: "336 4X XX", sector: "Résine",      budget: "300-600€"  },
+  { name: "Nicolas B.",   email: "nic***",  tel: "336 3X XX", sector: "Menuiserie",  budget: "300-600€"  },
+];
+
+const HERO_BUBBLES: Array<{
+  name: string; sector: string; city: string; time: string;
+  pos: React.CSSProperties; sx: number; sy: number;
+}> = [
+  { name: "Mohamed K.", sector: "Résine",      city: "Paris 15",  time: "il y a 2 min",  pos: { top: "-28px",  left: "-210px"  }, sx: -52, sy: -28 },
+  { name: "Pierre D.",  sector: "Peinture",    city: "Lyon 3",    time: "il y a 8 min",  pos: { top: "55px",   right: "-215px" }, sx:  52, sy: -38 },
+  { name: "Karim B.",   sector: "Plomberie",   city: "Marseille", time: "il y a 15 min", pos: { top: "210px",  left: "-210px"  }, sx: -58, sy:  22 },
+  { name: "Sarah M.",   sector: "Résine",      city: "Bordeaux",  time: "il y a 23 min", pos: { top: "320px",  right: "-218px" }, sx:  58, sy:  22 },
+  { name: "Thomas R.",  sector: "Électricité", city: "Toulouse",  time: "il y a 31 min", pos: { bottom: "45px", right: "-208px" }, sx: 42, sy:  48 },
+];
+
+const HERO_ROW_H = 36; // px — height of each CRM row
+
 // ─── HERO ────────────────────────────────────────────────────────────────────
 
 function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
+  const heroRef   = useRef<HTMLDivElement>(null);
+  const crmRef    = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.25 });
 
-      // Badge pill : pop depuis le haut avec overshoot
-      tl.fromTo(".hero-badge",
-        { opacity: 0, y: -24, scale: 0.88 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.8)" }
-      )
-      // Titre H1 : sweep puissant depuis le bas
-      .fromTo(".hero-title",
-        { opacity: 0, y: 72 },
-        { opacity: 1, y: 0, duration: 1, ease: "power4.out" },
-        "-=0.15"
-      )
-      // Sous-titre : suit le titre
-      .fromTo(".hero-sub",
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.55"
-      )
-      // CTAs : léger overshoot back.out
-      .fromTo(".hero-cta",
-        { opacity: 0, y: 32 },
-        { opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.5)" },
-        "-=0.45"
-      )
-      // Badge preuve : pop avec overshoot + légère échelle
-      .fromTo(".hero-proof",
-        { opacity: 0, y: 20, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.65, ease: "back.out(1.7)" },
-        "-=0.35"
-      );
+    const ctx = gsap.context(() => {
+
+      // ── Initial state of +1 counters ──
+      gsap.set(".bubble-counter", { opacity: 0, scale: 0 });
+      gsap.set(".hero-finale",    { opacity: 0 });
+
+      // ── Entrance timeline ──
+      const tl = gsap.timeline({ delay: 0.3 });
+      tl
+        .fromTo(".hero-badge",
+          { opacity: 0, y: -22, scale: 0.88 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.8)" })
+        .fromTo(".hero-title",
+          { opacity: 0, y: 64 },
+          { opacity: 1, y: 0, duration: 0.95, ease: "power4.out" }, "-=0.1")
+        .fromTo(".hero-sub",
+          { opacity: 0, y: 36 },
+          { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" }, "-=0.55")
+        .fromTo(".hero-cta",
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0, duration: 0.65, ease: "back.out(1.5)" }, "-=0.45")
+        .fromTo(".hero-proof",
+          { opacity: 0, y: 18, scale: 0.93 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, "-=0.35")
+        // Phone slides from right + subtle 3-D rotation
+        .fromTo(".hero-phone",
+          { opacity: 0, x: 90, rotateY: -20 },
+          { opacity: 1, x: 0, rotateY: 0, duration: 1.15, ease: "power3.out" }, 0.35)
+        // Bubbles pop in one by one
+        .fromTo(".hero-bubble",
+          { opacity: 0, scale: 0 },
+          { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)", stagger: 0.14 }, 1.1);
+
+      // ── Continuous bubble float ──
+      gsap.to(".hero-bubble", {
+        y: -9, duration: 2.3, ease: "sine.inOut",
+        yoyo: true, repeat: -1,
+        stagger: { each: 0.42, from: "random" },
+      });
+
+      // ── CRM seamless scroll loop (rows duplicated in JSX) ──
+      if (crmRef.current) {
+        const dist = HERO_ROW_H * HERO_LEADS.length;
+        gsap.to(crmRef.current, {
+          y: -dist, duration: 18, ease: "none", repeat: -1,
+          onRepeat: () => { if (crmRef.current) gsap.set(crmRef.current, { y: 0 }); },
+        });
+      }
+
+      // ── New-row highlight pulse ──
+      gsap.to(".crm-highlight", {
+        backgroundColor: "rgba(0,200,150,0.18)",
+        duration: 0.9, yoyo: true, repeat: -1, repeatDelay: 1.8,
+        ease: "power2.inOut",
+      });
+
+      // ── ScrollTrigger pin (desktop only) ──
+      if (window.innerWidth >= 768) {
+        const pinTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "+=170%",
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+          },
+        });
+
+        const bubbleEls = gsap.utils.toArray<HTMLElement>(".hero-bubble");
+        HERO_BUBBLES.forEach((b, i) => {
+          const el = bubbleEls[i];
+          if (!el) return;
+          const counter = el.querySelector<HTMLElement>(".bubble-counter");
+          pinTl.to(el,      { x: b.sx, y: b.sy, duration: 0.2 }, i * 0.15);
+          if (counter) pinTl.to(counter, { opacity: 1, scale: 1, duration: 0.12 }, i * 0.15 + 0.12);
+        });
+
+        pinTl.fromTo(".hero-finale",
+          { opacity: 0, y: 22, scale: 0.88 },
+          { opacity: 1, y: 0,  scale: 1,    duration: 0.3 },
+          0.83);
+      }
     }, heroRef);
+
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={heroRef} className="relative min-h-screen flex items-center pt-16 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#00C896]/8 rounded-full blur-3xl" />
+    <section
+      ref={heroRef}
+      className="relative min-h-screen flex items-center pt-20"
+      style={{ perspective: "1200px" }}
+    >
+      {/* Background glows */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-[#00C896]/6 rounded-full blur-3xl -translate-y-1/2" />
         <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-[#00C896]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-[#00C896]/4 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-4xl mx-auto px-5 py-24 text-center relative z-10">
-        <div className="hero-badge inline-flex items-center gap-2 bg-[#00C896]/10 border border-[#00C896]/30 text-[#00C896] text-xs font-semibold px-4 py-2 rounded-full mb-8">
-          <span className="w-2 h-2 bg-[#00C896] rounded-full animate-pulse" />
-          Agence d&apos;acquisition digitale pour artisans du bâtiment
-        </div>
+      <div className="max-w-6xl mx-auto px-5 py-16 md:py-20 relative z-10 w-full">
+        <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
 
-        <h1 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white mb-6">
-          Des clients qualifiés directement sur{" "}
-          <span className="text-[#00C896]">votre téléphone.</span>
-        </h1>
+          {/* ── LEFT : Text ── */}
+          <div>
+            <div className="hero-badge inline-flex items-center gap-2 bg-[#00C896]/10 border border-[#00C896]/30 text-[#00C896] text-xs font-semibold px-4 py-2 rounded-full mb-6">
+              <span className="w-2 h-2 bg-[#00C896] rounded-full animate-pulse" />
+              ⚡ Système clé en main — Meta Ads
+            </div>
 
-        <p className="hero-sub text-lg sm:text-xl text-[#A0B4C8] leading-relaxed max-w-2xl mx-auto mb-10">
-          CreaLeads met en place votre système Lead Ads Meta clé en main —
-          formulaires instantanés, CRM, notifications WhatsApp. Vous recevez vos
-          premiers leads en 24 à 72h.
-        </p>
+            <h1 className="hero-title text-4xl sm:text-5xl font-black leading-tight text-white mb-5">
+              Des clients qualifiés{" "}
+              <span className="text-[#00C896]">directement sur votre téléphone.</span>
+            </h1>
 
-        <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-center mb-10">
-          <button
-            type="button"
-            onClick={openFunnel}
-            className="inline-flex items-center justify-center gap-2 bg-[#00C896] text-[#0B1E3D] font-bold text-base px-8 py-4 rounded-full hover:brightness-110 hover:scale-105 transition-all duration-200 shadow-lg shadow-[#00C896]/25"
+            <p className="hero-sub text-base sm:text-lg text-[#A0B4C8] leading-relaxed mb-8">
+              CreaLeads met en place votre système Lead Ads Meta —{" "}
+              formulaires instantanés, CRM, notifications WhatsApp.{" "}
+              Premiers leads en 24 à 72h.
+            </p>
+
+            <div className="hero-cta flex flex-col sm:flex-row gap-3 mb-8">
+              <button
+                type="button"
+                onClick={openFunnel}
+                className="inline-flex items-center justify-center gap-2 bg-[#00C896] text-[#0B1E3D] font-bold text-sm px-7 py-3.5 rounded-full hover:brightness-110 hover:scale-105 transition-all duration-200 shadow-lg shadow-[#00C896]/25"
+              >
+                Prendre rendez-vous
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+              <a
+                href="#process"
+                className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold text-sm px-7 py-3.5 rounded-full hover:border-[#00C896] hover:text-[#00C896] transition-all duration-200"
+              >
+                Voir comment ça marche
+              </a>
+            </div>
+
+            <div className="hero-proof inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-3">
+              <span className="text-xl">⚡</span>
+              <p className="text-sm text-[#A0B4C8]">
+                <span className="text-white font-semibold">Premiers leads en 24 à 72h</span>
+                {" "}— garanti par contrat
+              </p>
+            </div>
+          </div>
+
+          {/* ── RIGHT : Phone + Bubbles ── */}
+          <div
+            className="flex justify-center md:justify-end relative"
+            style={{ perspective: "1000px" }}
           >
-            Prendre rendez-vous gratuitement
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </button>
-          <a
-            href="#process"
-            className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold text-base px-8 py-4 rounded-full hover:border-[#00C896] hover:text-[#00C896] transition-all duration-200"
-          >
-            Voir comment ça marche
-          </a>
-        </div>
+            <div className="hero-phone relative" style={{ transformStyle: "preserve-3d" }}>
 
-        <div className="hero-proof inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
-          <span className="text-2xl">⚡</span>
-          <p className="text-sm text-[#A0B4C8] text-left">
-            <span className="text-white font-semibold">Premiers leads en 24 à 72h après lancement</span>
-            {" "}— garanti par contrat
-          </p>
+              {/* Phone shell */}
+              <div
+                className="relative w-[272px] rounded-[44px] overflow-hidden"
+                style={{
+                  height: "568px",
+                  background: "linear-gradient(155deg, #182840 0%, #0d1b2a 100%)",
+                  border: "7px solid #1e3550",
+                  boxShadow: "0 40px 80px rgba(0,200,150,0.2), inset 0 0 0 1px rgba(255,255,255,0.04)",
+                }}
+              >
+                {/* Notch */}
+                <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-20 h-5 bg-[#0d1b2a] rounded-full z-10 flex items-center justify-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#1e3550]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#1e3550]" />
+                </div>
+
+                {/* Screen */}
+                <div className="absolute inset-0 pt-10 overflow-hidden">
+                  {/* Status bar */}
+                  <div className="px-3 py-1.5 flex items-center justify-between border-b border-[#1e3550]">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-[#00C896] rounded-full animate-pulse" />
+                      <span className="text-[#00C896] text-[7.5px] font-bold tracking-widest uppercase">CRM Live</span>
+                    </div>
+                    <span className="text-[#3d5a7a] text-[7px]">Google Sheets</span>
+                  </div>
+
+                  {/* Column headers */}
+                  <div
+                    className="grid px-2 py-1 bg-[#0f2035]"
+                    style={{ gridTemplateColumns: "1.8fr 1.4fr 1.4fr 1.2fr 1.4fr" }}
+                  >
+                    {["Prénom", "Email", "Tél", "Secteur", "Budget"].map((h) => (
+                      <span key={h} className="text-[6.5px] font-bold text-[#3d5a7a] uppercase tracking-wider truncate">{h}</span>
+                    ))}
+                  </div>
+                  <div className="h-px bg-[#1a3048] mx-2" />
+
+                  {/* Scrolling body — rows duplicated for seamless loop */}
+                  <div className="overflow-hidden" style={{ height: "460px" }}>
+                    <div ref={crmRef}>
+                      {[...HERO_LEADS, ...HERO_LEADS].map((row, i) => (
+                        <div
+                          key={i}
+                          className={`grid px-2 border-b border-[#132030] ${i === 0 ? "crm-highlight" : ""}`}
+                          style={{
+                            gridTemplateColumns: "1.8fr 1.4fr 1.4fr 1.2fr 1.4fr",
+                            height: `${HERO_ROW_H}px`,
+                            alignItems: "center",
+                          }}
+                        >
+                          <span className="text-[7px] font-semibold text-white truncate">{row.name}</span>
+                          <span className="text-[6.5px] text-[#7a9ab8] truncate">{row.email}</span>
+                          <span className="text-[6.5px] text-[#7a9ab8] truncate">{row.tel}</span>
+                          <span className="text-[7px] text-[#00C896] font-semibold truncate">{row.sector}</span>
+                          <span className="text-[6.5px] text-[#fbd38d] truncate">{row.budget}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Home indicator */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-20 h-1 bg-white/20 rounded-full" />
+              </div>
+
+              {/* ── Notification Bubbles ── */}
+              {HERO_BUBBLES.map((b, i) => (
+                <div
+                  key={i}
+                  className="hero-bubble absolute hidden md:block"
+                  style={{ ...b.pos, width: "195px", transformStyle: "preserve-3d", zIndex: 20 }}
+                >
+                  {/* +1 counter */}
+                  <div className="bubble-counter absolute -top-2.5 -right-2.5 w-6 h-6 bg-[#00C896] text-[#0B1E3D] rounded-full text-[9px] font-black flex items-center justify-center z-30">
+                    +1
+                  </div>
+
+                  <div className="rounded-2xl px-3 py-2.5" style={{ background: "white", borderLeft: "4px solid #00C896", boxShadow: "0 8px 32px rgba(0,0,0,0.18)" }}>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      {/* Meta ∞ logo */}
+                      <svg width="15" height="10" viewBox="0 0 48 30" fill="#0082FB">
+                        <path d="M24 15C21 9 17 3 12 3 6.5 3 2 8 2 15s4.5 12 10 12c5 0 9-6 12-12zm0 0c3 6 7 12 12 12 5.5 0 10-5 10-12S41.5 3 36 3c-5 0-9 6-12 12z"/>
+                      </svg>
+                      <span className="text-[10px] font-black text-[#0B1E3D]">Nouveau lead</span>
+                    </div>
+                    <p className="text-[9.5px] font-semibold text-[#0B1E3D] leading-tight">{b.name} — {b.sector}</p>
+                    <p className="text-[8.5px] text-gray-500">{b.city}</p>
+                    <p className="text-[8px] text-gray-400 mt-0.5">{b.time}</p>
+                  </div>
+                </div>
+              ))}
+
+              {/* ── "50 leads en 5 jours" finale (scroll reveal) ── */}
+              <div
+                className="hero-finale absolute inset-0 flex items-center justify-center pointer-events-none rounded-[38px]"
+                style={{ background: "rgba(11,30,61,0.88)", backdropFilter: "blur(14px)" }}
+              >
+                <div className="text-center px-8 py-6 rounded-3xl border border-[#00C896]/30">
+                  <p className="text-5xl font-black text-[#00C896] leading-none">50</p>
+                  <p className="text-sm font-bold text-white mt-1">leads en 5 jours.</p>
+                  <p className="text-[11px] text-[#A0B4C8] mt-1">exclusivité zone + métier</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
     </section>
