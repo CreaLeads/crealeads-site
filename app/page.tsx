@@ -283,16 +283,16 @@ function Hero() {
 
           {/* ── RIGHT : Phone + Bubbles ── */}
           <div
-            className="flex justify-center md:justify-end relative"
+            className="flex flex-col items-center md:items-end relative"
             style={{ perspective: "1000px", overflow: "visible" }}
           >
             <div className="hero-phone relative" style={{ transformStyle: "preserve-3d", willChange: "transform, opacity" }}>
 
-              {/* Phone shell */}
+              {/* Phone shell — w-44 mobile / w-[272px] desktop, height via aspect-ratio */}
               <div
-                className="relative w-[272px] rounded-[44px] overflow-hidden"
+                className="relative w-44 md:w-[272px] rounded-[40px] md:rounded-[44px] overflow-hidden"
                 style={{
-                  height: "568px",
+                  aspectRatio: "272 / 568",
                   background: "linear-gradient(155deg, #182840 0%, #0d1b2a 100%)",
                   border: "7px solid #1e3550",
                   boxShadow: "0 40px 80px rgba(0,200,150,0.2), inset 0 0 0 1px rgba(255,255,255,0.04)",
@@ -394,6 +394,28 @@ function Hero() {
               </div>
 
             </div>
+
+            {/* ── Mobile only : 3 compact notification chips ── */}
+            <div className="md:hidden mt-4 w-full max-w-[280px] flex flex-col gap-1.5">
+              {HERO_BUBBLES.slice(0, 3).map((b, i) => (
+                <div
+                  key={i}
+                  className="hero-bubble flex items-center gap-2 rounded-xl px-3 py-2"
+                  style={{ background: "white", borderLeft: "3px solid #00C896", boxShadow: "0 4px 12px rgba(0,0,0,0.10)", willChange: "transform, opacity" }}
+                >
+                  <svg width="11" height="7" viewBox="0 0 48 30" fill="#0082FB" className="flex-shrink-0">
+                    <path d="M24 15C21 9 17 3 12 3 6.5 3 2 8 2 15s4.5 12 10 12c5 0 9-6 12-12zm0 0c3 6 7 12 12 12 5.5 0 10-5 10-12S41.5 3 36 3c-5 0-9 6-12 12z"/>
+                  </svg>
+                  <div className="min-w-0">
+                    <p className="text-[9px] font-black text-[#0B1E3D] truncate">
+                      Nouveau lead — {b.name} — {b.sector}
+                    </p>
+                    <p className="text-[8px] text-gray-400">{b.city} · {b.time}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
@@ -717,168 +739,142 @@ function Offres() {
     if (typeof window === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      // Titre : simple fadeUp avant le pin
-      gsap.fromTo(".offres-title", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.7,
-        scrollTrigger: { trigger: ".offres-title", start: "top 85%" },
+      // Titre : simple fadeUp au scroll, sans pin
+      gsap.fromTo(".offres-title", { opacity: 0, y: 24 }, {
+        opacity: 1, y: 0, duration: 0.65,
+        scrollTrigger: { trigger: ".offres-title", start: "top 88%" },
       });
-
-      // Cards : section pineé, cards arrivent en stagger au scroll
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=560",
-          pin: true,
-          scrub: 0.9,
-          anticipatePin: 1,
-        },
-      });
-
-      tl.fromTo(".offer-card",
-        { opacity: 0, y: 90, scale: 0.96 },
-        { opacity: 1, y: 0, scale: 1, stagger: 0.28, ease: "power3.out", duration: 0.55 }
-      );
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
-  const essentials = [
+  const growthFeatures = [
     "1 campagne Lead Ads Meta",
     "Formulaire instantané configuré",
     "Ciblage zone + métier précis",
     "Notification WhatsApp à chaque lead",
-    "CRM Google Sheets template",
-    "Page de crédibilité",
-    "Vos photos formatées (3 formats)",
-    "Support WhatsApp 1 mois",
-    "Kickoff call 20 min",
-  ];
-  const growth = [
-    "Tout le pack Essentiel",
-    "CRM Google Sheets 100% automatisé",
-    "Make.com : lead → CRM en 30 sec",
-    "2 campagnes (prospection + retargeting)",
+    "CRM Google Sheets 100% automatisé (Make.com)",
     "2-3 visuels créés par nous",
-    "Optimisation mensuelle des campagnes",
-    "Rapport mensuel complet",
-    "Support WhatsApp 24h continu",
+    "Page de crédibilité",
+    "Support WhatsApp 1 mois",
     "Kickoff call 30 min",
   ];
-  const full = [
+  const fullFeatures = [
     "Tout le pack Growth",
-    "3 campagnes + audience lookalike",
-    "5 visuels pro tous formats",
-    "CRM avancé + alertes couleurs auto",
-    "Rapport premium mensuel",
+    "2 campagnes (prospection + retargeting)",
+    "3 campagnes + audience lookalike (dès 100 leads)",
+    "5 visuels pro tous formats — créés et renouvelés",
+    "CRM avancé + alertes couleurs automatiques",
+    "Optimisation mensuelle des campagnes",
+    "Rapport premium mensuel avec KPIs complets",
     "Appel de suivi mensuel inclus",
-    "Support WhatsApp prioritaire 4h",
+    "Support WhatsApp prioritaire — réponse sous 4h",
     "Kickoff call 45 min",
   ];
 
   return (
     <section id="offres" ref={sectionRef} className="py-24 px-5 bg-[#0F2547]">
-      <div className="max-w-6xl mx-auto">
+      {/* CSS keyframes pour fadeInUp sans JS */}
+      <style>{`
+        @keyframes offerFadeUp {
+          from { opacity: 0; transform: translateY(32px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .offer-card-anim {
+          animation: offerFadeUp 0.6s ease forwards;
+        }
+      `}</style>
+
+      <div className="max-w-5xl mx-auto">
         <h2 className="offres-title text-3xl sm:text-4xl font-black text-center text-white mb-3">
           Choisissez votre <span className="text-[#00C896]">pack</span>
         </h2>
         <p className="offres-title text-center text-[#A0B4C8] mb-16 text-base">
-          Trois niveaux selon votre budget et vos objectifs.
+          Deux formules selon votre ambition.
         </p>
 
-        <div className="grid lg:grid-cols-3 gap-6 items-start">
-          {/* Essentiel */}
-          <div className="offer-card bg-[#0B1E3D] border border-white/10 rounded-2xl p-8 flex flex-col hover:border-white/25 transition-all duration-300">
-            <div className="mb-6">
-              <div className="text-xs font-bold text-[#A0B4C8] uppercase tracking-widest mb-2">Essentiel</div>
-              <div className="text-4xl font-black text-white mb-1">990<span className="text-xl text-[#A0B4C8]"> €</span></div>
+        <div className="grid lg:grid-cols-2 gap-8 items-start max-w-3xl mx-auto">
+
+          {/* ── GROWTH ── */}
+          <div
+            className="offer-card offer-card-anim relative bg-[#0B1E3D] border border-white/10 rounded-2xl p-8 flex flex-col hover:border-white/25 transition-all duration-300"
+            style={{ animationDelay: "0.1s" }}
+          >
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white/10 border border-white/20 text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap">
+              Le plus choisi
+            </div>
+            <div className="mb-6 pt-2">
+              <div className="text-xs font-bold text-[#00C896] uppercase tracking-widest mb-2">Growth</div>
+              <div className="flex items-end gap-2 mb-1">
+                <span className="text-4xl font-black text-white">1 500</span>
+                <span className="text-xl text-[#A0B4C8] mb-1"> €</span>
+              </div>
               <div className="text-xs text-[#A0B4C8]">one-shot · sans abonnement</div>
             </div>
-            <p className="text-sm text-[#A0B4C8] mb-6 italic">&ldquo;On lance la machine. Vous volez seul.&rdquo;</p>
+            <p className="text-sm text-[#A0B4C8] mb-6 italic">&ldquo;On lance la machine. Résultats dès la première semaine.&rdquo;</p>
             <ul className="space-y-3 mb-8 flex-1">
-              {essentials.map((item, i) => (
+              {growthFeatures.map((item, i) => (
                 <li key={i} className="flex gap-2.5 text-sm text-[#A0B4C8]">
                   <span className="text-[#00C896] flex-shrink-0 mt-0.5">✓</span>
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="text-xs text-[#A0B4C8]/60 italic mb-5">
-              Pour : artisan sceptique ou budget serré — test à faible risque
+            <p className="text-xs text-[#A0B4C8]/70 italic mb-5">
+              Pour : artisan qui veut démarrer sans engagement
             </p>
             <button
               type="button"
               onClick={openFunnel}
               className="block w-full text-center border border-[#00C896] text-[#00C896] font-bold text-sm py-3.5 rounded-full hover:bg-[#00C896] hover:text-[#0B1E3D] transition-all duration-200"
             >
-              Démarrer avec l&apos;Essentiel
+              Démarrer avec le Growth
             </button>
           </div>
 
-          {/* Growth */}
-          <div className="offer-card relative bg-[#0B1E3D] border-2 border-[#00C896] rounded-2xl p-8 flex flex-col shadow-2xl shadow-[#00C896]/20">
+          {/* ── FULL ── */}
+          <div
+            className="offer-card offer-card-anim relative bg-[#0B1E3D] border-2 border-[#00C896] rounded-2xl p-8 flex flex-col shadow-2xl shadow-[#00C896]/20"
+            style={{ animationDelay: "0.22s" }}
+          >
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#00C896] text-[#0B1E3D] text-xs font-black px-5 py-1.5 rounded-full whitespace-nowrap">
               Recommandé
             </div>
-            <div className="mb-6">
-              <div className="text-xs font-bold text-[#00C896] uppercase tracking-widest mb-2">Growth</div>
-              <div className="text-4xl font-black text-white mb-1">1 500<span className="text-xl text-[#A0B4C8]"> €</span></div>
-              <div className="text-xs text-[#A0B4C8]">setup + 300 €/mois</div>
+            <div className="mb-6 pt-2">
+              <div className="text-xs font-bold text-[#00C896] uppercase tracking-widest mb-2">Full</div>
+              <div className="flex items-end gap-2 mb-1">
+                <span className="text-4xl font-black text-white">2 500</span>
+                <span className="text-xl text-[#A0B4C8] mb-1"> €</span>
+              </div>
+              <div className="text-xs text-[#A0B4C8]">setup en 2×1 250 € · + 500 €/mois · 3 mois min</div>
             </div>
-            <p className="text-sm text-[#A0B4C8] mb-6 italic">&ldquo;On lance ET on optimise chaque mois.&rdquo;</p>
+            <p className="text-sm text-[#A0B4C8] mb-6 italic">&ldquo;Un expert à vos côtés chaque mois pour des résultats croissants.&rdquo;</p>
             <ul className="space-y-3 mb-8 flex-1">
-              {growth.map((item, i) => (
+              {fullFeatures.map((item, i) => (
                 <li key={i} className="flex gap-2.5 text-sm text-[#A0B4C8]">
                   <span className="text-[#00C896] flex-shrink-0 mt-0.5">✓</span>
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="text-xs text-[#A0B4C8]/60 italic mb-5">
-              Pour : artisan motivé qui veut un système clé en main
+            <p className="text-xs text-[#A0B4C8]/70 italic mb-5">
+              Pour : artisan qui veut des résultats croissants avec un expert à ses côtés chaque mois
             </p>
             <button
               type="button"
               onClick={openFunnel}
               className="block w-full text-center bg-[#00C896] text-[#0B1E3D] font-black text-sm py-3.5 rounded-full hover:brightness-110 transition-all duration-200 shadow-lg shadow-[#00C896]/30"
             >
-              Démarrer avec le Growth
-            </button>
-          </div>
-
-          {/* Full */}
-          <div className="offer-card bg-[#0B1E3D] border border-white/10 rounded-2xl p-8 flex flex-col hover:border-white/25 transition-all duration-300">
-            <div className="mb-6">
-              <div className="text-xs font-bold text-[#A0B4C8] uppercase tracking-widest mb-2">Full</div>
-              <div className="text-4xl font-black text-white mb-1">2 200<span className="text-xl text-[#A0B4C8]"> €</span></div>
-              <div className="text-xs text-[#A0B4C8]">setup + 650 €/mois</div>
-            </div>
-            <p className="text-sm text-[#A0B4C8] mb-6 italic">&ldquo;Pour les artisans avec équipe ou fort volume.&rdquo;</p>
-            <ul className="space-y-3 mb-8 flex-1">
-              {full.map((item, i) => (
-                <li key={i} className="flex gap-2.5 text-sm text-[#A0B4C8]">
-                  <span className="text-[#00C896] flex-shrink-0 mt-0.5">✓</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="text-xs text-[#A0B4C8]/60 italic mb-5">
-              Pour : artisan avec équipe ou fort volume de chantiers
-            </p>
-            <button
-              type="button"
-              onClick={openFunnel}
-              className="block w-full text-center border border-[#00C896] text-[#00C896] font-bold text-sm py-3.5 rounded-full hover:bg-[#00C896] hover:text-[#0B1E3D] transition-all duration-200"
-            >
               Démarrer avec le Full
             </button>
           </div>
+
         </div>
 
         <p className="text-center text-xs text-[#A0B4C8]/60 mt-10 leading-relaxed">
-          Engagement 3 mois minimum pour les packs mensuels · Résiliation préavis 30 jours
+          Pack Full — engagement 3 mois minimum · Résiliation avec préavis 30 jours
           <br />
-          Paiement en 2 fois : 50% à la signature, 50% à la livraison
+          Setup Full payable en 2 fois : 1 250 € à la signature, 1 250 € à la livraison
         </p>
       </div>
     </section>
@@ -1054,7 +1050,7 @@ const faqData = [
   },
   {
     q: "Y a-t-il un engagement ?",
-    a: "Les packs Growth et Full ont un engagement minimum de 3 mois, puis résiliation avec préavis de 30 jours. Le pack Essentiel est un one-shot sans abonnement.",
+    a: "Le pack Growth est un one-shot sans engagement. Le pack Full a un engagement minimum de 3 mois, puis résiliation avec préavis de 30 jours.",
   },
 ];
 
