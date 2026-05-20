@@ -128,47 +128,53 @@ function Hero() {
     if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
 
+    // a) Performance globals
+    gsap.config({ force3D: true });
+    ScrollTrigger.config({ limitCallbacks: true });
+    // d) Normalize scroll across browsers
+    ScrollTrigger.normalizeScroll(true);
+
+    let mounted = true; // guard for chained float callbacks
+
     const ctx = gsap.context(() => {
 
-      // ── Initial state of +1 counters ──
-      gsap.set(".bubble-counter", { opacity: 0, scale: 0 });
-      gsap.set(".hero-finale",    { opacity: 0 });
+      // ── Set ALL initial states synchronously before first paint ──
+      gsap.set(".hero-badge",      { opacity: 0, y: -22, scale: 0.88 });
+      gsap.set(".hero-title",      { opacity: 0, y: 64 });
+      gsap.set(".hero-sub",        { opacity: 0, y: 36 });
+      gsap.set(".hero-cta",        { opacity: 0, y: 28 });
+      gsap.set(".hero-proof",      { opacity: 0, y: 18, scale: 0.93 });
+      gsap.set(".hero-phone",      { opacity: 0, x: 90, rotateY: -20 });
+      gsap.set(".hero-bubble",     { opacity: 0, scale: 0 });
+      gsap.set(".bubble-counter",  { opacity: 0, scale: 0 });
+      gsap.set(".hero-finale",     { opacity: 0 });
 
-      // ── Entrance timeline ──
+      // ── Entrance timeline (gsap.to — reads GSAP-set state above) ──
       const tl = gsap.timeline({ delay: 0.3 });
       tl
-        .fromTo(".hero-badge",
-          { opacity: 0, y: -22, scale: 0.88 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.8)" })
-        .fromTo(".hero-title",
-          { opacity: 0, y: 64 },
-          { opacity: 1, y: 0, duration: 0.95, ease: "power4.out" }, "-=0.1")
-        .fromTo(".hero-sub",
-          { opacity: 0, y: 36 },
-          { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" }, "-=0.55")
-        .fromTo(".hero-cta",
-          { opacity: 0, y: 28 },
-          { opacity: 1, y: 0, duration: 0.65, ease: "back.out(1.5)" }, "-=0.45")
-        .fromTo(".hero-proof",
-          { opacity: 0, y: 18, scale: 0.93 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, "-=0.35")
-        // Phone slides from right + subtle 3-D rotation
-        .fromTo(".hero-phone",
-          { opacity: 0, x: 90, rotateY: -20 },
-          { opacity: 1, x: 0, rotateY: 0, duration: 1.15, ease: "power3.out" }, 0.35)
-        // Bubbles pop in one by one
-        .fromTo(".hero-bubble",
-          { opacity: 0, scale: 0 },
-          { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)", stagger: 0.14 }, 1.1);
+        .to(".hero-badge",  { opacity: 1, y: 0, scale: 1,   duration: 0.5,  ease: "back.out(1.8)" })
+        .to(".hero-title",  { opacity: 1, y: 0,             duration: 0.95, ease: "power4.out"    }, "-=0.1")
+        .to(".hero-sub",    { opacity: 1, y: 0,             duration: 0.75, ease: "power3.out"    }, "-=0.55")
+        .to(".hero-cta",    { opacity: 1, y: 0,             duration: 0.65, ease: "back.out(1.5)" }, "-=0.45")
+        .to(".hero-proof",  { opacity: 1, y: 0, scale: 1,   duration: 0.6,  ease: "back.out(1.7)" }, "-=0.35")
+        .to(".hero-phone",  { opacity: 1, x: 0, rotateY: 0, duration: 1.15, ease: "power3.out"   }, 0.35)
+        .to(".hero-bubble", { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)", stagger: 0.14 }, 1.1);
 
-      // ── Continuous bubble float ──
-      gsap.to(".hero-bubble", {
-        y: -9, duration: 2.3, ease: "sine.inOut",
-        yoyo: true, repeat: -1,
-        stagger: { each: 0.42, from: "random" },
-      });
+      // f) Bubble float — chained onComplete instead of repeat:-1 (lighter GPU)
+      const floatEls = gsap.utils.toArray<HTMLElement>(".hero-bubble");
+      function floatDown(el: HTMLElement) {
+        if (!mounted) return;
+        gsap.to(el, { y: 0, duration: 2.3, ease: "sine.inOut", overwrite: false,
+          onComplete: () => floatUp(el) });
+      }
+      function floatUp(el: HTMLElement) {
+        if (!mounted) return;
+        gsap.to(el, { y: -9, duration: 2.3, ease: "sine.inOut", overwrite: false,
+          onComplete: () => floatDown(el) });
+      }
+      floatEls.forEach((el, i) => gsap.delayedCall(i * 0.42, () => floatUp(el)));
 
-      // ── CRM seamless scroll loop (rows duplicated in JSX) ──
+      // ── CRM seamless scroll loop ──
       if (crmRef.current) {
         const dist = HERO_ROW_H * HERO_LEADS.length;
         gsap.to(crmRef.current, {
@@ -184,16 +190,16 @@ function Hero() {
         ease: "power2.inOut",
       });
 
-      // ── ScrollTrigger pin (desktop only) ──
+      // ── ScrollTrigger pin — desktop only, max 1.5 screens ──
       if (window.innerWidth >= 768) {
         const pinTl = gsap.timeline({
           scrollTrigger: {
             trigger: heroRef.current,
             start: "top top",
-            end: "+=170%",
+            end: "+=150%",          // e) 1.5 écrans max
             pin: true,
-            scrub: 1,
-            anticipatePin: 1,
+            scrub: 0.5,             // c) 0.5 pour fluidité
+            anticipatePin: 1,       // e) anticipe le pin
           },
         });
 
@@ -206,14 +212,11 @@ function Hero() {
           if (counter) pinTl.to(counter, { opacity: 1, scale: 1, duration: 0.12 }, i * 0.15 + 0.12);
         });
 
-        pinTl.fromTo(".hero-finale",
-          { opacity: 0, y: 22, scale: 0.88 },
-          { opacity: 1, y: 0,  scale: 1,    duration: 0.3 },
-          0.83);
+        pinTl.to(".hero-finale", { opacity: 1, y: 0, scale: 1, duration: 0.3 }, 0.83);
       }
     }, heroRef);
 
-    return () => ctx.revert();
+    return () => { mounted = false; ctx.revert(); };
   }, []);
 
   return (
@@ -281,9 +284,9 @@ function Hero() {
           {/* ── RIGHT : Phone + Bubbles ── */}
           <div
             className="flex justify-center md:justify-end relative"
-            style={{ perspective: "1000px" }}
+            style={{ perspective: "1000px", overflow: "visible" }}
           >
-            <div className="hero-phone relative" style={{ transformStyle: "preserve-3d" }}>
+            <div className="hero-phone relative" style={{ transformStyle: "preserve-3d", willChange: "transform, opacity" }}>
 
               {/* Phone shell */}
               <div
@@ -356,7 +359,7 @@ function Hero() {
                 <div
                   key={i}
                   className="hero-bubble absolute hidden md:block"
-                  style={{ ...b.pos, width: "195px", transformStyle: "preserve-3d", zIndex: 20 }}
+                  style={{ ...b.pos, width: "195px", transformStyle: "preserve-3d", zIndex: 20, willChange: "transform, opacity", transform: "translateZ(0)" }}
                 >
                   {/* +1 counter */}
                   <div className="bubble-counter absolute -top-2.5 -right-2.5 w-6 h-6 bg-[#00C896] text-[#0B1E3D] rounded-full text-[9px] font-black flex items-center justify-center z-30">
