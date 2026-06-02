@@ -128,11 +128,9 @@ function Hero() {
     if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
 
-    // a) Performance globals
+    // Performance globals — force3D composite layer sur GPU
     gsap.config({ force3D: true });
-    ScrollTrigger.config({ limitCallbacks: true });
-    // d) Normalize scroll across browsers
-    ScrollTrigger.normalizeScroll(true);
+    ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
 
     let mounted = true; // guard for chained float callbacks
 
@@ -492,23 +490,23 @@ function PreuveSociale() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const metrics = [
-    { value: 50, suffix: " leads", label: "qualifiés en 5 jours" },
-    { value: 8, suffix: " devis", label: "envoyés la 1ère semaine" },
-    { value: 3, suffix: " chantiers", label: "signés la 1ère semaine" },
-    { value: 60, suffix: "%", label: "taux de closing" },
+    { value: 60, suffix: " leads", label: "qualifiés en 5 jours" },
+    { value: 8,  suffix: " devis",    label: "envoyés la 1ère semaine" },
+    { value: 2,  suffix: " chantiers", label: "signés la 1ère semaine" },
+    { value: 25, prefix: "+", suffix: "k€", label: "de CA généré" },
   ];
 
   return (
     <section ref={sectionRef} className="py-24 px-5 bg-[#0F2547]">
       <div className="max-w-5xl mx-auto text-center">
-        <div className="preuve-title inline-flex items-center gap-2 bg-[#00C896]/10 border border-[#00C896]/30 text-[#00C896] text-xs font-semibold px-4 py-2 rounded-full mb-6">
-          Résultat réel — cas client
+        <div className="inline-flex items-center gap-2 bg-[#00C896]/10 border border-[#00C896]/30 text-[#00C896] text-xs font-semibold px-4 py-2 rounded-full mb-6">
+          📊 Moyenne constatée — clients actifs
         </div>
-        <h2 className="preuve-title text-3xl sm:text-4xl font-black text-white mb-3">
-          SurfaceBéton, Île-de-France
+        <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+          Résultats <span className="text-[#00C896]">dès la première semaine</span>
         </h2>
-        <p className="preuve-title text-[#A0B4C8] mb-14 text-base">
-          Applicateur résine — campagne Meta lancée sur une zone ciblée
+        <p className="text-[#A0B4C8] mb-14 text-base">
+          Chiffres moyens observés sur nos clients après lancement de campagne Meta
         </p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {metrics.map((m, i) => (
@@ -568,37 +566,63 @@ function Process() {
     if (typeof window === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      // Titre process
-      gsap.fromTo(".process-title", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.7,
-        scrollTrigger: { trigger: ".process-title", start: "top 85%" },
-      });
+      const isDesktop = window.innerWidth >= 1024;
 
-      // Ligne + steps : scrub lent et fluide
-      const line = lineRef.current;
-      if (line) {
-        const length = 1000;
-        gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
-        gsap.set(".step-card", { opacity: 0, y: 24 });
+      // ── Titre ──
+      gsap.fromTo(".process-title",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power2.out",
+          scrollTrigger: { trigger: ".process-title", start: "top 90%", toggleActions: "play none none none" } }
+      );
 
-        const tl = gsap.timeline({
+      if (isDesktop) {
+        // ── Desktop : ligne scrub indépendante ──
+        const line = lineRef.current;
+        if (line) {
+          gsap.set(line, { strokeDasharray: 1000, strokeDashoffset: 1000 });
+          gsap.to(line, {
+            strokeDashoffset: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".process-timeline",
+              start: "top 72%",
+              end: "top 15%",
+              scrub: 1.8,
+              fastScrollEnd: true,
+            },
+          });
+        }
+
+        // ── Desktop : cards apparaissent en stagger quand la section entre ──
+        gsap.set(".step-card-dt", { opacity: 0, y: 22 });
+        gsap.to(".step-card-dt", {
+          opacity: 1, y: 0,
+          duration: 0.65,
+          ease: "power2.out",
+          stagger: 0.14,
           scrollTrigger: {
             trigger: ".process-timeline",
-            start: "top 78%",
-            end: "bottom 20%",
-            scrub: 2.5,           // scrub très doux
-            fastScrollEnd: true,  // rattrape les scrolls rapides proprement
+            start: "top 74%",
+            toggleActions: "play none none none",
           },
         });
 
-        tl.to(line, { strokeDashoffset: 0, ease: "none", duration: 0.55 })
-          .to(".step-card",
-            { opacity: 1, y: 0, stagger: 0.18, ease: "power2.out", duration: 0.5 },
-            "-=0.05"
-          );
       } else {
-        // Mobile : steps visibles directement
-        gsap.set(".step-card", { opacity: 1, y: 0 });
+        // ── Mobile : chaque card se déclenche individuellement au scroll ──
+        const cards = gsap.utils.toArray<HTMLElement>(".step-card-mb");
+        gsap.set(cards, { opacity: 0, x: -18 });
+        cards.forEach((card) => {
+          gsap.to(card, {
+            opacity: 1, x: 0,
+            duration: 0.55,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          });
+        });
       }
     }, sectionRef);
     return () => ctx.revert();
@@ -614,7 +638,7 @@ function Process() {
           5 étapes simples pour démarrer votre flux de leads
         </p>
 
-        {/* Desktop */}
+        {/* ── Desktop ── */}
         <div className="process-timeline hidden lg:block relative">
           <div className="absolute top-8 left-16 right-16 flex items-center">
             <svg className="w-full h-6" preserveAspectRatio="none" viewBox="0 0 1000 24">
@@ -628,7 +652,11 @@ function Process() {
           </div>
           <div className="grid grid-cols-5 gap-4 relative z-10">
             {steps.map((s, i) => (
-              <div key={i} className="step-card flex flex-col items-center text-center">
+              <div
+                key={i}
+                className="step-card-dt flex flex-col items-center text-center"
+                style={{ willChange: "transform, opacity" }}
+              >
                 <div className="w-16 h-16 rounded-full bg-[#00C896] text-[#0B1E3D] font-black text-lg flex items-center justify-center mb-4 shadow-lg shadow-[#00C896]/30 flex-shrink-0">
                   {s.num}
                 </div>
@@ -640,12 +668,16 @@ function Process() {
           </div>
         </div>
 
-        {/* Mobile */}
+        {/* ── Mobile : chaque étape se déclenche au scroll ── */}
         <div className="lg:hidden relative pl-10">
           <div className="absolute left-4 top-4 bottom-4 w-0.5 bg-[#00C896]/20" />
           <div className="space-y-6">
             {steps.map((s, i) => (
-              <div key={i} className="step-card relative">
+              <div
+                key={i}
+                className="step-card-mb relative"
+                style={{ willChange: "transform, opacity" }}
+              >
                 <div className="absolute -left-10 top-4 w-8 h-8 rounded-full bg-[#00C896] text-[#0B1E3D] font-black text-xs flex items-center justify-center shadow-lg shadow-[#00C896]/30">
                   {i + 1}
                 </div>
