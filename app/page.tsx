@@ -144,7 +144,7 @@ function Hero() {
       gsap.set(".hero-sub",        { opacity: 0, y: 36 });
       gsap.set(".hero-cta",        { opacity: 0, y: 28 });
       gsap.set(".hero-proof",      { opacity: 0, y: 18, scale: 0.93 });
-      gsap.set(".hero-phone",      { opacity: 0, x: 90, rotateY: -20 });
+      gsap.set(".hero-phone",      { opacity: 0, x: 55, rotateY: -10 });
       gsap.set(".hero-bubble",     { opacity: 0, scale: 0 });
       gsap.set(".bubble-counter",  { opacity: 0, scale: 0 });
       gsap.set(".hero-finale",     { opacity: 0 });
@@ -157,7 +157,7 @@ function Hero() {
         .to(".hero-sub",    { opacity: 1, y: 0,             duration: 0.75, ease: "power3.out"    }, "-=0.55")
         .to(".hero-cta",    { opacity: 1, y: 0,             duration: 0.65, ease: "back.out(1.5)" }, "-=0.45")
         .to(".hero-proof",  { opacity: 1, y: 0, scale: 1,   duration: 0.6,  ease: "back.out(1.7)" }, "-=0.35")
-        .to(".hero-phone",  { opacity: 1, x: 0, rotateY: 0, duration: 1.15, ease: "power3.out"   }, 0.35)
+        .to(".hero-phone",  { opacity: 1, x: 0, rotateY: 0, duration: 1.4, ease: "power2.out"    }, 0.35)
         .to(".hero-bubble", { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)", stagger: 0.14 }, 1.1);
 
       // f) Bubble float — chained onComplete instead of repeat:-1 (lighter GPU)
@@ -428,26 +428,6 @@ function Hero() {
 function ProblemeSolution() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".ps-title", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.7,
-        scrollTrigger: { trigger: ".ps-title", start: "top 85%" },
-      });
-      gsap.fromTo(".prob-col", { opacity: 0, x: -60 }, {
-        opacity: 1, x: 0, duration: 0.8, ease: "power3.out",
-        scrollTrigger: { trigger: ".prob-col", start: "top 85%" },
-      });
-      gsap.fromTo(".sol-col", { opacity: 0, x: 60 }, {
-        opacity: 1, x: 0, duration: 0.8, ease: "power3.out",
-        scrollTrigger: { trigger: ".sol-col", start: "top 85%" },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
   const problems = [
     "Pas le temps de prospecter entre deux chantiers",
     "Les sites web seuls n'apportent pas de trafic avant 6 à 12 mois",
@@ -503,56 +483,13 @@ function ProblemeSolution() {
 
 // ─── PREUVE SOCIALE ───────────────────────────────────────────────────────────
 
+// CountUp simplifié — affiche la valeur finale directement, pas d'animation au scroll
 function CountUp({ end, suffix = "", prefix = "" }: { end: number; suffix?: string; prefix?: string }) {
-  const [value, setValue] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const triggered = useRef(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-    const el = ref.current;
-    if (!el) return;
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: "top 85%",
-      onEnter: () => {
-        if (triggered.current) return;
-        triggered.current = true;
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: end,
-          duration: 2.4,
-          ease: "power4.out",
-          onUpdate: () => setValue(Math.floor(obj.val)),
-          onComplete: () => setValue(end), // snap exact au chiffre final
-        });
-      },
-    });
-    return () => st.kill();
-  }, [end]);
-
-  return <span ref={ref}>{prefix}{value}{suffix}</span>;
+  return <span>{prefix}{end}{suffix}</span>;
 }
 
 function PreuveSociale() {
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".preuve-title", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.7,
-        scrollTrigger: { trigger: ".preuve-title", start: "top 85%" },
-      });
-      gsap.fromTo(".metric-card", { opacity: 0, y: 40 }, {
-        opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out",
-        scrollTrigger: { trigger: ".metric-card", start: "top 85%" },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
 
   const metrics = [
     { value: 50, suffix: " leads", label: "qualifiés en 5 jours" },
@@ -637,35 +574,31 @@ function Process() {
         scrollTrigger: { trigger: ".process-title", start: "top 85%" },
       });
 
-      // Timeline scrub : ligne se trace d'abord, puis chaque step apparaît
+      // Ligne + steps : scrub lent et fluide
       const line = lineRef.current;
       if (line) {
-        const length = 1000; // correspond au viewBox 0 0 1000 24
+        const length = 1000;
         gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
+        gsap.set(".step-card", { opacity: 0, y: 24 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: ".process-timeline",
-            start: "top 72%",
-            end: "bottom 55%",
-            scrub: 1.5,
+            start: "top 78%",
+            end: "bottom 20%",
+            scrub: 2.5,           // scrub très doux
+            fastScrollEnd: true,  // rattrape les scrolls rapides proprement
           },
         });
 
-        // Phase 1 : la ligne se trace (60 % de la durée)
-        tl.to(line, { strokeDashoffset: 0, ease: "none", duration: 0.6 })
-        // Phase 2 : les steps apparaissent en stagger (40 % restants)
-          .fromTo(".step-card",
-            { opacity: 0, y: 44, scale: 0.95 },
-            { opacity: 1, y: 0, scale: 1, stagger: 0.12, ease: "power3.out", duration: 0.4 },
+        tl.to(line, { strokeDashoffset: 0, ease: "none", duration: 0.55 })
+          .to(".step-card",
+            { opacity: 1, y: 0, stagger: 0.18, ease: "power2.out", duration: 0.5 },
             "-=0.05"
           );
       } else {
-        // Fallback mobile (pas de line ref) : stagger simple
-        gsap.fromTo(".step-card", { opacity: 0, y: 40 }, {
-          opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out",
-          scrollTrigger: { trigger: ".step-card", start: "top 85%" },
-        });
+        // Mobile : steps visibles directement
+        gsap.set(".step-card", { opacity: 1, y: 0 });
       }
     }, sectionRef);
     return () => ctx.revert();
@@ -886,22 +819,6 @@ function Offres() {
 function Engagements() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".engage-title", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.7,
-        scrollTrigger: { trigger: ".engage-title", start: "top 85%" },
-      });
-      gsap.fromTo(".engage-card", { opacity: 0, y: 40 }, {
-        opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power3.out",
-        scrollTrigger: { trigger: ".engage-card", start: "top 85%" },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
   const items = [
     { icon: "🗓", title: "Livraison garantie 7 à 14 jours", desc: "Écrit dans le contrat. Pas de vague promesse." },
     { icon: "🔑", title: "Vous êtes propriétaire", desc: "Tous les accès, fichiers et contenus vous appartiennent." },
@@ -964,22 +881,6 @@ const certCards = [
 
 function Certifications() {
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".cert-title", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.7,
-        scrollTrigger: { trigger: ".cert-title", start: "top 85%" },
-      });
-      gsap.fromTo(".cert-card", { opacity: 0, y: 50 }, {
-        opacity: 1, y: 0, duration: 0.7, stagger: 0.2, ease: "power3.out",
-        scrollTrigger: { trigger: ".cert-card", start: "top 85%" },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section ref={sectionRef} className="py-24 px-5">
