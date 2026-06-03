@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
-const poppins = Poppins({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "900"],
-  variable: "--font-poppins",
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "CreaLeads — Leads qualifiés pour artisans du bâtiment",
+  metadataBase: new URL("https://crealeads.fr"),
+  title: "CreaLeads — Acquisition clients pour artisans du bâtiment",
   description:
-    "CreaLeads met en place votre système Lead Ads Meta clé en main — formulaires instantanés, CRM, notifications WhatsApp. Premiers leads en 24 à 72h.",
-  keywords: "leads artisans, lead ads meta, acquisition digitale bâtiment, leads qualifiés",
+    "Le bouche-à-oreille a une limite. Nous, on n'en a pas. Système d'acquisition clients clé en main pour artisans du BTP.",
+  keywords:
+    "acquisition clients artisans, leads artisans, meta ads bâtiment, acquisition digitale BTP",
   icons: {
     icon: [
       { url: "/favicon-v2.ico", sizes: "32x32", type: "image/png" },
@@ -22,10 +29,13 @@ export const metadata: Metadata = {
     apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
   },
   openGraph: {
+    title: "CreaLeads — Acquisition clients pour artisans",
+    description: "Le bouche-à-oreille a une limite. Nous, on n'en a pas.",
+    url: "https://crealeads.fr",
+    siteName: "CreaLeads",
+    locale: "fr_FR",
+    type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
-  },
-  other: {
-    "cache-control": "no-cache, no-store, must-revalidate",
   },
 };
 
@@ -35,8 +45,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={poppins.variable}>
-      <body className="font-poppins antialiased">{children}</body>
+    <html lang="fr" className={`${inter.variable} ${outfit.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
