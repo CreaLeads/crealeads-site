@@ -4,36 +4,36 @@ import { useState } from "react";
 
 const faqs = [
   {
-    q: "C'est cher non ?",
-    a: "Tu factures environ 7 000€ par chantier. Notre setup COPILOTE coûte 2 500€ = 35% d'UN chantier signé. Si on t'amène 1 seul chantier de plus par mois, c'est rentabilisé. Si on t'en amène 3, c'est 4× ton investissement. La question c'est pas est-ce que c'est cher, c'est est-ce que tu crois qu'on est capable de t'en amener au moins 1 par mois.",
+    q: "C'est cher, non ?",
+    a: "Vous facturez environ 7 000 € par chantier. Notre installation COPILOTE coûte 2 500 €, soit 35 % d'un seul chantier signé. Si nous vous amenons un seul chantier de plus par mois, c'est rentabilisé. Si nous vous en amenons trois, c'est quatre fois votre investissement. La vraie question n'est pas le prix, mais notre capacité à vous amener au moins un chantier par mois.",
   },
   {
-    q: "J'ai déjà essayé des pubs Facebook, ça n'a pas marché.",
-    a: "Normal. 80% des artisans qui font des pubs Meta seuls les font mal : audience trop large, créa basique, formulaire mal optimisé, pas de retargeting. Nous on fait de la lead gen pure, avec ciblage métier + zone + 3 campagnes orchestrées + renouvellement créa mensuel. C'est pas la même chose qu'un Boost Post à 50€/mois.",
+    q: "J'ai déjà essayé les publicités Facebook, ça n'a pas marché.",
+    a: "C'est fréquent. La plupart des artisans qui lancent des publicités Meta seuls les configurent mal : audience trop large, visuels basiques, formulaire non optimisé, absence de retargeting. Nous faisons de la génération de leads ciblée, avec un ciblage métier et zone, trois campagnes coordonnées et un renouvellement régulier des visuels. Ce n'est pas comparable à une publication boostée à 50 € par mois.",
   },
   {
-    q: "Pourquoi 3 mois d'engagement sur COPILOTE ?",
-    a: "Les campagnes Meta s'optimisent sur 30 jours minimum. L'algorithme a besoin de data pour apprendre. Si tu testes 1 mois et tu pars, tu vois 30% de notre potentiel. À 3 mois on peut te garantir un retour. C'est pour TE protéger, pas nous. Si tu veux 0 engagement, prends DÉCOLLAGE.",
+    q: "Pourquoi un engagement de 3 mois sur COPILOTE ?",
+    a: "Les campagnes Meta s'optimisent sur trente jours minimum. L'algorithme a besoin de données pour apprendre. Si vous testez un mois et vous arrêtez, vous ne voyez qu'une fraction du potentiel. À trois mois, nous pouvons vous garantir un retour. C'est une protection pour vous, pas pour nous. Si vous préférez aucun engagement, l'offre DÉCOLLAGE est faite pour ça.",
   },
   {
-    q: "Vous pouvez me garantir X chantiers par mois ?",
-    a: "Non, et c'est honnête. Le résultat dépend de TON métier (résine c'est plus facile que plombier), de TON panier moyen, de TON budget Meta, de TA capacité à closer en RDV. On te garantit la qualité de la machine et la transparence totale des KPIs. Et on rembourse 50% du setup si après 90 jours t'as vu zéro différence (COPILOTE et AUTOPILOTE).",
+    q: "Pouvez-vous me garantir un nombre de chantiers par mois ?",
+    a: "Non, et c'est une réponse honnête. Le résultat dépend de votre métier, de votre panier moyen, de votre budget publicitaire et de votre capacité à conclure en rendez-vous. Nous garantissons la qualité du système et une transparence totale sur les indicateurs. Et nous remboursons 50 % de l'installation si, après 90 jours, vous ne constatez aucune différence (offres COPILOTE et AUTOPILOTE).",
   },
   {
-    q: "Vous travaillez avec combien d'artisans en parallèle ?",
-    a: "Exclusivité zone + métier. Un seul applicateur résine par grande ville, un seul peintre par zone, etc. Si ton concurrent direct est déjà chez nous, on ne te prendra pas. Période.",
+    q: "Avec combien d'artisans travaillez-vous en parallèle ?",
+    a: "Nous travaillons en exclusivité par zone et par métier. Un seul applicateur résine par grande ville, un seul peintre par secteur, et ainsi de suite. Si votre concurrent direct est déjà accompagné par nos soins, nous ne vous prendrons pas comme client.",
   },
   {
-    q: "Vous gérez aussi les appels téléphoniques et les RDV physiques ?",
-    a: "Non. On fait l'acquisition digitale (Meta Ads + WhatsApp pour AUTOPILOTE). Les appels et RDV physiques restent ton boulot. Avec AUTOPILOTE, l'IA pré-qualifie sur WhatsApp pour que tu n'appelles que les prospects chauds.",
+    q: "Gérez-vous aussi les appels et les rendez-vous physiques ?",
+    a: "Non. Nous gérons l'acquisition digitale : publicités Meta et qualification WhatsApp pour l'offre AUTOPILOTE. Les appels et les rendez-vous physiques restent de votre ressort. Avec AUTOPILOTE, l'intelligence artificielle pré-qualifie les prospects pour que vous n'appeliez que les plus sérieux.",
   },
   {
-    q: "Quelle différence entre COPILOTE et AUTOPILOTE ?",
-    a: "COPILOTE = on pilote les campagnes Meta pour toi, tu gères tes prospects à la main. AUTOPILOTE = on pilote les campagnes ET une IA répond/qualifie tes prospects sur WhatsApp en moins de 30 secondes, 24/7. C'est le remplacement d'un commercial junior qui coûterait 3 500€/mois.",
+    q: "Quelle est la différence entre COPILOTE et AUTOPILOTE ?",
+    a: "Avec COPILOTE, nous pilotons vos campagnes Meta et vous gérez vos prospects manuellement. Avec AUTOPILOTE, nous pilotons les campagnes et une intelligence artificielle répond et qualifie vos prospects sur WhatsApp en moins de trente secondes, 24h/24. C'est l'équivalent d'un commercial junior, pour un coût bien inférieur.",
   },
   {
     q: "Et si je veux arrêter avant la fin de l'engagement ?",
-    a: "Préavis de 30 jours, par email. Tu paies le mois en cours + le mois suivant, et c'est terminé. Pas de pénalité, pas de blocage, pas de procès. Notre objectif c'est que tu restes parce que ça marche, pas parce que t'es coincé.",
+    a: "Un préavis de trente jours, par e-mail, suffit. Vous réglez le mois en cours et le mois suivant, et c'est terminé. Aucune pénalité, aucun blocage. Notre objectif est que vous restiez parce que les résultats sont là, pas parce que vous êtes contraint.",
   },
 ];
 
@@ -41,16 +41,14 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24 lg:py-32 bg-ink-05">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="text-sm font-semibold text-emerald uppercase tracking-wider mb-4">
+    <section id="faq" className="py-16 sm:py-24 lg:py-32 bg-ink-05">
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="text-center mb-10 sm:mb-16">
+          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
             Questions fréquentes
           </div>
           <h2 className="font-display text-display-md">
-            Tu hésites ?
-            <br />
-            <span className="text-emerald">On répond.</span>
+            Vous hésitez ? Nous répondons.
           </h2>
         </div>
 
@@ -62,12 +60,12 @@ export default function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full px-6 lg:px-8 py-5 lg:py-6 flex items-center justify-between gap-4 text-left"
+                className="w-full px-5 sm:px-8 py-4 sm:py-6 flex items-center justify-between gap-4 text-left"
               >
-                <span className="font-display text-base lg:text-lg font-bold">
+                <span className="font-display text-sm sm:text-lg font-bold">
                   {faq.q}
                 </span>
-                <span className={`flex-shrink-0 w-8 h-8 rounded-full bg-ink-05 flex items-center justify-center transition-transform duration-300 ${openIndex === i ? "rotate-45" : ""}`}>
+                <span className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-ink-05 flex items-center justify-center transition-transform duration-300 ${openIndex === i ? "rotate-45" : ""}`}>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                   </svg>
@@ -75,7 +73,7 @@ export default function FAQ() {
               </button>
               <div className={`grid transition-all duration-500 ${openIndex === i ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
                 <div className="overflow-hidden">
-                  <p className="px-6 lg:px-8 pb-6 lg:pb-8 text-ink-60 leading-relaxed">
+                  <p className="px-5 sm:px-8 pb-5 sm:pb-8 text-sm sm:text-base text-ink-60 leading-relaxed">
                     {faq.a}
                   </p>
                 </div>

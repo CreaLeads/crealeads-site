@@ -4,39 +4,37 @@ import Link from "next/link";
 
 const offers = [
   {
-    icon: "✈️",
     name: "DÉCOLLAGE",
-    tagline: "Tu pars seul",
-    price: "1 500€",
+    tagline: "Vous partez seul",
+    price: "1 500 €",
     priceDetail: "Paiement unique. Sans engagement.",
-    desc: "Le terrain d'essai. Un setup pro pour tester l'acquisition digitale sans engagement mensuel. Tu repars avec tout.",
+    desc: "Le terrain d'essai. Un système professionnel pour tester l'acquisition digitale sans engagement mensuel. Vous repartez avec tout.",
     features: [
       "1 campagne Meta Ads complète",
       "CRM Google Sheets",
       "Notification WhatsApp",
-      "2-3 visuels publicitaires",
-      "Formation 1h",
-      "Support email 30 jours",
+      "2 à 3 visuels publicitaires",
+      "Formation d'une heure",
+      "Support par e-mail 30 jours",
     ],
     highlight: false,
     href: "/offres#decollage",
     ctaLabel: "Découvrir l'offre",
   },
   {
-    icon: "🛬",
     name: "COPILOTE",
-    tagline: "On vole ensemble",
-    price: "2 500€",
-    priceDetail: "+ 500€/mois · Engagement 3 mois",
-    desc: "Le best-seller. Un partenaire de croissance qui optimise tes campagnes chaque mois. Pour scaler durablement.",
+    tagline: "On avance ensemble",
+    price: "2 500 €",
+    priceDetail: "+ 500 €/mois · Engagement 3 mois",
+    desc: "Le choix le plus populaire. Un partenaire de croissance qui optimise vos campagnes chaque mois pour des résultats durables.",
     features: [
-      "Tout DÉCOLLAGE +",
-      "3 campagnes (prospection + retargeting + lookalike)",
+      "Tout DÉCOLLAGE, et en plus :",
+      "3 campagnes (prospection, retargeting, similaire)",
       "CRM Airtable avancé",
       "Compte Renalto inclus",
       "Optimisation mensuelle",
       "Rapport mensuel détaillé",
-      "Appel mensuel 30 min",
+      "Appel mensuel de suivi",
       "Support WhatsApp prioritaire",
     ],
     highlight: true,
@@ -44,21 +42,20 @@ const offers = [
     ctaLabel: "Voir le détail",
   },
   {
-    icon: "🛸",
     name: "AUTOPILOTE",
-    tagline: "L'IA pilote pour toi",
-    price: "6 000€",
-    priceDetail: "+ 1 200€/mois · Engagement 6 mois",
-    desc: "L'écosystème complet. Des agents IA qui qualifient tes prospects 24/7, te briefent chaque matin, automatisent ton devis.",
+    tagline: "L'IA pilote pour vous",
+    price: "6 000 €",
+    priceDetail: "+ 1 200 €/mois · Engagement 6 mois",
+    desc: "L'écosystème complet. Des agents intelligents qui qualifient vos prospects en continu, vous informent chaque matin et automatisent vos devis.",
     features: [
-      "Tout COPILOTE +",
-      "Agent IA Qualif Leads 24/7",
-      "Agent IA Monitoring matinal",
+      "Tout COPILOTE, et en plus :",
+      "Agent IA de qualification 24h/24",
+      "Brief matinal automatique",
       "Renalto en API (devis sous 5 min)",
       "WhatsApp Business dédié",
       "Appel hebdomadaire",
       "Co-pilotage stratégique",
-      "Support sous 1h",
+      "Support sous 1 heure",
     ],
     highlight: false,
     href: "/offres#autopilote",
@@ -68,58 +65,55 @@ const offers = [
 
 export default function OffersOverview() {
   return (
-    <section id="offres" className="py-24 lg:py-32 bg-ink-05">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="text-sm font-semibold text-emerald uppercase tracking-wider mb-4">
+    <section id="offres" className="py-16 sm:py-24 lg:py-32 bg-ink-05">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
             Nos offres
           </div>
-          <h2 className="font-display text-display-md mb-6">
-            3 niveaux d'accompagnement.
-            <br />
-            <span className="text-emerald">Un seul objectif.</span>
+          <h2 className="font-display text-display-md mb-4 sm:mb-6">
+            Trois niveaux d'accompagnement, un seul objectif.
           </h2>
-          <p className="text-base lg:text-lg text-ink-60 leading-relaxed">
-            Que tu veuilles tester sans risque, scaler sereinement ou industrialiser ton acquisition avec l'IA, on a une offre pour toi.
+          <p className="text-base sm:text-lg text-ink-60 leading-relaxed">
+            Que vous vouliez tester sans risque, grandir sereinement ou industrialiser votre acquisition avec l'intelligence artificielle, une offre est faite pour vous.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 lg:items-start">
           {offers.map((offer, i) => (
             <div
               key={i}
-              className={`relative card-hover rounded-3xl p-8 lg:p-10 flex flex-col ${
+              className={`relative card-hover rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col ${
                 offer.highlight
-                  ? "bg-ink text-bg border-2 border-emerald lg:scale-105"
+                  ? "bg-ink text-bg border-2 border-emerald lg:-mt-4 lg:pb-14"
                   : "bg-bg border border-ink-10"
               }`}
             >
               {offer.highlight && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-emerald text-ink rounded-full text-xs font-bold uppercase tracking-wider">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-emerald text-ink rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap">
                   Le plus choisi
                 </div>
               )}
 
-              <div className="text-4xl mb-4">{offer.icon}</div>
-              <div className="font-display text-2xl font-bold mb-1">{offer.name}</div>
-              <div className={`text-sm mb-6 ${offer.highlight ? "text-bg/60" : "text-ink-60"}`}>
+              <div className="font-display text-xl sm:text-2xl font-bold mb-1 mt-2">{offer.name}</div>
+              <div className={`text-sm mb-5 sm:mb-6 ${offer.highlight ? "text-bg/60" : "text-ink-60"}`}>
                 {offer.tagline}
               </div>
 
               <div className="mb-2">
-                <span className={`font-display text-4xl font-bold ${offer.highlight ? "text-emerald" : ""}`}>
+                <span className={`font-display text-3xl sm:text-4xl font-bold ${offer.highlight ? "text-emerald" : ""}`}>
                   {offer.price}
                 </span>
               </div>
-              <div className={`text-xs mb-6 pb-6 border-b ${offer.highlight ? "text-bg/60 border-bg/10" : "text-ink-60 border-ink-10"}`}>
+              <div className={`text-xs mb-5 sm:mb-6 pb-5 sm:pb-6 border-b ${offer.highlight ? "text-bg/60 border-bg/10" : "text-ink-60 border-ink-10"}`}>
                 {offer.priceDetail}
               </div>
 
-              <p className={`text-sm mb-6 leading-relaxed ${offer.highlight ? "text-bg/80" : "text-ink-60"}`}>
+              <p className={`text-sm mb-5 sm:mb-6 leading-relaxed ${offer.highlight ? "text-bg/80" : "text-ink-60"}`}>
                 {offer.desc}
               </p>
 
-              <ul className="space-y-3 mb-8 flex-grow">
+              <ul className="space-y-2.5 sm:space-y-3 mb-7 sm:mb-8 flex-grow">
                 {offer.features.map((feat, j) => (
                   <li key={j} className="flex items-start gap-2.5 text-sm">
                     <svg className="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -144,12 +138,12 @@ export default function OffersOverview() {
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-10 sm:mt-12">
           <Link
             href="/tarifs"
             className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-emerald transition-colors"
           >
-            Comparer les 3 offres en détail
+            Comparer les trois offres en détail
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>

@@ -3,70 +3,58 @@
 const steps = [
   {
     num: "01",
-    icon: "📞",
     title: "Appel découverte",
-    desc: "30 minutes en visio. On comprend ton métier, ta zone, ton volume actuel et tes objectifs. Pas de bla-bla commercial.",
+    desc: "Trente minutes en visio. On comprend votre métier, votre zone, votre volume actuel et vos objectifs. Sans discours commercial inutile.",
   },
   {
     num: "02",
-    icon: "🎯",
     title: "Audit et stratégie",
-    desc: "On définit ta cible précise, on construit ton angle d'attaque, on cale tes audiences Meta avec exclusivité zone + métier.",
+    desc: "On définit votre cible précise, on construit votre angle d'attaque, on cale vos audiences Meta avec exclusivité zone et métier.",
   },
   {
     num: "03",
-    icon: "🚀",
-    title: "Setup en 7 jours",
-    desc: "On crée tes campagnes, tes visuels, ton formulaire, ton CRM, ton WhatsApp. Tu valides avant le lancement.",
+    title: "Mise en place en 7 jours",
+    desc: "On crée vos campagnes, vos visuels, votre formulaire, votre CRM et vos notifications WhatsApp. Vous validez avant le lancement.",
   },
   {
     num: "04",
-    icon: "📲",
     title: "Lancement",
-    desc: "Tes premiers prospects tombent dans les 24-72h sur ton WhatsApp. Tu rappelles, tu qualifies, tu signes.",
+    desc: "Vos premiers prospects arrivent sous 24 à 72 heures sur votre WhatsApp. Vous rappelez, vous qualifiez, vous signez.",
   },
   {
     num: "05",
-    icon: "📈",
     title: "Optimisation continue",
-    desc: "Chaque mois on analyse, on optimise, on renouvelle les créas. Les campagnes deviennent meilleures avec le temps.",
+    desc: "Chaque mois, on analyse, on optimise et on renouvelle les visuels. Les campagnes deviennent plus performantes avec le temps.",
   },
 ];
 
 export default function Method() {
   return (
-    <section id="methode" className="py-24 lg:py-32">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="max-w-3xl mb-16 lg:mb-20">
-          <div className="text-sm font-semibold text-emerald uppercase tracking-wider mb-4">
+    <section id="methode" className="py-16 sm:py-24 lg:py-32">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mb-10 sm:mb-16 lg:mb-20">
+          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
             Notre méthode
           </div>
           <h2 className="font-display text-display-md">
-            De zéro à
-            <br />
-            <span className="text-emerald">premier chantier signé</span>
-            <br />
-            en moins de 14 jours.
+            De zéro à premier chantier signé en moins de 14 jours.
           </h2>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {steps.map((step, i) => (
             <div
               key={i}
-              className="card-hover grid lg:grid-cols-12 gap-6 lg:gap-12 items-start bg-bg border border-ink-10 rounded-2xl p-8 lg:p-10"
+              className="card-hover flex flex-col sm:grid sm:grid-cols-12 gap-3 sm:gap-8 lg:gap-12 sm:items-start bg-bg border border-ink-10 rounded-2xl p-6 sm:p-8 lg:p-10"
             >
-              <div className="lg:col-span-1">
+              <div className="sm:col-span-2">
                 <div className="font-display text-display-sm text-emerald">{step.num}</div>
               </div>
-              <div className="lg:col-span-1">
-                <div className="text-4xl">{step.icon}</div>
-              </div>
-              <div className="lg:col-span-10">
-                <h3 className="font-display text-2xl lg:text-3xl font-bold mb-3">
+              <div className="sm:col-span-10">
+                <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold mb-2.5 sm:mb-3">
                   {step.title}
                 </h3>
-                <p className="text-ink-60 text-base lg:text-lg leading-relaxed max-w-3xl">
+                <p className="text-ink-60 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl">
                   {step.desc}
                 </p>
               </div>

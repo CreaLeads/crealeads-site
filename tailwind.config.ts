@@ -9,17 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Règle 60/30/10
-        bg: "#FAFAF8",           // 60% - Fond blanc cassé
-        ink: "#1A1A1A",          // 30% - Texte anthracite
-        emerald: "#00C896",      // 10% - Accent emerald (signature CreaLeads)
-        // Nuances utilitaires (variations de l'anthracite, pas nouvelles couleurs)
+        bg: "#FAFAF8",
+        ink: "#1A1A1A",
+        emerald: "#00C896",
         "ink-60": "rgba(26, 26, 26, 0.6)",
         "ink-40": "rgba(26, 26, 26, 0.4)",
         "ink-20": "rgba(26, 26, 26, 0.2)",
         "ink-10": "rgba(26, 26, 26, 0.1)",
         "ink-05": "rgba(26, 26, 26, 0.05)",
-        // Variante emerald
         "emerald-dark": "#00A87E",
         "emerald-light": "#33D5AC",
       },
@@ -28,13 +25,14 @@ const config: Config = {
         display: ["var(--font-outfit)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        "display-xl": ["clamp(3rem, 8vw, 7rem)", { lineHeight: "0.95", letterSpacing: "-0.04em", fontWeight: "800" }],
-        "display-lg": ["clamp(2.5rem, 6vw, 5rem)", { lineHeight: "1", letterSpacing: "-0.03em", fontWeight: "800" }],
-        "display-md": ["clamp(2rem, 4vw, 3.5rem)", { lineHeight: "1.05", letterSpacing: "-0.02em", fontWeight: "700" }],
-        "display-sm": ["clamp(1.5rem, 3vw, 2.25rem)", { lineHeight: "1.15", letterSpacing: "-0.01em", fontWeight: "700" }],
+        // Tailles RÉDUITES pour un rendu plus pro et équilibré
+        "display-xl": ["clamp(2.25rem, 5.5vw, 4.5rem)", { lineHeight: "1.02", letterSpacing: "-0.03em", fontWeight: "800" }],
+        "display-lg": ["clamp(2rem, 4.5vw, 3.5rem)", { lineHeight: "1.05", letterSpacing: "-0.025em", fontWeight: "800" }],
+        "display-md": ["clamp(1.65rem, 3.5vw, 2.75rem)", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "display-sm": ["clamp(1.35rem, 2.5vw, 1.875rem)", { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "700" }],
       },
       animation: {
-        "marquee": "marquee 30s linear infinite",
+        "marquee": "marquee 35s linear infinite",
         "fade-up": "fade-up 0.6s ease-out forwards",
         "fade-in": "fade-in 0.8s ease-out forwards",
       },
