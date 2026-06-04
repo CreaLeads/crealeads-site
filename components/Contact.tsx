@@ -1,14 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Cal, { getCalApi } from "@calcom/embed-react";
 
-const CAL_URL = "https://cal.eu/enzo-crealeads/20min";
+const CAL_LINK = "enzo-crealeads/20min";
+const CAL_ORIGIN = "https://cal.eu";
+const CAL_EMBED_JS = "https://app.cal.eu/embed/embed.js";
+const CAL_NS = "crealeads-20min";
 
 type Status = "idle" | "sending" | "ok" | "error";
 
 export default function Contact() {
   const [form, setForm] = useState({ nom: "", email: "", tel: "", message: "" });
   const [status, setStatus] = useState<Status>("idle");
+
+  // Initialise l'embed Cal.com (instance EU) thémé aux couleurs du site
+  useEffect(() => {
+    (async () => {
+      try {
+        const cal = await getCalApi({ namespace: CAL_NS, embedJsUrl: CAL_EMBED_JS });
+        cal("ui", {
+          theme: "light",
+          cssVarsPerTheme: {
+            light: { "cal-brand": "#00C896" },
+            dark: { "cal-brand": "#00C896" },
+          },
+          hideEventTypeDetails: false,
+          layout: "month_view",
+        });
+      } catch {
+        /* le lien de secours reste disponible si l'embed échoue */
+      }
+    })();
+  }, []);
 
   const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -32,7 +56,6 @@ export default function Contact() {
       setStatus("ok");
       return;
     }
-
     try {
       await fetch(webhook, {
         method: "POST",
@@ -62,30 +85,39 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+        <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-stretch">
 
-          {/* Bloc réservation Cal.com */}
-          <div className="bg-bg border border-ink-10 rounded-3xl p-2 sm:p-3 shadow-sm overflow-hidden flex flex-col">
-            <div className="px-4 pt-3 pb-2 sm:px-5">
-              <div className="font-display font-bold text-base sm:text-lg flex items-center gap-2">
-                <span className="text-emerald">📅</span> Réserver un appel découverte
-              </div>
-              <div className="text-xs text-ink-60 mt-0.5">Choisissez le créneau qui vous arrange — 20 min en visio.</div>
+          {/* Bloc réservation Cal.com (embed officiel, instance EU) */}
+          <div className="lg:col-span-3 bg-bg border border-ink-10 rounded-3xl p-4 sm:p-6 shadow-sm flex flex-col">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="w-8 h-8 rounded-full bg-emerald/15 flex items-center justify-center text-sm">📅</span>
+              <div className="font-display font-bold text-base sm:text-lg">Réserver un appel découverte</div>
             </div>
-            <iframe
-              src={CAL_URL}
-              title="Réserver un appel avec CreaLeads"
-              loading="lazy"
-              className="w-full flex-grow rounded-2xl border-0 bg-bg"
-              style={{ minHeight: "560px" }}
-            />
-            <noscript>
-              <a href={CAL_URL} className="block text-center text-sm text-emerald p-4">Ouvrir le calendrier</a>
-            </noscript>
+            <div className="text-xs text-ink-60 mb-4 pl-10">20 minutes en visio — choisissez votre créneau.</div>
+
+            <div className="flex-grow overflow-hidden rounded-2xl">
+              <Cal
+                namespace={CAL_NS}
+                calLink={CAL_LINK}
+                calOrigin={CAL_ORIGIN}
+                embedJsUrl={CAL_EMBED_JS}
+                style={{ width: "100%", height: "100%", minHeight: "560px", overflow: "scroll" }}
+                config={{ layout: "month_view", theme: "light" }}
+              />
+            </div>
+
+            <a
+              href={`${CAL_ORIGIN}/${CAL_LINK}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center text-xs text-ink-60 hover:text-emerald transition-colors mt-3"
+            >
+              Le calendrier ne s&apos;affiche pas ? Ouvrir dans un nouvel onglet →
+            </a>
           </div>
 
           {/* Bloc formulaire */}
-          <div className="bg-bg border border-ink-10 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col">
+          <div className="lg:col-span-2 bg-bg border border-ink-10 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col">
             <div className="font-display font-bold text-base sm:text-lg mb-1">Ou écrivez-nous</div>
             <div className="text-xs text-ink-60 mb-5">On revient vers vous sous 24 heures.</div>
 
