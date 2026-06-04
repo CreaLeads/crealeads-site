@@ -32,7 +32,7 @@ const config: Config = {
         "display-sm": ["clamp(1.35rem, 2.5vw, 1.875rem)", { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "700" }],
       },
       animation: {
-        "marquee": "marquee 35s linear infinite",
+        "marquee": "marquee 28s linear infinite",
         "fade-up": "fade-up 0.6s ease-out forwards",
         "fade-in": "fade-in 0.8s ease-out forwards",
       },

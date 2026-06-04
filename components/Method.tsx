@@ -13,13 +13,13 @@ const steps = [
   },
   {
     num: "03",
-    title: "Mise en place en 7 jours",
-    desc: "On crée vos campagnes, vos visuels, votre formulaire, votre CRM et vos notifications WhatsApp. Vous validez avant le lancement.",
+    title: "Mise en place en 10 jours",
+    desc: "On crée vos campagnes, vos visuels, votre formulaire, votre CRM et vos notifications. Vous validez tout avant le lancement.",
   },
   {
     num: "04",
     title: "Lancement",
-    desc: "Vos premiers prospects arrivent sous 24 à 72 heures sur votre WhatsApp. Vous rappelez, vous qualifiez, vous signez.",
+    desc: "Vos premiers prospects arrivent sous 24 à 48 heures, directement sur votre téléphone. Vous rappelez, vous qualifiez, vous signez.",
   },
   {
     num: "05",
@@ -37,7 +37,7 @@ export default function Method() {
             Notre méthode
           </div>
           <h2 className="font-display text-display-md">
-            De zéro à premier chantier signé en moins de 14 jours.
+            De zéro à votre premier chantier signé en moins de 14 jours.
           </h2>
         </div>
 

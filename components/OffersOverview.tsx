@@ -30,6 +30,7 @@ const offers = [
     features: [
       "Tout DÉCOLLAGE, et en plus :",
       "3 campagnes (prospection, retargeting, similaire)",
+      "Gestion de votre page Google My Business",
       "CRM Airtable avancé",
       "Compte Renalto inclus",
       "Optimisation mensuelle",

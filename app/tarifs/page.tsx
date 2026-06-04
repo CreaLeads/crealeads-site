@@ -11,6 +11,7 @@ const rows = [
   { label: "Audit métier et zone", values: [true, true, true] },
   { label: "Campagnes Meta Ads", values: ["1 campagne", "3 campagnes", "3 campagnes + similaire"] },
   { label: "Visuels publicitaires", values: ["2 à 3", "5+ renouvelés/mois", "5+ adaptés par segment"] },
+  { label: "Gestion Google My Business", values: [false, true, true] },
   { label: "Retargeting", values: [false, true, true] },
   { label: "Audience similaire", values: [false, true, true] },
   { label: "CRM", values: ["Google Sheets", "Airtable avancé", "Airtable + IA"] },
@@ -29,7 +30,7 @@ const rows = [
 function Cell({ value }: { value: boolean | string }) {
   if (value === true) {
     return (
-      <svg className="w-5 h-5 text-emerald mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+      <svg className="w-5 h-5 text-ink mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
       </svg>
     );
@@ -64,7 +65,7 @@ export default function TarifsPage() {
       </section>
 
       <section className="pb-16 sm:pb-24 lg:pb-32">
-        <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
           {/* En-têtes des offres (sticky en haut du tableau) */}
           <div className="grid grid-cols-4 gap-2 sm:gap-4 mb-2 sticky top-20 bg-bg/95 backdrop-blur-sm py-4 z-10 rounded-2xl">
             <div className="hidden sm:block" />
@@ -86,7 +87,7 @@ export default function TarifsPage() {
               <div
                 key={i}
                 className={`grid grid-cols-4 gap-2 sm:gap-4 px-3 sm:px-6 py-3.5 sm:py-4 items-center ${
-                  row.head ? "bg-ink-05 font-semibold" : i % 2 === 0 ? "bg-bg" : "bg-ink-05/40"
+                  row.head ? "bg-emerald/10 font-semibold" : i % 2 === 0 ? "bg-bg" : "bg-emerald/[0.06]"
                 }`}
               >
                 <div className="col-span-4 sm:col-span-1 text-xs sm:text-sm font-medium mb-2 sm:mb-0">
@@ -103,13 +104,13 @@ export default function TarifsPage() {
 
           {/* CTAs par colonne */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-8">
-            <Link href="https://cal.eu/enzo-crealeads/20min" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
+            <Link href="/#contact" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
               Choisir DÉCOLLAGE
             </Link>
-            <Link href="https://cal.eu/enzo-crealeads/20min" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm bg-emerald text-ink hover:bg-emerald-light transition-colors">
+            <Link href="/#contact" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm bg-emerald text-ink hover:bg-emerald-light transition-colors">
               Choisir COPILOTE
             </Link>
-            <Link href="https://cal.eu/enzo-crealeads/20min" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
+            <Link href="/#contact" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
               Choisir AUTOPILOTE
             </Link>
           </div>

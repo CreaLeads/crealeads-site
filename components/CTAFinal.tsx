@@ -22,7 +22,7 @@ export default function CTAFinal() {
 
         <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
           <Link
-            href="https://cal.eu/enzo-crealeads/20min"
+            href="#contact"
             className="bg-emerald text-ink hover:bg-emerald-light px-7 sm:px-8 py-4 text-sm sm:text-base font-bold rounded-full transition-colors"
           >
             Réserver mon appel découverte

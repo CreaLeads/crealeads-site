@@ -28,7 +28,7 @@ export default function Hero() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-up" style={{ animationDelay: "0.3s", opacity: 0 }}>
           <Link
-            href="https://cal.eu/enzo-crealeads/20min"
+            href="#contact"
             className="btn-primary px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold rounded-full text-center"
           >
             <span>Réserver un appel découverte</span>

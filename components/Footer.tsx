@@ -45,7 +45,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm text-ink-60">
               <li><a href="tel:+33663675254" className="hover:text-emerald">06 63 67 52 54</a></li>
               <li><a href="mailto:contact.crealeads@gmail.com" className="hover:text-emerald">contact.crealeads@gmail.com</a></li>
-              <li><a href="https://cal.eu/enzo-crealeads/20min" className="hover:text-emerald">Prendre RDV</a></li>
+              <li><Link href="/#contact" className="hover:text-emerald">Prendre RDV</Link></li>
             </ul>
           </div>
         </div>

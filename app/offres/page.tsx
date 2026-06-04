@@ -45,6 +45,7 @@ const offers = [
     included: [
       "Tout ce que comprend l'offre DÉCOLLAGE",
       "3 campagnes coordonnées (prospection, retargeting, audience similaire)",
+      "Gestion et optimisation de votre page Google My Business",
       "5 visuels publicitaires ou plus, renouvelés chaque mois",
       "CRM Airtable avancé avec pipeline et alertes",
       "Compte Renalto inclus pour vos devis",
@@ -196,7 +197,7 @@ export default function OffresPage() {
             </div>
 
             <Link
-              href="https://cal.eu/enzo-crealeads/20min"
+              href="/#contact"
               className="block text-center btn-primary px-8 py-4 text-base font-semibold rounded-full"
             >
               <span>Réserver un appel pour cette offre</span>
@@ -204,7 +205,7 @@ export default function OffresPage() {
           </div>
 
           {/* Garanties communes */}
-          <div className="mt-10 sm:mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
               { t: "Livraison rapide", d: "7 jours (DÉCOLLAGE, COPILOTE) ou 21 jours (AUTOPILOTE)" },
               { t: "Propriété totale", d: "Tous les accès et contenus créés vous appartiennent" },

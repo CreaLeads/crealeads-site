@@ -9,6 +9,7 @@ import OffersOverview from "@/components/OffersOverview";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import CTAFinal from "@/components/CTAFinal";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
       <Testimonials />
       <FAQ />
       <CTAFinal />
+      <Contact />
       <Footer />
     </main>
   );

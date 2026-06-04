@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Mentions légales — CreaLeads",
+  title: "Mentions légales",
 };
 
 export default function MentionsLegalesPage() {

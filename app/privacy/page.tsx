@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Confidentialité — CreaLeads",
+  title: "Confidentialité",
 };
 
 export default function PrivacyPage() {
