@@ -67,7 +67,7 @@ export default function TarifsPage() {
       <section className="pb-16 sm:pb-24 lg:pb-32">
         <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
           {/* En-têtes des offres (sticky en haut du tableau) */}
-          <div className="grid grid-cols-4 gap-2 sm:gap-4 mb-2 sticky top-20 bg-bg/95 backdrop-blur-sm py-4 z-10 rounded-2xl">
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-4 mb-2 sticky top-20 sm:top-24 bg-bg/95 backdrop-blur-sm py-4 z-10 rounded-2xl">
             <div className="hidden sm:block" />
             <div className="text-center">
               <div className="font-display font-bold text-sm sm:text-lg">DÉCOLLAGE</div>
@@ -86,11 +86,11 @@ export default function TarifsPage() {
             {rows.map((row, i) => (
               <div
                 key={i}
-                className={`grid grid-cols-4 gap-2 sm:gap-4 px-3 sm:px-6 py-3.5 sm:py-4 items-center ${
+                className={`grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-4 px-3 sm:px-6 py-3.5 sm:py-4 items-center ${
                   row.head ? "bg-emerald/10 font-semibold" : i % 2 === 0 ? "bg-bg" : "bg-emerald/[0.06]"
                 }`}
               >
-                <div className="col-span-4 sm:col-span-1 text-xs sm:text-sm font-medium mb-2 sm:mb-0">
+                <div className="col-span-3 sm:col-span-1 text-center sm:text-left text-xs sm:text-sm font-medium mb-1.5 sm:mb-0">
                   {row.label}
                 </div>
                 {row.values.map((v, j) => (

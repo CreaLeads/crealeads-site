@@ -37,7 +37,7 @@ export default function Method() {
             Notre méthode
           </div>
           <h2 className="font-display text-display-md">
-            De zéro à votre premier chantier signé en moins de 14 jours.
+            Du premier appel au premier chantier signé, en moins de 14 jours.
           </h2>
         </div>
 

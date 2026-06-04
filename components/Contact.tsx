@@ -28,7 +28,6 @@ export default function Contact() {
 
     const webhook = process.env.NEXT_PUBLIC_MAKE_WEBHOOK;
     if (!webhook) {
-      // Pas de webhook configuré → on ouvre l'email pré-rempli
       mailtoFallback();
       setStatus("ok");
       return;
@@ -49,45 +48,57 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-24 lg:py-32 scroll-mt-24">
-      <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-          {/* Colonne gauche — accroche */}
-          <div>
-            <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
-              Contact
-            </div>
-            <h2 className="font-display text-display-md mb-5 sm:mb-6">
-              Parlons de votre projet.
-            </h2>
-            <p className="text-base sm:text-lg text-ink-60 leading-relaxed mb-8">
-              Laissez-nous un message, on vous rappelle sous 24 heures. Trente minutes pour comprendre votre métier, votre zone et vos objectifs. Aucun engagement.
-            </p>
+    <section id="contact" className="py-16 sm:py-24 lg:py-32 scroll-mt-24 bg-ink-05">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+            Contact
+          </div>
+          <h2 className="font-display text-display-md mb-4 sm:mb-6">
+            Parlons de votre projet.
+          </h2>
+          <p className="text-base sm:text-lg text-ink-60 leading-relaxed">
+            Réservez directement votre créneau ci-dessous, ou laissez-nous un message : on vous rappelle sous 24 heures. Trente minutes, aucun engagement.
+          </p>
+        </div>
 
-            <div className="space-y-3 text-sm">
-              <a href="mailto:contact.crealeads@gmail.com" className="flex items-center gap-3 text-ink-60 hover:text-emerald transition-colors">
-                <span className="w-9 h-9 rounded-full bg-ink-05 flex items-center justify-center">✉️</span>
-                contact.crealeads@gmail.com
-              </a>
-              <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-ink-60 hover:text-emerald transition-colors">
-                <span className="w-9 h-9 rounded-full bg-ink-05 flex items-center justify-center">📅</span>
-                Préférez réserver un créneau directement
-              </a>
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+
+          {/* Bloc réservation Cal.com */}
+          <div className="bg-bg border border-ink-10 rounded-3xl p-2 sm:p-3 shadow-sm overflow-hidden flex flex-col">
+            <div className="px-4 pt-3 pb-2 sm:px-5">
+              <div className="font-display font-bold text-base sm:text-lg flex items-center gap-2">
+                <span className="text-emerald">📅</span> Réserver un appel découverte
+              </div>
+              <div className="text-xs text-ink-60 mt-0.5">Choisissez le créneau qui vous arrange — 20 min en visio.</div>
             </div>
+            <iframe
+              src={CAL_URL}
+              title="Réserver un appel avec CreaLeads"
+              loading="lazy"
+              className="w-full flex-grow rounded-2xl border-0 bg-bg"
+              style={{ minHeight: "560px" }}
+            />
+            <noscript>
+              <a href={CAL_URL} className="block text-center text-sm text-emerald p-4">Ouvrir le calendrier</a>
+            </noscript>
           </div>
 
-          {/* Colonne droite — formulaire */}
-          <div className="bg-bg border border-ink-10 rounded-3xl p-6 sm:p-8 shadow-sm">
+          {/* Bloc formulaire */}
+          <div className="bg-bg border border-ink-10 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col">
+            <div className="font-display font-bold text-base sm:text-lg mb-1">Ou écrivez-nous</div>
+            <div className="text-xs text-ink-60 mb-5">On revient vers vous sous 24 heures.</div>
+
             {status === "ok" ? (
-              <div className="text-center py-10">
-                <div className="w-14 h-14 rounded-full bg-emerald/15 flex items-center justify-center mx-auto mb-4 text-2xl">
+              <div className="flex-grow flex flex-col items-center justify-center text-center py-10">
+                <div className="w-14 h-14 rounded-full bg-emerald/15 flex items-center justify-center mb-4 text-2xl">
                   ✓
                 </div>
                 <h3 className="font-display text-xl font-bold mb-2">Message envoyé !</h3>
                 <p className="text-ink-60 text-sm">On vous recontacte sous 24 heures.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4 flex-grow flex flex-col">
                 <div>
                   <label className="block text-sm font-medium mb-1.5">Nom *</label>
                   <input
@@ -112,12 +123,12 @@ export default function Contact() {
                     className="w-full bg-ink-05 border border-ink-10 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors"
                   />
                 </div>
-                <div>
+                <div className="flex-grow flex flex-col">
                   <label className="block text-sm font-medium mb-1.5">Votre métier / votre besoin</label>
                   <textarea
-                    rows={3} value={form.message} onChange={update("message")}
+                    value={form.message} onChange={update("message")}
                     placeholder="Carreleur à Lyon, je veux plus de chantiers…"
-                    className="w-full bg-ink-05 border border-ink-10 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors resize-none"
+                    className="w-full flex-grow min-h-[80px] bg-ink-05 border border-ink-10 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors resize-none"
                   />
                 </div>
                 <button
