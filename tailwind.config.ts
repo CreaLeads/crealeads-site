@@ -23,6 +23,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         display: ["var(--font-outfit)", "system-ui", "sans-serif"],
+        poppins: ["var(--font-poppins)", "system-ui", "sans-serif"],
       },
       fontSize: {
         // Tailles RÉDUITES pour un rendu plus pro et équilibré
