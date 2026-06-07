@@ -1,6 +1,38 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+/* Compteur isolé (rAF, sans librairie) — monte 0→100 puis affiche "50–100".
+   Isolé pour que ses re-renders n'affectent pas les animations du hero. */
+function Counter() {
+  const [v, setV] = useState(0);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    let raf = 0;
+    let startT: number | null = null;
+    const dur = 1800;
+    const delay = 350;
+    const tick = (t: number) => {
+      if (startT === null) startT = t;
+      const e = t - startT - delay;
+      if (e < 0) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+      const p = Math.min(e / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setV(Math.round(eased * 100));
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else setDone(true);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  return <>{done ? "50–100" : v}</>;
+}
 
 export default function Hero() {
   return (
@@ -21,9 +53,19 @@ export default function Hero() {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-base sm:text-lg text-ink-60 mb-8 sm:mb-10 max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
-          Un système clé en main qui vous ramène <strong className="text-ink font-semibold">30 à 60 prospects qualifiés par mois</strong>, directement sur votre WhatsApp. Pensé par un fils d'artisan, pour les artisans.
+        <p className="text-base sm:text-lg text-ink-60 mb-6 sm:mb-8 max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
+          Un système clé en main qui vous ramène <strong className="text-ink font-semibold">50 à 100 prospects qualifiés par mois</strong>, directement sur votre WhatsApp. Pensé par un fils d'artisan, pour les artisans.
         </p>
+
+        {/* Compteur animé */}
+        <div className="flex items-center gap-4 mb-8 sm:mb-10 animate-fade-up" style={{ animationDelay: "0.28s", opacity: 0 }}>
+          <span className="font-display text-4xl sm:text-5xl font-bold text-emerald tabular-nums leading-none">
+            <Counter />
+          </span>
+          <span className="text-sm text-ink-60 leading-tight max-w-[170px]">
+            demandes de devis qualifiées <span className="text-ink font-semibold">par mois</span>
+          </span>
+        </div>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-up" style={{ animationDelay: "0.3s", opacity: 0 }}>
