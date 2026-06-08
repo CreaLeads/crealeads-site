@@ -12,23 +12,39 @@ function Counter() {
   useEffect(() => {
     let raf = 0;
     let startT: number | null = null;
+    let started = false;
     const dur = 1800;
-    const delay = 350;
+
     const tick = (t: number) => {
       if (startT === null) startT = t;
-      const e = t - startT - delay;
-      if (e < 0) {
-        raf = requestAnimationFrame(tick);
-        return;
-      }
-      const p = Math.min(e / dur, 1);
+      const p = Math.min((t - startT) / dur, 1);
       const eased = 1 - Math.pow(1 - p, 3);
       setV(Math.round(eased * 100));
       if (p < 1) raf = requestAnimationFrame(tick);
       else setDone(true);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+
+    const start = () => {
+      if (started) return;
+      started = true;
+      raf = requestAnimationFrame(tick);
+    };
+
+    // Démarre quand l'écran de chargement a disparu (sinon l'anim se joue cachée)
+    const w = window as unknown as { __clLoaded?: boolean };
+    let fb = 0;
+    if (w.__clLoaded) {
+      start();
+    } else {
+      window.addEventListener("cl:loaded", start, { once: true });
+      fb = window.setTimeout(start, 4000); // sécurité si le signal est manqué
+    }
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("cl:loaded", start);
+      if (fb) clearTimeout(fb);
+    };
   }, []);
 
   return <>{done ? "50–100" : v}</>;

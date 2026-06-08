@@ -1,6 +1,7 @@
 import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import StoryCards from "@/components/StoryCards";
 import Stats from "@/components/Stats";
 import CaseStudy from "@/components/CaseStudy";
 import ForYouIf from "@/components/ForYouIf";
@@ -19,6 +20,7 @@ export default function Home() {
       <Loader />
       <Navbar />
       <Hero />
+      <StoryCards />
       <Stats />
       <CaseStudy />
       <ForYouIf />

@@ -2,6 +2,15 @@
 
 import { useEffect, useState } from "react";
 
+// Signale aux autres composants (ex : compteur du hero) que le loader a disparu
+function fireLoaded() {
+  if (typeof window === "undefined") return;
+  const w = window as unknown as { __clLoaded?: boolean };
+  if (w.__clLoaded) return;
+  w.__clLoaded = true;
+  window.dispatchEvent(new Event("cl:loaded"));
+}
+
 export default function Loader() {
   const [pct, setPct] = useState(0);
 
@@ -24,11 +33,20 @@ export default function Loader() {
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    // Fallback : signale « loader fini » même si l'animation CSS est en pause
+    const fb = setTimeout(fireLoaded, 3300);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(fb);
+    };
   }, []);
 
   return (
-    <div className="cl-loader fixed inset-0 z-[100] flex items-center justify-center bg-ink text-bg" aria-hidden>
+    <div
+      className="cl-loader fixed inset-0 z-[100] flex items-center justify-center bg-ink text-bg"
+      aria-hidden
+      onAnimationEnd={fireLoaded}
+    >
       {/* Le retrait du loader est piloté en CSS pur : fiable même si le JS est lent/désactivé */}
       <style>{`
         .cl-loader {
