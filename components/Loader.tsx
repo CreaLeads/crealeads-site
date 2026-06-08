@@ -33,8 +33,9 @@ export default function Loader() {
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    // Fallback : signale « loader fini » même si l'animation CSS est en pause
-    const fb = setTimeout(fireLoaded, 3300);
+    // Signale « loader fini » au moment où il commence à s'effacer (le compteur
+    // démarre alors, et est déjà en mouvement quand le hero se révèle).
+    const fb = setTimeout(fireLoaded, 2350);
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(fb);

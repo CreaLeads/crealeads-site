@@ -5,23 +5,25 @@ import { useEffect, useState } from "react";
 
 /* Compteur isolé (rAF, sans librairie) — monte 0→100 puis affiche "50–100".
    Isolé pour que ses re-renders n'affectent pas les animations du hero. */
+/* La borne haute grimpe de 50 → 100 : "50–50" puis "50–100".
+   Pas de saut en arrière. Démarre après l'écran de chargement. */
 function Counter() {
-  const [v, setV] = useState(0);
-  const [done, setDone] = useState(false);
+  const [n, setN] = useState(50);
 
   useEffect(() => {
     let raf = 0;
     let startT: number | null = null;
     let started = false;
-    const dur = 1800;
+    const from = 50;
+    const to = 100;
+    const dur = 1700;
 
     const tick = (t: number) => {
       if (startT === null) startT = t;
       const p = Math.min((t - startT) / dur, 1);
       const eased = 1 - Math.pow(1 - p, 3);
-      setV(Math.round(eased * 100));
+      setN(Math.round(from + (to - from) * eased));
       if (p < 1) raf = requestAnimationFrame(tick);
-      else setDone(true);
     };
 
     const start = () => {
@@ -30,7 +32,6 @@ function Counter() {
       raf = requestAnimationFrame(tick);
     };
 
-    // Démarre quand l'écran de chargement a disparu (sinon l'anim se joue cachée)
     const w = window as unknown as { __clLoaded?: boolean };
     let fb = 0;
     if (w.__clLoaded) {
@@ -47,7 +48,7 @@ function Counter() {
     };
   }, []);
 
-  return <>{done ? "50–100" : v}</>;
+  return <>50–{n}</>;
 }
 
 export default function Hero() {
