@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -85,12 +85,19 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
 .check-item.checked{color:var(--gray);text-decoration:line-through;}
 
 /* OBJECTIONS */
+.obj-rule{background:#2d1515;border:1px solid var(--red);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:12px;font-weight:800;color:#fc8181;line-height:1.5;text-align:center;letter-spacing:.3px;}
 .obj-item{background:var(--navy3);border:1px solid var(--border);border-left:3px solid var(--orange);border-radius:8px;padding:9px 12px;margin-bottom:7px;cursor:pointer;transition:.18s;}
 .obj-item:last-child{margin-bottom:0;}
 .obj-item:hover{border-left-color:var(--green);}
 .obj-q{font-size:12px;font-weight:700;color:#fbd38d;}
 .obj-a{font-size:11px;color:#b0bec5;line-height:1.55;display:none;margin-top:6px;padding-top:6px;border-top:1px solid var(--border);}
 .obj-item.open .obj-a{display:block;}
+
+/* AGENTS IA */
+.ia-item{display:flex;align-items:flex-start;gap:10px;background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:7px;font-size:12px;color:#dbe4ee;line-height:1.4;}
+.ia-item:last-child{margin-bottom:0;}
+.ia-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:4px;box-shadow:0 0 0 3px rgba(0,200,150,.18);}
+.ia-script{margin-top:10px;background:rgba(0,200,150,.07);border:1px solid var(--green);border-radius:8px;padding:10px 12px;font-size:11px;color:#b0bec5;line-height:1.55;font-style:italic;}
 
 /* LINK CONFIG */
 .link-config{display:flex;flex-direction:column;gap:6px;}
@@ -115,16 +122,9 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
 .pack-tabs{display:flex;gap:6px;margin-bottom:12px;}
 .pack-tab{flex:1;padding:8px 4px;border:1px solid var(--border);border-radius:7px;text-align:center;cursor:pointer;transition:.15s;background:var(--navy3);}
 .pack-tab:hover{border-color:var(--gray);}
-.pack-tab.active-ess{border-color:#4a5568;background:rgba(74,85,104,.2);}
-.pack-tab.active-gro{border-color:var(--green);background:rgba(0,200,150,.1);}
-.pack-tab.active-ful{border-color:#48bb78;background:rgba(72,187,120,.1);}
+.pack-tab.active{border-color:var(--green);background:rgba(0,200,150,.12);}
 .pack-tab-name{font-size:11px;font-weight:700;color:white;}
 .pack-tab-price{font-size:10px;color:var(--gray);margin-top:2px;}
-
-/* WARMUP STATUS */
-.warmup-status{font-size:11px;padding:6px 10px;border-radius:6px;margin-top:8px;display:none;}
-.warmup-ok{background:#0d2218;border:1px solid var(--green);color:var(--green);}
-.warmup-err{background:#2d1515;border:1px solid var(--red);color:#fc8181;}
 
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;overflow-y:auto;padding:20px;}
@@ -210,35 +210,35 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
     <div class="card-title">📍 Avancement call</div>
     <div class="phases" id="phases">
       <div class="phase-item active" onclick="setPhase(0)">
-        <span class="phase-num">01</span><span class="phase-name">Ouverture — Pose le cadre</span>
+        <span class="phase-num">01</span><span class="phase-name">Ouverture (désarmer)</span>
         <span class="phase-time">2 min</span><span class="phase-check" id="check-0">○</span>
       </div>
       <div class="phase-item" onclick="setPhase(1)">
-        <span class="phase-num">02</span><span class="phase-name">Découverte — Son monde</span>
+        <span class="phase-num">02</span><span class="phase-name">Découverte (le faire parler)</span>
         <span class="phase-time">8 min</span><span class="phase-check" id="check-1">○</span>
       </div>
       <div class="phase-item" onclick="setPhase(2)">
-        <span class="phase-num">03</span><span class="phase-name">Creuse &amp; quantifie la douleur</span>
+        <span class="phase-num">03</span><span class="phase-name">Douleur (reformuler + silence)</span>
         <span class="phase-time">5 min</span><span class="phase-check" id="check-2">○</span>
       </div>
       <div class="phase-item" onclick="setPhase(3)">
-        <span class="phase-num">04</span><span class="phase-name">Projette dans la solution</span>
+        <span class="phase-num">04</span><span class="phase-name">Solution (système + IA + preuve)</span>
         <span class="phase-time">3 min</span><span class="phase-check" id="check-3">○</span>
       </div>
       <div class="phase-item" onclick="setPhase(4)">
-        <span class="phase-num">05</span><span class="phase-name">Présente l'offre (Growth par défaut)</span>
+        <span class="phase-num">05</span><span class="phase-name">Choix de l'offre (lire le client)</span>
         <span class="phase-time">4 min</span><span class="phase-check" id="check-4">○</span>
       </div>
       <div class="phase-item" onclick="setPhase(5)">
-        <span class="phase-num">06</span><span class="phase-name">Obtenir les oui</span>
+        <span class="phase-num">06</span><span class="phase-name">Annonce du prix (puis SE TAIRE)</span>
         <span class="phase-time">3 min</span><span class="phase-check" id="check-5">○</span>
       </div>
       <div class="phase-item" onclick="setPhase(6)">
-        <span class="phase-num">07</span><span class="phase-name">Traite les freins</span>
+        <span class="phase-num">07</span><span class="phase-name">Objections</span>
         <span class="phase-time">5 min</span><span class="phase-check" id="check-6">○</span>
       </div>
       <div class="phase-item" onclick="setPhase(7)">
-        <span class="phase-num">08</span><span class="phase-name">Closing — Signature live</span>
+        <span class="phase-num">08</span><span class="phase-name">Closing (question de projection)</span>
         <span class="phase-time">3 min</span><span class="phase-check" id="check-7">○</span>
       </div>
     </div>
@@ -252,15 +252,15 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
     <div class="card-title">📤 Envoyer pendant le call</div>
     <button class="btn btn-green" onclick="openContractModal()">
       <span class="btn-icon">✍️</span>
-      <div class="btn-info"><div class="btn-main">Générer &amp; envoyer le contrat</div><div class="btn-sub">Essentiel 990€ / Growth 1 500€ one-shot / Full 2 500€ setup + 500€/m</div></div>
+      <div class="btn-info"><div class="btn-main">Générer &amp; envoyer le contrat</div><div class="btn-sub">DÉCOLLAGE 1 500€ / COPILOTE 2 500€ + 500€/m / AUTOPILOTE 6 000€ + 1 200€/m</div></div>
     </button>
     <button class="btn btn-calcom" onclick="sendCalcomLink()">
       <span class="btn-icon">📅</span>
-      <div class="btn-info"><div class="btn-main">Envoyer lien Cal.com + déclencher warmup</div><div class="btn-sub">WhatsApp auto → séquence J-1 / J-0 via Make.com</div></div>
+      <div class="btn-info"><div class="btn-main">Envoyer le lien Cal.com (WhatsApp)</div><div class="btn-sub">Ouvre WhatsApp avec le lien de réservation pré-rempli</div></div>
     </button>
     <button class="btn btn-purple" onclick="openRDVModal()">
       <span class="btn-icon">📆</span>
-      <div class="btn-info"><div class="btn-main">Caler RDV manuellement</div><div class="btn-sub">Mail + Google Calendar + warmup Make.com</div></div>
+      <div class="btn-info"><div class="btn-main">Caler RDV manuellement</div><div class="btn-sub">Mail + Google Calendar (rappel auto via n8n)</div></div>
     </button>
     <button class="btn btn-gray" onclick="openLink('offre')">
       <span class="btn-icon">📄</span>
@@ -304,7 +304,7 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
     <div class="closing-phrase">"Je retiens ta place jusqu'à ce soir.<br>Un concurrent prend ta zone si tu attends."</div>
     <hr class="divider">
     <div class="section-label">🚫 Règle absolue</div>
-    <div class="closing-phrase" style="border-left:3px solid var(--red);border-radius:0 7px 7px 0;color:#fc8181;">Zéro remise spontanée.<br>Budget serré → Essentiel 990€ seulement.</div>
+    <div class="closing-phrase" style="border-left:3px solid var(--red);border-radius:0 7px 7px 0;color:#fc8181;">Zéro remise spontanée.<br>Tu annonces le prix, puis tu te tais.</div>
   </div>
 </div>
 
@@ -313,63 +313,59 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
   <div class="card">
     <div class="card-title">🎯 Offre CreaLeads — sélectionne le pack à présenter</div>
     <div class="pack-tabs" id="main-pack-tabs">
-      <div class="pack-tab active-gro" id="tab-gro" onclick="showPack('growth')">
-        <div class="pack-tab-name">⭐ GROWTH</div>
+      <div class="pack-tab" id="tab-dec" onclick="showPack('decollage')">
+        <div class="pack-tab-name">DÉCOLLAGE</div>
         <div class="pack-tab-price">1 500€ one-shot</div>
       </div>
-      <div class="pack-tab" id="tab-ful" onclick="showPack('full')">
-        <div class="pack-tab-name">FULL</div>
-        <div class="pack-tab-price">2 500€ setup + 500€/m</div>
+      <div class="pack-tab active" id="tab-cop" onclick="showPack('copilote')">
+        <div class="pack-tab-name">⭐ COPILOTE</div>
+        <div class="pack-tab-price">2 500€ + 500€/m</div>
       </div>
-    </div>
-    <div id="essentiel-tab-row" style="display:none;margin-bottom:8px;">
-      <div class="pack-tabs" style="margin-bottom:0;">
-        <div class="pack-tab" id="tab-ess" onclick="showPack('essentiel')" style="max-width:220px;">
-          <div class="pack-tab-name">ESSENTIEL</div>
-          <div class="pack-tab-price">990€ one-shot</div>
-        </div>
+      <div class="pack-tab" id="tab-aut" onclick="showPack('autopilote')">
+        <div class="pack-tab-name">AUTOPILOTE</div>
+        <div class="pack-tab-price">6 000€ + 1 200€/m</div>
       </div>
-    </div>
-    <div style="text-align:center;margin-bottom:10px;">
-      <span id="essentiel-toggle-link" onclick="toggleEssentiel()" style="font-size:11px;color:var(--gray);cursor:pointer;opacity:0.65;text-decoration:underline;">Budget serré ? Voir l'offre Essentiel →</span>
     </div>
     <div id="pack-content"></div>
   </div>
 
   <div class="card">
     <div class="card-title">💬 Objections → Réponses (clique pour développer)</div>
+    <div class="obj-rule">⚠️ APRÈS LE PRIX, TU TE TAIS.<br>Le premier qui parle a perdu.</div>
+    <div class="obj-item" onclick="this.classList.toggle('open')">
+      <div class="obj-q">😒 « J'ai déjà payé pour des trucs qui ont rien donné »</div>
+      <div class="obj-a">« Je comprends, c'est sain de se méfier. La différence : 1) je viens du bâtiment, pas un marketeux. 2) Je montre des résultats réels (CRM SurfaceBéton en direct), pas des promesses. 3) On commence petit, vous voyez les demandes tomber en vrai avant de vous engager. Vous risquez pas de payer dans le vide, vous le constatez dès la 1ère semaine. »</div>
+    </div>
     <div class="obj-item" onclick="this.classList.toggle('open')">
       <div class="obj-q">💰 « C'est trop cher »</div>
-      <div class="obj-a">« 1 500€ c'est un investissement. Un seul chantier en plus et c'est amorti. La vraie question c'est pas le coût — c'est le retour.<br><br>Si budget vraiment serré : "On a aussi une formule à 990€ sans abonnement — même système, tu gères seul après. Ça tient ?" »</div>
+      <div class="obj-a">« Le PRIX ou le COÛT ? Le prix c'est ce que vous sortez aujourd'hui. Le coût c'est combien de chantiers vous ratez chaque mois sans système. Une réno tourne à combien ? Un seul chantier de plus et c'est remboursé plusieurs fois. »</div>
     </div>
     <div class="obj-item" onclick="this.classList.toggle('open')">
-      <div class="obj-q">🤔 « J'ai besoin d'y réfléchir »</div>
-      <div class="obj-a">« Réfléchir à quoi exactement ? C'est le budget qui coince ou il y a autre chose ? Dis-moi franchement, on regarde ça ensemble maintenant.<br><br>Pendant que tu réfléchis, un concurrent prend ta place dans ta zone — on n'en prend qu'un par métier. »</div>
+      <div class="obj-q">🤔 « Je vais réfléchir »</div>
+      <div class="obj-a">« Vous réfléchissez au budget, ou à si ça marche pour votre métier ? Dites-moi franchement, on regarde ça maintenant. »</div>
     </div>
     <div class="obj-item" onclick="this.classList.toggle('open')">
-      <div class="obj-q">📊 « Pas de résultats garantis »</div>
-      <div class="obj-a">« Je garantis le système — livraison en 7-14 jours, campagnes qui tournent, suivi mensuel pour optimiser le CPL.<br><br>Ce que je garantis pas : tes chantiers — ça c'est ton job de vendre quand les leads arrivent. Moi je t'amène les prospects à la porte. »</div>
+      <div class="obj-q">📊 « Vous me garantissez des résultats ? »</div>
+      <div class="obj-a">« Je garantis des demandes qualifiées dans votre zone dès la 1ère semaine, par écrit. Ce que vous en faites au tél, c'est votre métier. (JAMAIS promettre un chantier signé.) »</div>
     </div>
     <div class="obj-item" onclick="this.classList.toggle('open')">
       <div class="obj-q">🕐 « C'est pas le bon moment »</div>
-      <div class="obj-a">« C'est quand le bon moment ? Si t'attends que les chantiers ralentissent, c'est déjà trop tard. Le système prend 7-14 jours à livrer. C'est maintenant qu'il faut l'allumer. »</div>
-    </div>
-    <div class="obj-item" onclick="this.classList.toggle('open')">
-      <div class="obj-q">🌐 « J'ai déjà quelqu'un pour ça »</div>
-      <div class="obj-a">« Ça tourne bien ? Tu génères combien de leads par mois en ce moment ?<br><br>Si c'est pas mesurable et prévisible chaque semaine — c'est pas un système, c'est juste des outils. »</div>
-    </div>
-    <div class="obj-item" onclick="this.classList.toggle('open')">
-      <div class="obj-q">😨 « Je connais pas le Lead Ads »</div>
-      <div class="obj-a">« C'est exactement pour ça que t'as besoin de nous. T'as rien à comprendre techniquement — toi tu reçois les leads sur ton téléphone, on s'occupe de tout le reste. »</div>
-    </div>
-    <div class="obj-item" onclick="this.classList.toggle('open')">
-      <div class="obj-q">👨‍👩 « Il faut que j'en parle à ma femme »</div>
-      <div class="obj-a">« C'est normal. Est-ce que c'est toi qui décides des investissements de moins de 2 000€ pour ton activité ?<br><br>Si oui, pas besoin d'attendre. Si non, dis-moi quand vous êtes dispos tous les deux — je vous fais le point en 10 min. »</div>
+      <div class="obj-a">« C'est quand le bon moment ? Si vous attendez que ça ralentisse, c'est trop tard. Le système prend 7-14 jours à livrer. »</div>
     </div>
   </div>
 </div>
 
-<!-- CONFIG LIENS + EMAILJS + MAKE + CAL.COM -->
+<!-- AGENTS IA -->
+<div class="card" style="margin-bottom:14px;">
+  <div class="card-title">🤖 Tes agents IA (à montrer au prospect)</div>
+  <div class="ia-item"><span class="ia-dot"></span><span>💬 <strong>Assistant SMS</strong> — répond aux demandes en 30 sec, 24h/24</span></div>
+  <div class="ia-item"><span class="ia-dot"></span><span>🔔 <strong>Rappels de RDV automatiques</strong> — plus de no-show</span></div>
+  <div class="ia-item"><span class="ia-dot"></span><span>🔄 <strong>Relances automatiques</strong> des leads tièdes</span></div>
+  <div class="ia-item"><span class="ia-dot"></span><span>📊 <strong>Reporting quotidien</strong> des performances</span></div>
+  <div class="ia-script">Dis au prospect : « Dès que vous signez, c'est ce système qui répond à VOS clients pendant que vous êtes sur le chantier. »</div>
+</div>
+
+<!-- CONFIG LIENS + EMAILJS + CAL.COM -->
 <div class="card" style="margin-bottom:14px;">
   <div class="card-title">⚙️ Configuration — remplis une fois, sauvegardé dans ce navigateur</div>
   <div class="grid" style="gap:10px;margin-bottom:0;">
@@ -381,8 +377,7 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
     </div>
     <div class="link-config">
       <div class="link-row"><label>🗓 Lien Cal.com</label><input id="link-calcom" type="text" placeholder="https://cal.com/enzo-crealeads/…" oninput="saveLinks()"></div>
-      <div class="link-row"><label>⚡ Make Webhook</label><input id="link-make-webhook" type="text" placeholder="https://hook.eu1.make.com/…" oninput="saveLinks()"></div>
-      <div style="font-size:10px;color:#3d5166;margin-top:2px;line-height:1.5;">Le webhook Make.com reçoit : name / phone / email / rdv_date / rdv_time → déclenche la séquence warmup WhatsApp J-1 et J-0</div>
+      <div style="font-size:10px;color:#3d5166;margin-top:2px;line-height:1.5;">✅ Le rappel automatique se déclenche dès que le RDV est dans Google Calendar (géré par l'agent n8n). Rien d'autre à configurer ici.</div>
     </div>
   </div>
   <hr class="divider">
@@ -409,7 +404,7 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
     <div class="modal-head" style="border-bottom:3px solid var(--purple);">
       <div>
         <div class="modal-head-title">📅 Caler un RDV manuellement</div>
-        <div class="modal-head-sub">Mail de confirmation + Google Calendar + warmup Make.com automatique</div>
+        <div class="modal-head-sub">Mail de confirmation + Google Calendar (rappel auto via l'agent n8n)</div>
       </div>
       <button class="modal-close-btn" onclick="closeModal('rdv-modal')">✕</button>
     </div>
@@ -419,7 +414,7 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
         <div><label class="field-label">Email client *</label><input id="rdv-email" class="field-input" type="email" placeholder="client@email.fr" oninput="updateRDVPreview()"></div>
       </div>
       <div class="field-row">
-        <div><label class="field-label">Téléphone (pour warmup WhatsApp)</label><input id="rdv-tel" class="field-input" type="text" placeholder="0612345678" oninput="updateRDVPreview()"></div>
+        <div><label class="field-label">Téléphone (optionnel)</label><input id="rdv-tel" class="field-input" type="text" placeholder="0612345678" oninput="updateRDVPreview()"></div>
         <div></div>
       </div>
       <div class="field-row">
@@ -431,12 +426,12 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
         <div id="rdv-preview"></div>
       </div>
       <div class="calcom-box">
-        <div class="calcom-box-title">🤖 Warmup automatique Make.com</div>
-        <div style="font-size:11px;color:#b0bec5;line-height:1.6;">Quand tu cliques "Envoyer", Make.com reçoit les infos du RDV et programme automatiquement :<br>📱 WhatsApp J-1 à 19h · 📱 WhatsApp J-0 à 2h avant l'appel<br><span style="color:var(--gray);">Assure-toi d'avoir rempli le webhook Make.com dans la config ⚙️ en bas.</span></div>
+        <div class="calcom-box-title">🤖 Rappel automatique</div>
+        <div style="font-size:11px;color:#b0bec5;line-height:1.6;">✅ Le rappel automatique se déclenche dès que le RDV est dans Google Calendar (géré par l'agent n8n). Tu n'as rien d'autre à faire — clique "Enregistrer" dans Google Cal après envoi.</div>
       </div>
       <div id="rdv-status" class="modal-status"></div>
       <div class="modal-actions">
-        <button class="modal-btn modal-btn-purple" onclick="sendRDV()">📅 Mail + Agenda + Warmup</button>
+        <button class="modal-btn modal-btn-purple" onclick="sendRDV()">📅 Mail + Agenda</button>
         <button class="modal-btn modal-btn-gray" onclick="fallbackMailto()" style="flex:0;white-space:nowrap;padding:12px 14px;">✉️ Gmail seul</button>
         <button class="modal-btn modal-btn-gray" onclick="closeModal('rdv-modal')" style="flex:0;padding:12px 16px;">Annuler</button>
       </div>
@@ -462,23 +457,23 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
       <div>
         <label class="field-label" style="margin-bottom:8px;display:block;font-size:12px;font-weight:700;color:white;">Pack / Formule *</label>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-          <div class="tarif-btn" id="tarif-ess" onclick="selectPack('essentiel')">
-            <div style="font-size:15px;font-weight:900;color:#00C896;">990 €</div>
-            <div style="font-size:9px;color:#8492A6;margin-top:2px;">One-shot</div>
-            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">ESSENTIEL</div>
-            <div style="font-size:8px;color:#3d5166;margin-top:2px;">Paiement unique</div>
-          </div>
-          <div class="tarif-btn" id="tarif-gro" onclick="selectPack('growth')" style="border-color:#00C896;background:rgba(0,200,150,.1);">
+          <div class="tarif-btn" id="tarif-dec" onclick="selectPack('decollage')">
             <div style="font-size:15px;font-weight:900;color:#00C896;">1 500 €</div>
             <div style="font-size:9px;color:#fbd38d;margin-top:2px;">One-shot</div>
-            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">⭐ GROWTH</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">DÉCOLLAGE</div>
             <div style="font-size:8px;color:#3d5166;margin-top:2px;">Paiement unique à la signature</div>
           </div>
-          <div class="tarif-btn" id="tarif-ful" onclick="selectPack('full')">
+          <div class="tarif-btn" id="tarif-cop" onclick="selectPack('copilote')" style="border-color:#00C896;background:rgba(0,200,150,.1);">
             <div style="font-size:15px;font-weight:900;color:#00C896;">2 500 € <span style="font-size:10px;">setup</span></div>
             <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 500 €/mois</div>
-            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">FULL</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">⭐ COPILOTE</div>
             <div style="font-size:8px;color:#3d5166;margin-top:2px;">3 mois min · 2 × 1 250€</div>
+          </div>
+          <div class="tarif-btn" id="tarif-aut" onclick="selectPack('autopilote')">
+            <div style="font-size:15px;font-weight:900;color:#00C896;">6 000 € <span style="font-size:10px;">setup</span></div>
+            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 1 200 €/mois</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">AUTOPILOTE</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">6 mois min · 2 × 3 000€</div>
           </div>
         </div>
       </div>
@@ -557,7 +552,7 @@ function saveNotes(){localStorage.setItem('cl_notes',document.getElementById('no
 function loadNotes(){const v=localStorage.getItem('cl_notes');if(v)document.getElementById('notes-live').value=v;}
 
 // ── LINKS ──
-const LINK_KEYS=['contrat','offre','site','resultats','script','calcom','make-webhook'];
+const LINK_KEYS=['contrat','offre','site','resultats','script','calcom'];
 function saveLinks(){LINK_KEYS.forEach(k=>{const el=document.getElementById('link-'+k);if(el)localStorage.setItem('cl_'+k,el.value);});}
 function loadLinks(){
   LINK_KEYS.forEach(k=>{
@@ -575,64 +570,62 @@ function openLink(key){
 
 // ── PACK DISPLAY ──
 const PACKS={
-  essentiel:{
+  decollage:{
     items:[
       '🎯 1 campagne Lead Ads Meta + formulaire instantané',
-      '📍 Ciblage zone géographique + métier précis',
-      '📱 Notification WhatsApp à chaque lead',
-      '📋 CRM Google Sheets template (gestion manuelle)',
-      '🌐 Page de crédibilité simple (carrd.co)',
-      '🖼️ Tes photos formatées (3 formats Meta)',
-      '💬 Support WhatsApp 48h — 1 mois',
-      '📞 Kickoff call 20 min'
-    ],
-    price:'990 €',
-    monthly:null,
-    sub:'One-shot · sans abonnement · Paiement unique',
-    note:''
-  },
-  growth:{
-    items:[
-      '✅ Tout le pack Essentiel',
-      '🔄 2 campagnes (prospection + retargeting)',
-      '🤖 Make.com : lead → CRM auto en 30 sec',
-      '📊 CRM Google Sheets 100% automatisé',
-      '🎨 2-3 visuels publicitaires créés par nous',
-      '📈 Optimisation mensuelle des campagnes',
-      '📋 Rapport mensuel complet',
-      '💬 Support WhatsApp 24h continu',
-      '📞 Kickoff call 30 min'
+      '📍 Ciblage zone + métier précis',
+      '🔔 Notification instantanée à chaque demande',
+      '📋 CRM automatisé',
+      '🎨 2-3 visuels publicitaires',
+      '🌐 Page de crédibilité',
+      '📞 Kickoff 30 min + support 1 mois'
     ],
     price:'1 500 €',
     monthly:null,
     sub:'Paiement unique · Sans engagement',
-    note:'⭐ Pack le plus choisi'
+    note:''
   },
-  full:{
+  copilote:{
     items:[
-      '✅ Tout le pack Growth',
-      '🚀 3 campagnes + audience lookalike',
-      '🎨 5 visuels pro tous formats',
-      '📊 CRM avancé + alertes couleurs auto (App Script)',
-      '📋 Rapport premium mensuel',
-      '📞 Appel de suivi mensuel inclus',
-      '💬 Support WhatsApp prioritaire 4h',
-      '📅 Kickoff call 45 min'
+      '✅ Tout le pack DÉCOLLAGE',
+      '🔄 3 campagnes (prospection + retargeting + audience similaire)',
+      '🤖 Assistant IA : réponse auto en 30 sec + relances + rappels de RDV',
+      '🟢 Gestion fiche Google',
+      '🎨 5 visuels pro renouvelés chaque mois',
+      '📊 CRM avancé + pipeline & alertes',
+      '📈 Optimisation mensuelle des campagnes',
+      '📋 Rapport mensuel + appel de suivi',
+      '💬 Support prioritaire 4h'
     ],
     price:'2 500 €',
     monthly:'+ 500 €/mois',
     sub:'Setup 2 × 1 250€ · Mensuel au lancement · 3 mois min',
-    note:'Pour artisans avec équipe ou fort volume'
+    note:'⭐ Best-seller'
+  },
+  autopilote:{
+    items:[
+      '✅ Tout le pack COPILOTE',
+      '🧠 Agent IA conversationnel COMPLET : qualifie les prospects de A à Z par message',
+      '🔥 Scoring automatique des leads (chauds / tièdes)',
+      '📆 Prise & déplacement de RDV autonome',
+      '✍️ Génération de contenu automatique',
+      '🔌 Intégration aux outils de devis en API',
+      '🎯 Accompagnement stratégique dédié'
+    ],
+    price:'6 000 €',
+    monthly:'+ 1 200 €/mois',
+    sub:'Setup 2 × 3 000€ · Mensuel au lancement · 6 mois min',
+    note:'Haut de gamme — IA complète'
   }
 };
-let activePack='growth';
+let activePack='copilote';
 function showPack(pack){
   activePack=pack;
   // Tabs
-  ['essentiel','growth','full'].forEach(p=>{
+  ['decollage','copilote','autopilote'].forEach(p=>{
     const tab=document.getElementById('tab-'+p.slice(0,3));
     if(!tab)return;
-    tab.className='pack-tab'+(p===pack?' active-'+(p==='essentiel'?'ess':p==='growth'?'gro':'ful'):'');
+    tab.classList.toggle('active',p===pack);
   });
   const d=PACKS[pack];
   let html='';
@@ -653,7 +646,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.modal-overlay').forEach(o=>{
     o.addEventListener('click',e=>{if(e.target===o)o.style.display='none';});
   });
-  showPack('growth');
+  showPack('copilote');
   loadLinks();loadEJS();loadNotes();loadMyInfo();
   if(location.protocol==='file:')console.warn('[CreaLeads] file:// — EmailJS peut échouer.');
   if(!isEmailjsLoaded())setEJSStatus('❌ Librairie non chargée (CDN bloqué ?)','#fc8181');
@@ -683,15 +676,15 @@ function openContractModal(){
   document.getElementById('c-moi-ville').value=localStorage.getItem('cl_moi_ville')||'Paris';
   const errEl=document.getElementById('modal-error');
   if(errEl)errEl.style.display='none';
-  selectPack(selectedPack||'growth');
+  selectPack(selectedPack||'copilote');
   document.getElementById('contract-modal').style.display='block';
 }
 
 // ── PACK / TARIF SELECTION (contract modal) ──
-let selectedPack='growth';
+let selectedPack='copilote';
 function selectPack(pack){
   selectedPack=pack;
-  ['essentiel','growth','full'].forEach(p=>{
+  ['decollage','copilote','autopilote'].forEach(p=>{
     const btn=document.getElementById('tarif-'+p.slice(0,3));
     if(!btn)return;
     const active=(p===pack);
@@ -728,28 +721,7 @@ function sendCalcomLink(){
   const bonjour=prenom?`Bonjour ${prenom} 👋`:'Bonjour 👋';
   const msg=`${bonjour}\n\nC'est Enzo de CreaLeads.\n\nPour qu'on se parle et que je prépare quelque chose de concret pour ta zone, réserve un créneau de 20 min ici 👇\n\n📅 ${calcomUrl}\n\nDès que tu as réservé, je reçois une notification et je prépare l'appel.\n\nÀ très vite !\n— Enzo, CreaLeads`;
   // Ouvrir WhatsApp Web avec le message pré-rempli + bon numéro
-  // L'utilisateur n'a plus qu'à cliquer "Envoyer"
   window.open('https://wa.me/'+tel+'?text='+encodeURIComponent(msg),'_blank');
-}
-
-// ── MAKE.COM WARMUP WEBHOOK ──
-async function triggerWarmupWebhook(nom,tel,email,date,heure){
-  const webhookUrl=document.getElementById('link-make-webhook').value.trim();
-  if(!webhookUrl){
-    console.log('[CreaLeads] Webhook Make.com non configuré — warmup ignoré.');
-    return false;
-  }
-  try{
-    await fetch(webhookUrl,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:nom,phone:tel,email:email,rdv_date:date,rdv_time:heure,source:'call_launcher'})
-    });
-    return true;
-  }catch(e){
-    console.error('[CreaLeads] Webhook Make.com échoué :',e);
-    return false;
-  }
 }
 
 // ── EMAILJS ──
@@ -811,7 +783,6 @@ function openGmailRDV(nom,email,date,heure){const subj=encodeURIComponent('Confi
 function fallbackMailto(){
   const nom=document.getElementById('rdv-nom').value.trim();
   const email=document.getElementById('rdv-email').value.trim();
-  const tel=document.getElementById('rdv-tel').value.trim();
   const date=document.getElementById('rdv-date').value;
   const heure=document.getElementById('rdv-heure').value;
   if(!nom||!date||!heure){showRDVStatus("Remplis le nom, la date et l'heure.",false);return;}
@@ -819,24 +790,19 @@ function fallbackMailto(){
   const gcalUrl=buildGCalLink(nom,email,date,heure);
   if(gcalUrl)window.open(gcalUrl,'_blank');
   openGmailRDV(nom,email,date,heure);
-  if(tel)triggerWarmupWebhook(nom,tel,email,date,heure);
-  showRDVStatus('📤 Gmail + Google Calendar ouverts.',true);
+  showRDVStatus('📤 Gmail + Google Calendar ouverts. Le rappel auto se déclenche dès que le RDV est dans l\'agenda (n8n).',true);
 }
 async function sendRDV(){
   const nom=document.getElementById('rdv-nom').value.trim();
   const email=document.getElementById('rdv-email').value.trim();
-  const tel=document.getElementById('rdv-tel').value.trim();
   const date=document.getElementById('rdv-date').value;
   const heure=document.getElementById('rdv-heure').value;
   if(!nom||!date||!heure){showRDVStatus("Remplis le nom, la date et l'heure.",false);return;}
   if(!email||!email.includes('@')||!email.includes('.')){showRDVStatus('Email client invalide.',false);return;}
 
-  // ── Toujours : Google Calendar + warmup Make.com ──
+  // ── Toujours : ouvrir Google Calendar (le rappel auto n8n se déclenche dès que le RDV y est) ──
   const gcalUrl=buildGCalLink(nom,email,date,heure);
   if(gcalUrl)setTimeout(()=>window.open(gcalUrl,'_blank'),300);
-  if(tel)triggerWarmupWebhook(nom,tel,email,date,heure).then(ok=>{
-    if(ok)console.log('[CreaLeads] Warmup Make.com déclenché ✅');
-  });
 
   // ── Tentative EmailJS (optionnel) ──
   const{pubkey,service,template}=getEJS();
@@ -846,8 +812,7 @@ async function sendRDV(){
     showRDVStatus('⏳ Envoi mail en cours…',true);
     try{
       await emailjs.send(service,template,{name:nom,email:email,to_email:email,reply_to:'contact.crealeads@gmail.com',from_name:'Enzo — CreaLeads',meeting_date:formatDateFR(date),meeting_time:heure,message:buildRDVEmailBody(nom,date,heure)});
-      const warmupNote=tel?' · Warmup WhatsApp déclenché':' · ⚠️ Pas de tél → warmup ignoré';
-      showRDVStatus('✅ Mail envoyé à '+email+' — Agenda ouvert.'+warmupNote,true);
+      showRDVStatus('✅ Mail envoyé à '+email+' — Agenda ouvert. Rappel auto déclenché dès que le RDV est dans Google Calendar (n8n).',true);
       return;
     }catch(e){
       const txt=(e&&(e.text||e.message))||JSON.stringify(e);
@@ -858,58 +823,48 @@ async function sendRDV(){
 
   // ── Fallback fiable : Gmail compose ──
   openGmailRDV(nom,email,date,heure);
-  const warmupNote=tel?' · Warmup WhatsApp déclenché':' · ⚠️ Pas de tél → warmup ignoré';
   const ejsNote=ejsOk?' (EmailJS a échoué — Gmail ouvert à la place)':' (EmailJS non configuré)';
-  showRDVStatus('📤 Gmail ouvert — complète et envoie le mail. Agenda ouvert.'+ejsNote+warmupNote,true);
-}
-
-// ── ESSENTIEL TOGGLE ──
-function toggleEssentiel(){
-  const row=document.getElementById('essentiel-tab-row');
-  const link=document.getElementById('essentiel-toggle-link');
-  const visible=row.style.display!=='none';
-  row.style.display=visible?'none':'block';
-  link.textContent=visible?"Budget serré ? Voir l'offre Essentiel →":'▲ Masquer l\'offre Essentiel';
-  if(!visible)showPack('essentiel');
+  showRDVStatus('📤 Gmail ouvert — complète et envoie le mail. Agenda ouvert. Rappel auto via n8n dès que le RDV est dans l\'agenda.'+ejsNote,true);
 }
 
 // ── CONTRACT GENERATOR ──
 function getPackServices(pack){
-  if(pack==='essentiel')return[
+  if(pack==='decollage')return[
     '01 · Création de la campagne Lead Ads Meta avec formulaire instantané',
-    '02 · Ciblage zone géographique + métier + comportements (audience Advantage+)',
-    '03 · Configuration de la notification WhatsApp à chaque nouveau lead (via Make.com basique)',
-    '04 · Fourniture du template CRM Google Sheets (remplissage manuel par le Client)',
-    '05 · Création de la page de crédibilité simple (carrd.co — URL personnalisée)',
-    '06 · Formatage des photos fournies par le Client en 3 formats publicitaires Meta',
-    '07 · Support WhatsApp 48h pendant 1 mois post-livraison',
+    '02 · Ciblage zone géographique + métier précis (audience Advantage+)',
+    '03 · Notification instantanée à chaque nouvelle demande',
+    '04 · CRM automatisé (la demande arrive directement en fiche)',
+    '05 · Création de 2 à 3 visuels publicitaires (formats Meta)',
+    '06 · Création de la page de crédibilité',
+    '07 · Kickoff call 30 min + support 1 mois post-livraison',
   ];
-  if(pack==='growth')return[
-    '01 · Tout le contenu du pack Essentiel',
-    '02 · 2 campagnes Lead Ads Meta : prospection principale + retargeting',
-    '03 · CRM Google Sheets 100% automatisé via Make.com (lead → CRM en 30 secondes)',
-    '04 · Configuration complète Make.com : lead → WhatsApp client + ajout automatique CRM',
-    '05 · Création de 2 à 3 visuels publicitaires par CreaLeads (formats Meta : carré, vertical, horizontal)',
-    '06 · Optimisation mensuelle des campagnes (CPL, rotation visuels, audiences)',
-    '07 · Rapport mensuel complet avec KPIs : leads générés, CPL, budget consommé',
-    '08 · Support WhatsApp 24h continu pendant toute la durée du contrat',
+  if(pack==='copilote')return[
+    '01 · Tout le contenu du pack DÉCOLLAGE',
+    '02 · 3 campagnes Lead Ads Meta : prospection + retargeting + audience similaire',
+    '03 · Assistant IA : réponse automatique aux demandes en 30 secondes + relances + rappels de RDV',
+    '04 · Gestion de la fiche Google (Google Business Profile)',
+    '05 · 5 visuels publicitaires professionnels renouvelés chaque mois',
+    '06 · CRM avancé avec pipeline et alertes',
+    '07 · Optimisation mensuelle des campagnes (CPL, audiences, visuels)',
+    '08 · Rapport mensuel + appel de suivi',
+    '09 · Support prioritaire — réponse sous 4h',
   ];
   return[
-    '01 · Tout le contenu du pack Growth',
-    '02 · 3 campagnes Lead Ads Meta : prospection + retargeting + audience similaire (lookalike)',
-    '03 · Création de 5 visuels publicitaires professionnels tous formats Meta',
-    '04 · CRM Google Sheets avancé avec alertes couleurs automatiques (App Script)',
-    '05 · Rapport mensuel premium avec analyse d\'évolution et recommandations stratégiques',
-    '06 · Appel de suivi mensuel inclus (20 à 30 min)',
-    '07 · Support WhatsApp prioritaire — réponse garantie sous 4h',
+    '01 · Tout le contenu du pack COPILOTE',
+    '02 · Agent IA conversationnel complet : qualification des prospects de A à Z par message',
+    '03 · Scoring automatique des leads (chauds / tièdes)',
+    '04 · Prise et déplacement de rendez-vous de façon autonome',
+    '05 · Génération de contenu automatique',
+    '06 · Intégration aux outils de devis en API',
+    '07 · Accompagnement stratégique dédié',
   ];
 }
 function getPackFinancials(pack){
-  if(pack==='essentiel')return{setup:990,acompte:null,solde:null,monthly:null,engagement:null,single:true};
-  if(pack==='growth')return{setup:1500,acompte:null,solde:null,monthly:null,engagement:null,single:true};
-  return{setup:2500,acompte:1250,solde:1250,monthly:500,engagement:3};
+  if(pack==='decollage')return{setup:1500,acompte:null,solde:null,monthly:null,engagement:null,single:true};
+  if(pack==='copilote')return{setup:2500,acompte:1250,solde:1250,monthly:500,engagement:3};
+  return{setup:6000,acompte:3000,solde:3000,monthly:1200,engagement:6};
 }
-function getPackName(pack){return pack==='essentiel'?'ESSENTIEL':pack==='growth'?'GROWTH':'FULL';}
+function getPackName(pack){return pack==='decollage'?'DÉCOLLAGE':pack==='copilote'?'COPILOTE':'AUTOPILOTE';}
 
 function generateContract(){
   const nom=document.getElementById('c-nom').value.trim();
