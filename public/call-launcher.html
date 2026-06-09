@@ -254,9 +254,9 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
       <span class="btn-icon">✍️</span>
       <div class="btn-info"><div class="btn-main">Générer &amp; envoyer le contrat</div><div class="btn-sub">DÉCOLLAGE 1 500€ / COPILOTE 2 500€ + 500€/m / AUTOPILOTE 6 000€ + 1 200€/m</div></div>
     </button>
-    <button class="btn btn-calcom" onclick="sendCalcomLink()">
-      <span class="btn-icon">📅</span>
-      <div class="btn-info"><div class="btn-main">Envoyer le lien Cal.com (WhatsApp)</div><div class="btn-sub">Ouvre WhatsApp avec le lien de réservation pré-rempli</div></div>
+    <button id="btn-sms" class="btn btn-calcom" onclick="envoyerLienRDV()">
+      <span class="btn-icon">📲</span>
+      <div class="btn-info"><div class="btn-main" id="sms-btn-label">Envoyer le lien par SMS</div><div class="btn-sub">SMS direct au prospect avec le lien de réservation (via n8n)</div></div>
     </button>
     <button class="btn btn-purple" onclick="openRDVModal()">
       <span class="btn-icon">📆</span>
@@ -706,22 +706,36 @@ function loadMyInfo(){
   if(ville&&v)v.value=ville;
 }
 
-// ── CALCOM LINK SEND ──
-function sendCalcomLink(){
-  const calcomUrl=document.getElementById('link-calcom').value.trim();
-  if(!calcomUrl){alert('Configure ton lien Cal.com dans la section ⚙️ en bas.');return;}
-  const name=document.getElementById('prospect-name').value.trim()||'';
-  const prenom=name?name.split(' ')[0]:'';
-  const rawTel=document.getElementById('prospect-tel').value.trim().replace(/\s/g,'');
-  if(!rawTel){alert('Remplis le téléphone du prospect dans "Info prospect" pour ouvrir WhatsApp directement.');return;}
-  // Convertir numéro FR en format international (0612... → 33612...)
-  let tel=rawTel;
-  if(tel.startsWith('0'))tel='33'+tel.slice(1);
-  else if(tel.startsWith('+'))tel=tel.slice(1);
-  const bonjour=prenom?`Bonjour ${prenom} 👋`:'Bonjour 👋';
-  const msg=`${bonjour}\n\nC'est Enzo de CreaLeads.\n\nPour qu'on se parle et que je prépare quelque chose de concret pour ta zone, réserve un créneau de 20 min ici 👇\n\n📅 ${calcomUrl}\n\nDès que tu as réservé, je reçois une notification et je prépare l'appel.\n\nÀ très vite !\n— Enzo, CreaLeads`;
-  // Ouvrir WhatsApp Web avec le message pré-rempli + bon numéro
-  window.open('https://wa.me/'+tel+'?text='+encodeURIComponent(msg),'_blank');
+// ── ENVOI DU LIEN RDV PAR SMS (webhook n8n) ──
+async function envoyerLienRDV(){
+  // Numéro du prospect depuis le champ existant de la page
+  let phone=(document.getElementById('prospect-tel')?.value||'').trim();
+  if(!phone){alert('Renseigne le numéro du prospect dans "Info prospect".');return;}
+  // Normalise au format +33
+  phone=phone.replace(/[^0-9+]/g,'');
+  if(phone.startsWith('0'))phone='+33'+phone.slice(1);
+  else if(phone.startsWith('33'))phone='+'+phone;
+
+  // Lien de réservation : config ⚙️ si rempli, sinon lien par défaut
+  const lien=(document.getElementById('link-calcom')?.value||'').trim()||'https://cal.eu/enzo-crealeads/20min';
+  const message=`Bonjour, voici le lien pour caler notre rendez-vous : ${lien} — à tout de suite ! Enzo, CreaLeads`;
+
+  const btn=document.getElementById('btn-sms');
+  const label=document.getElementById('sms-btn-label');
+  if(btn)btn.disabled=true;
+  if(label)label.textContent='Envoi...';
+  try{
+    await fetch('https://crealeads.app.n8n.cloud/webhook/envoyer-sms-launcher',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({phone,message})
+    });
+    if(label)label.textContent='Lien SMS envoyé ✅';
+  }catch(e){
+    alert("Échec de l'envoi du SMS");
+    if(btn)btn.disabled=false;
+    if(label)label.textContent='Envoyer le lien par SMS';
+  }
 }
 
 // ── EMAILJS ──
