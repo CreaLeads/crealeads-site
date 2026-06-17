@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CreaLeads — On démarre ensemble</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF8; --card:#FFFFFF; --ink:#16181A; --soft:#5A5F66; --faint:#8A9099;
+    --em:#00C896; --em-deep:#00A87E; --em-wash:#EAFBF5; --line:#E7E7E2; --line-soft:#F0F0EC;
+    --ink-band:#14181B; --danger:#E2554B;
+    --r:16px; --rs:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);
+    font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.disp{font-family:'Outfit',sans-serif;}
+
+  /* ---------- TOP BAR ---------- */
+  .bar{position:sticky;top:0;z-index:50;background:rgba(250,250,248,.86);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .bar-in{max-width:1120px;margin:0 auto;padding:13px 22px;display:flex;align-items:center;gap:16px;}
+  .logo{font-family:'Outfit';font-weight:800;font-size:19px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;}
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--em);display:inline-block;}
+  .logo b{color:var(--em);font-weight:800}
+  .bar-prog{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden;max-width:320px;margin-left:auto;}
+  .bar-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--em),var(--em-deep));
+    border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);}
+  .bar-pct{font-family:'Outfit';font-weight:700;font-size:13px;color:var(--soft);min-width:38px;text-align:right;}
+
+  /* ---------- HERO ---------- */
+  .hero{background:var(--ink-band);color:#fff;padding:54px 22px 60px;position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 85% 0%,rgba(0,200,150,.16),transparent 55%);}
+  .hero-in{max-width:1120px;margin:0 auto;position:relative;z-index:1;}
+  .hero .kicker{font-family:'Outfit';font-weight:700;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--em);margin-bottom:16px;}
+  .hero h1{font-weight:900;font-size:clamp(32px,5.4vw,52px);line-height:1.02;letter-spacing:-.025em;max-width:16ch;}
+  .hero .scribble{font-family:'Caveat';font-weight:700;color:var(--em);font-size:clamp(26px,3.6vw,34px);
+    display:block;margin-top:6px;transform:rotate(-1.5deg);}
+  .hero p{color:#C9CDD2;font-size:16px;max-width:60ch;margin-top:20px;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.14);border-radius:99px;padding:7px 14px;font-size:13px;color:#E4E7EA;font-weight:500;}
+  .chip svg{width:15px;height:15px;stroke:var(--em);}
+
+  /* ---------- LAYOUT ---------- */
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px 80px;display:grid;
+    grid-template-columns:232px 1fr;gap:40px;align-items:start;}
+  .wrap{margin-top:-28px;position:relative;z-index:2;}
+
+  /* side nav */
+  .side{position:sticky;top:84px;}
+  .side-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px;
+    box-shadow:0 10px 30px rgba(20,24,27,.05);}
+  .nav-item{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:10px;cursor:pointer;
+    color:var(--soft);font-weight:500;font-size:13.5px;text-decoration:none;transition:.16s;border:none;background:none;width:100%;text-align:left;}
+  .nav-item:hover{background:var(--line-soft);color:var(--ink);}
+  .nav-item.on{background:var(--em-wash);color:var(--ink);font-weight:600;}
+  .nav-num{font-family:'Outfit';font-weight:700;font-size:11px;width:22px;height:22px;border-radius:7px;
+    background:var(--line);color:var(--soft);display:grid;place-items:center;flex:none;transition:.16s;}
+  .nav-item.on .nav-num{background:var(--em);color:#fff;}
+  .nav-item.done .nav-num{background:var(--ink);color:#fff;}
+  .nav-item.done .nav-num::after{content:"✓";}
+  .nav-item.done .nav-num span{display:none;}
+
+  /* ---------- SECTIONS ---------- */
+  main{min-width:0;}
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:30px 32px;margin-bottom:20px;box-shadow:0 8px 26px rgba(20,24,27,.04);scroll-margin-top:84px;}
+  .sec-head{display:flex;gap:15px;align-items:flex-start;margin-bottom:6px;}
+  .sec-n{font-family:'Outfit';font-weight:800;font-size:13px;color:var(--em);letter-spacing:.04em;
+    border:1.5px solid var(--em);border-radius:8px;padding:4px 9px;flex:none;margin-top:3px;}
+  .sec h2{font-weight:800;font-size:23px;letter-spacing:-.02em;line-height:1.12;}
+  .sec-sub{color:var(--soft);font-size:14px;margin-top:6px;margin-left:51px;margin-bottom:22px;max-width:62ch;}
+  .sec.eco{border-color:#CFEFE4;}
+  .sec.eco .sec-n{background:var(--em);color:#fff;border-color:var(--em);}
+  .eco-tag{display:inline-flex;align-items:center;gap:6px;background:var(--em-wash);color:var(--em-deep);
+    font-family:'Outfit';font-weight:700;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    border-radius:6px;padding:4px 9px;margin-left:10px;vertical-align:middle;}
+
+  /* fields */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;}
+  .f{display:flex;flex-direction:column;gap:7px;}
+  .f.full{grid-column:1/-1;}
+  label{font-weight:600;font-size:13.5px;color:var(--ink);}
+  label .req{color:var(--em-deep);margin-left:2px;}
+  label .hint{font-weight:400;color:var(--faint);font-size:12.5px;display:block;margin-top:1px;}
+  input[type=text],input[type=email],input[type=tel],input[type=url],input[type=number],select,textarea{
+    font-family:'Inter';font-size:14.5px;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:var(--rs);padding:11px 13px;width:100%;transition:.15s;}
+  textarea{resize:vertical;min-height:80px;line-height:1.5;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--em);box-shadow:0 0 0 3px var(--em-wash);}
+  input.bad,select.bad,textarea.bad{border-color:var(--danger);box-shadow:0 0 0 3px #FBE9E7;}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A5F66' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
+
+  /* choice pills (checkbox/radio) */
+  .pills{display:flex;flex-wrap:wrap;gap:9px;}
+  .pill{position:relative;}
+  .pill input{position:absolute;opacity:0;width:0;height:0;}
+  .pill span{display:inline-block;border:1.5px solid var(--line);border-radius:99px;padding:9px 15px;
+    font-size:13.5px;font-weight:500;color:var(--soft);cursor:pointer;transition:.15s;user-select:none;}
+  .pill input:checked + span{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .pill input:focus-visible + span{box-shadow:0 0 0 3px var(--em-wash);}
+
+  /* upload */
+  .drop{border:1.5px dashed var(--line);border-radius:var(--rs);background:#FCFCFB;padding:20px;
+    text-align:center;cursor:pointer;transition:.15s;}
+  .drop:hover{border-color:var(--em);background:var(--em-wash);}
+  .drop svg{width:26px;height:26px;stroke:var(--em);margin-bottom:7px;}
+  .drop b{font-weight:600;font-size:14px;color:var(--ink);}
+  .drop small{display:block;color:var(--faint);font-size:12.5px;margin-top:3px;}
+  .drop input{display:none;}
+  .filelist{margin-top:10px;display:flex;flex-direction:column;gap:6px;}
+  .filerow{display:flex;align-items:center;gap:9px;font-size:13px;background:var(--line-soft);
+    border-radius:8px;padding:7px 11px;color:var(--ink);}
+  .filerow svg{width:15px;height:15px;stroke:var(--em-deep);flex:none;}
+  .filerow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .filerow .sz{color:var(--faint);margin-left:auto;flex:none;font-size:12px;}
+
+  /* repeatable rows */
+  .rep{display:flex;flex-direction:column;gap:14px;}
+  .rep-card{border:1.5px solid var(--line);border-radius:var(--rs);padding:18px 18px 6px;background:#FCFCFB;position:relative;}
+  .rep-card .rep-rm{position:absolute;top:12px;right:12px;background:none;border:none;cursor:pointer;
+    color:var(--faint);font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px;}
+  .rep-card .rep-rm:hover{color:var(--danger);}
+  .rep-card .rep-rm svg{width:14px;height:14px;}
+  .rep-idx{font-family:'Outfit';font-weight:700;font-size:12px;color:var(--em-deep);margin-bottom:12px;}
+  .add{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:var(--em-wash);
+    color:var(--em-deep);border:1.5px solid #CFEFE4;border-radius:10px;padding:10px 16px;
+    font-family:'Outfit';font-weight:700;font-size:14px;cursor:pointer;transition:.15s;}
+  .add:hover{background:var(--em);color:#fff;border-color:var(--em);}
+  .add svg{width:16px;height:16px;}
+
+  /* secure notice */
+  .secure{display:flex;gap:14px;background:#F4F6F8;border:1px solid var(--line);border-radius:var(--r);
+    padding:20px 22px;margin-bottom:20px;}
+  .secure svg{width:24px;height:24px;stroke:var(--ink);flex:none;margin-top:2px;}
+  .secure b{font-family:'Outfit';font-weight:700;}
+  .secure p{color:var(--soft);font-size:13.5px;margin-top:4px;}
+
+  /* submit */
+  .submit-wrap{text-align:center;padding-top:6px;}
+  .btn{font-family:'Outfit';font-weight:700;font-size:16px;background:var(--em);color:#fff;border:none;
+    border-radius:12px;padding:16px 34px;cursor:pointer;transition:.18s;width:100%;max-width:420px;
+    box-shadow:0 10px 26px rgba(0,200,150,.28);}
+  .btn:hover{background:var(--em-deep);transform:translateY(-1px);}
+  .btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+  .submit-note{color:var(--faint);font-size:12.5px;margin-top:12px;}
+  .err-box{display:none;background:#FBE9E7;border:1px solid #F3C3BD;color:#9A2A20;border-radius:12px;
+    padding:14px 16px;margin-bottom:14px;font-size:13.5px;font-weight:500;text-align:left;}
+
+  /* success */
+  .done{display:none;max-width:640px;margin:60px auto;text-align:center;padding:0 22px;}
+  .done .tick{width:74px;height:74px;border-radius:50%;background:var(--em-wash);display:grid;place-items:center;margin:0 auto 22px;}
+  .done .tick svg{width:38px;height:38px;stroke:var(--em-deep);}
+  .done h2{font-family:'Outfit';font-weight:900;font-size:30px;letter-spacing:-.02em;}
+  .done .scribble{font-family:'Caveat';font-weight:700;color:var(--em-deep);font-size:30px;display:block;margin-top:2px;}
+  .done p{color:var(--soft);margin-top:16px;font-size:15.5px;}
+  .done .next{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-top:26px;text-align:left;}
+  .done .next b{font-family:'Outfit';}
+  .done .next ol{margin:12px 0 0 18px;color:var(--soft);font-size:14px;line-height:1.9;}
+
+  /* footer */
+  footer{text-align:center;color:var(--faint);font-size:12.5px;padding:30px 22px 50px;}
+
+  @media (max-width:860px){
+    .wrap{grid-template-columns:1fr;gap:0;margin-top:-22px;}
+    .side{display:none;}
+    .grid{grid-template-columns:1fr;}
+    .sec{padding:24px 20px;}
+    .sec-sub{margin-left:0;}
+    .hero{padding:42px 22px 46px;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="logo"><span class="dot"></span>Crea<b>Leads</b></div>
+    <div class="bar-prog"><i id="progFill"></i></div>
+    <div class="bar-pct" id="progPct">0%</div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-in">
+    <div class="kicker">Bienvenue chez CreaLeads</div>
+    <h1>On a tout pour partir fort.<span class="scribble">remplis ça, on s'occupe du reste.</span></h1>
+    <p>Ce formulaire nous donne tout ce qu'il faut pour lancer ton site, tes campagnes et tes agents IA — sans avoir à te courir après pendant trois semaines. Prends 15 minutes, sois précis, et envoie tout d'un coup.</p>
+    <div class="hero-meta">
+      <span class="chip"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>≈ 15 minutes</span>
+      <span class="chip"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>Tes données restent privées</span>
+      <span class="chip"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Ta progression est sauvegardée</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <!-- SIDE NAV -->
+  <aside class="side">
+    <nav class="side-card" id="sidenav">
+      <a class="nav-item on" href="#s1"><span class="nav-num"><span>1</span></span>Toi &amp; ton entreprise</a>
+      <a class="nav-item" href="#s2"><span class="nav-num"><span>2</span></span>Ton activité</a>
+      <a class="nav-item" href="#s3"><span class="nav-num"><span>3</span></span>Photos &amp; contenu</a>
+      <a class="nav-item" href="#s4"><span class="nav-num"><span>4</span></span>Ton réseau d'applicateurs</a>
+      <a class="nav-item" href="#s5"><span class="nav-num"><span>5</span></span>Tes produits / boutique</a>
+      <a class="nav-item" href="#s6"><span class="nav-num"><span>6</span></span>Formation</a>
+      <a class="nav-item" href="#s7"><span class="nav-num"><span>7</span></span>Présence en ligne</a>
+      <a class="nav-item" href="#s8"><span class="nav-num"><span>8</span></span>Tes objectifs</a>
+    </nav>
+  </aside>
+
+  <!-- FORM -->
+  <main>
+  <form id="form" novalidate>
+
+    <!-- 1 -->
+    <section class="sec" id="s1">
+      <div class="sec-head"><span class="sec-n">01</span><div><h2>Toi &amp; ton entreprise</h2></div></div>
+      <p class="sec-sub">Les infos de base pour tes mentions légales, ton site et ta fiche Google.</p>
+      <div class="grid">
+        <div class="f"><label>Prénom &amp; nom du dirigeant<span class="req">*</span></label><input type="text" name="dirigeant" data-req></div>
+        <div class="f"><label>Nom commercial / raison sociale<span class="req">*</span></label><input type="text" name="entreprise" data-req></div>
+        <div class="f"><label>Forme juridique</label>
+          <select name="forme"><option value="">—</option><option>Auto-entrepreneur</option><option>EI</option><option>EURL</option><option>SARL</option><option>SAS / SASU</option><option>Autre</option></select></div>
+        <div class="f"><label>SIRET<span class="hint">14 chiffres</span></label><input type="text" name="siret" inputmode="numeric"></div>
+        <div class="f"><label>Téléphone<span class="req">*</span></label><input type="tel" name="tel" data-req></div>
+        <div class="f"><label>Email<span class="req">*</span></label><input type="email" name="email" data-req></div>
+        <div class="f full"><label>Adresse complète<span class="req">*</span><span class="hint">Rue, code postal, ville</span></label><input type="text" name="adresse" data-req></div>
+        <div class="f"><label>Site web actuel<span class="hint">Si tu en as déjà un</span></label><input type="url" name="site" placeholder="https://"></div>
+        <div class="f"><label>Réseaux sociaux<span class="hint">Liens Facebook, Instagram…</span></label><input type="text" name="reseaux" placeholder="facebook.com/... , instagram.com/..."></div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="s2">
+      <div class="sec-head"><span class="sec-n">02</span><div><h2>Ton activité</h2></div></div>
+      <p class="sec-sub">Ce que tu fais, pour qui, et où. C'est ce qui cale le ciblage de tes pubs et le contenu de ton site.</p>
+      <div class="grid">
+        <div class="f full"><label>Tes prestations<span class="req">*</span><span class="hint">Coche tout ce que tu proposes</span></label>
+          <div class="pills">
+            <label class="pill"><input type="checkbox" name="presta" value="Résine décorative"><span>Résine décorative</span></label>
+            <label class="pill"><input type="checkbox" name="presta" value="Résine industrielle"><span>Résine industrielle</span></label>
+            <label class="pill"><input type="checkbox" name="presta" value="Béton ciré"><span>Béton ciré</span></label>
+            <label class="pill"><input type="checkbox" name="presta" value="Époxy"><span>Époxy</span></label>
+            <label class="pill"><input type="checkbox" name="presta" value="Moquette de pierre"><span>Moquette de pierre</span></label>
+            <label class="pill"><input type="checkbox" name="presta" value="Peinture de sol"><span>Peinture de sol</span></label>
+            <label class="pill"><input type="checkbox" name="presta" value="Ravalement"><span>Ravalement</span></label>
+            <label class="pill"><input type="checkbox" name="presta" value="Maçonnerie"><span>Maçonnerie</span></label>
+          </div>
+        </div>
+        <div class="f full"><label>Autres prestations / ta spécialité principale</label><input type="text" name="specialite" placeholder="Ce que tu fais le mieux"></div>
+        <div class="f"><label>Rayon d'intervention<span class="hint">En km autour de ta base</span></label><input type="number" name="rayon" inputmode="numeric"></div>
+        <div class="f"><label>Villes / départements couverts<span class="req">*</span></label><input type="text" name="zone" data-req placeholder="Ex : Yvelines, Paris, Hauts-de-Seine"></div>
+        <div class="f"><label>Type de clientèle</label>
+          <select name="clientele"><option value="">—</option><option>Particuliers</option><option>Professionnels</option><option>Les deux</option></select></div>
+        <div class="f"><label>Panier moyen / prix au m²<span class="hint">Une fourchette suffit</span></label><input type="text" name="panier" placeholder="Ex : 40–60 €/m² · chantier moyen 7 000 €"></div>
+        <div class="f"><label>Années d'expérience</label><input type="number" name="xp" inputmode="numeric"></div>
+        <div class="f"><label>Certifications / assurances<span class="hint">Décennale, RGE, Qualibat…</span></label><input type="text" name="certif"></div>
+        <div class="f full"><label>Ce qui te différencie de tes concurrents<span class="req">*</span></label><textarea name="differenciation" data-req placeholder="Pourquoi un client te choisit toi plutôt qu'un autre ?"></textarea></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="s3">
+      <div class="sec-head"><span class="sec-n">03</span><div><h2>Photos &amp; contenu</h2></div></div>
+      <p class="sec-sub">C'est le carburant de ton site et de tes pubs. Plus tu envoies de belles photos de chantiers, plus on tape fort. Mets-en un max.</p>
+      <div class="grid">
+        <div class="f full"><label>Photos de chantiers<span class="req">*</span><span class="hint">Avant / après, finitions, chantiers en cours — la meilleure qualité possible</span></label>
+          <label class="drop"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5V18a2 2 0 002 2h14a2 2 0 002-2v-1.5M7 9l5-5 5 5M12 4v12"/></svg>
+            <b>Ajouter des photos</b><small>JPG, PNG · plusieurs à la fois</small>
+            <input type="file" name="photos_chantiers" accept="image/*" multiple data-req></label>
+          <div class="filelist"></div></div>
+        <div class="f"><label>Photos de toi / ton équipe<span class="hint">Sur chantier, en action — ça humanise</span></label>
+          <label class="drop"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5V18a2 2 0 002 2h14a2 2 0 002-2v-1.5M7 9l5-5 5 5M12 4v12"/></svg>
+            <b>Ajouter des photos</b><small>JPG, PNG</small>
+            <input type="file" name="photos_equipe" accept="image/*" multiple></label>
+          <div class="filelist"></div></div>
+        <div class="f"><label>Ton logo<span class="hint">Si tu en as un (PNG de préférence)</span></label>
+          <label class="drop"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5V18a2 2 0 002 2h14a2 2 0 002-2v-1.5M7 9l5-5 5 5M12 4v12"/></svg>
+            <b>Ajouter ton logo</b><small>PNG, JPG, SVG</small>
+            <input type="file" name="logo" accept="image/*,.svg"></label>
+          <div class="filelist"></div></div>
+        <div class="f full"><label>Vidéos<span class="hint">Petites vidéos directement ici. Pour les gros fichiers, colle plutôt un lien ci-dessous.</span></label>
+          <label class="drop"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5V18a2 2 0 002 2h14a2 2 0 002-2v-1.5M7 9l5-5 5 5M12 4v12"/></svg>
+            <b>Ajouter des vidéos</b><small>MP4, MOV</small>
+            <input type="file" name="videos" accept="video/*" multiple></label>
+          <div class="filelist"></div></div>
+        <div class="f full"><label>Lien WeTransfer / Google Drive<span class="hint">Pour les gros volumes de photos ou vidéos qui ne passent pas ici</span></label><input type="url" name="lien_media" placeholder="https://"></div>
+        <div class="f full"><label>Avis &amp; témoignages clients<span class="hint">Copie-colle tes meilleurs avis, ou dis-nous où on peut les trouver</span></label><textarea name="avis"></textarea></div>
+      </div>
+    </section>
+
+    <!-- 4 ECO -->
+    <section class="sec eco" id="s4">
+      <div class="sec-head"><span class="sec-n">04</span><div><h2>Ton réseau d'applicateurs<span class="eco-tag">Écosystème</span></h2></div></div>
+      <p class="sec-sub">Quand un lead tombe en dehors de ta zone, on ne le jette pas : on le redistribue à un applicateur de confiance. Liste ceux avec qui tu bosses déjà. Tu pourras en rajouter plus tard.</p>
+      <div class="rep" id="rep-net"></div>
+      <button type="button" class="add" data-add="net"><svg fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>Ajouter un applicateur</button>
+    </section>
+
+    <!-- 5 ECO -->
+    <section class="sec eco" id="s5">
+      <div class="sec-head"><span class="sec-n">05</span><div><h2>Tes produits / ta boutique<span class="eco-tag">Écosystème</span></h2></div></div>
+      <p class="sec-sub">Pour ta future boutique en ligne. Liste les produits que tu veux vendre. Le <b>ratio de consommation</b> est important : c'est lui qui permettra à l'estimateur de calculer les quantités pour tes clients.</p>
+      <div class="rep" id="rep-prod"></div>
+      <button type="button" class="add" data-add="prod"><svg fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>Ajouter un produit</button>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="s6">
+      <div class="sec-head"><span class="sec-n">06</span><div><h2>Formation</h2></div></div>
+      <p class="sec-sub">Si tu formes (ou veux former) d'autres applicateurs, on peut en faire un levier d'acquisition.</p>
+      <div class="grid">
+        <div class="f full"><label>Tu proposes des formations ?</label>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="formation" value="Oui"><span>Oui</span></label>
+            <label class="pill"><input type="radio" name="formation" value="Non, mais ça m'intéresse"><span>Pas encore, mais ça m'intéresse</span></label>
+            <label class="pill"><input type="radio" name="formation" value="Non"><span>Non</span></label>
+          </div></div>
+        <div class="f full"><label>Détaille tes formations<span class="hint">Intitulé, durée, prix, public visé, présentiel ou distanciel</span></label><textarea name="formation_detail"></textarea></div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="s7">
+      <div class="sec-head"><span class="sec-n">07</span><div><h2>Ta présence en ligne</h2></div></div>
+      <p class="sec-sub">L'état des lieux de ton marketing aujourd'hui. <b>On ne te demande aucun mot de passe ici</b> — juste des liens publics.</p>
+      <div class="grid">
+        <div class="f"><label>Fiche Google (Google Business Profile)<span class="hint">Le lien public, pas tes accès</span></label><input type="url" name="gmb" placeholder="https://"></div>
+        <div class="f"><label>Tu as déjà fait de la pub ?<span class="hint">Meta, Google…</span></label>
+          <select name="deja_pub"><option value="">—</option><option>Jamais</option><option>Oui, sans vrai résultat</option><option>Oui, avec des résultats</option></select></div>
+        <div class="f"><label>Budget pub mensuel envisagé<span class="hint">En € — une idée suffit</span></label><input type="text" name="budget" placeholder="Ex : 500 €/mois"></div>
+        <div class="f"><label>Saisonnalité / périodes fortes</label><input type="text" name="saison" placeholder="Ex : printemps–été"></div>
+        <div class="f full"><label>Concurrents que tu admires<span class="hint">Noms ou liens — ça nous aide à viser juste</span></label><input type="text" name="concurrents"></div>
+        <div class="f full"><label>Selon toi, qu'est-ce que tes clients tapent sur Google pour te trouver ?<span class="hint">Pour ton référencement</span></label><textarea name="mots_cles" placeholder="Ex : sol résine garage 78, béton ciré salon Versailles…"></textarea></div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="s8">
+      <div class="sec-head"><span class="sec-n">08</span><div><h2>Tes objectifs</h2></div></div>
+      <p class="sec-sub">Là où tu veux aller. C'est notre boussole pour les 6 prochains mois.</p>
+      <div class="grid">
+        <div class="f full"><label>Ton objectif n°1 avec CreaLeads<span class="req">*</span></label><textarea name="objectif" data-req placeholder="Ex : remplir mon agenda toute l'année, viser des chantiers pro plus gros…"></textarea></div>
+        <div class="f"><label>Nombre de chantiers/mois visés</label><input type="text" name="cible_chantiers"></div>
+        <div class="f"><label>Panier cible<span class="hint">Le ticket moyen que tu veux atteindre</span></label><input type="text" name="cible_panier"></div>
+        <div class="f full"><label>Zone à attaquer en priorité</label><input type="text" name="zone_prio"></div>
+        <div class="f full"><label>Une chose qu'on doit absolument savoir</label><textarea name="libre" placeholder="Tout ce qui n'est pas rentré dans les cases."></textarea></div>
+      </div>
+    </section>
+
+    <!-- SECURE NOTICE -->
+    <div class="secure">
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/></svg>
+      <div>
+        <b>On ne touche jamais à tes mots de passe.</b>
+        <p>Pour Meta, Google et ton hébergeur, on n'utilise <b>jamais</b> de mot de passe ici. On t'enverra juste après une demande d'<b>accès partenaire</b> : tu valides depuis ton propre compte, tu gardes la main, et tu peux nous retirer l'accès quand tu veux. Tes identifiants restent chez toi.</p>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <div class="err-box" id="errBox"></div>
+      <button type="submit" class="btn" id="submitBtn">Envoyer mes informations à CreaLeads</button>
+      <p class="submit-note">En envoyant, tu acceptes qu'on utilise ces infos pour construire et piloter ton acquisition.</p>
+    </div>
+
+  </form>
+  </main>
+</div>
+
+<!-- SUCCESS -->
+<div class="done" id="done">
+  <div class="tick"><svg fill="none" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+  <h2>C'est envoyé.<span class="scribble">on s'occupe du reste.</span></h2>
+  <p>Merci, on a bien tout reçu. On démarre l'analyse de ton activité dès maintenant.</p>
+  <div class="next">
+    <b>La suite, concrètement :</b>
+    <ol>
+      <li>On épluche tes infos et tes photos sous 48h.</li>
+      <li>On t'envoie la demande d'accès partenaire (Meta, Google) — tu valides en 2 clics.</li>
+      <li>On lance ton site, ton SEO et tes premières campagnes.</li>
+    </ol>
+  </div>
+</div>
+
+<footer>CreaLeads · Acquisition · Intelligence artificielle · Croissance — contact.crealeads@gmail.com</footer>
+
+<!-- ============ TEMPLATES ============ -->
+<template id="tpl-net">
+  <div class="rep-card">
+    <button type="button" class="rep-rm"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>Retirer</button>
+    <div class="rep-idx"></div>
+    <div class="grid">
+      <div class="f"><label>Nom de l'applicateur</label><input type="text" name="net_nom[]"></div>
+      <div class="f"><label>Entreprise</label><input type="text" name="net_entreprise[]"></div>
+      <div class="f"><label>Zone couverte</label><input type="text" name="net_zone[]" placeholder="Villes / départements"></div>
+      <div class="f"><label>Métiers</label><input type="text" name="net_metiers[]"></div>
+      <div class="f"><label>Téléphone / email</label><input type="text" name="net_contact[]"></div>
+      <div class="f"><label>Commission convenue<span class="hint">Si vous en avez une</span></label><input type="text" name="net_commission[]" placeholder="Ex : 10 %"></div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-prod">
+  <div class="rep-card">
+    <button type="button" class="rep-rm"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>Retirer</button>
+    <div class="rep-idx"></div>
+    <div class="grid">
+      <div class="f"><label>Nom du produit</label><input type="text" name="prod_nom[]"></div>
+      <div class="f"><label>Catégorie</label>
+        <select name="prod_cat[]"><option value="">—</option><option>Résine</option><option>Primaire</option><option>Durcisseur</option><option>Vernis</option><option>Paillettes / déco</option><option>Outil</option><option>Kit complet</option><option>Autre</option></select></div>
+      <div class="f"><label>Conditionnement</label><input type="text" name="prod_cond[]" placeholder="Ex : kit 20 kg, bidon 5 L"></div>
+      <div class="f"><label>Prix de vente HT</label><input type="text" name="prod_prix[]" placeholder="Ex : 189 €"></div>
+      <div class="f"><label>Ratio de consommation<span class="hint">Le calcul des quantités</span></label><input type="text" name="prod_ratio[]" placeholder="Ex : 1,5 kg/m² · 1 kit = 10 m²"></div>
+      <div class="f"><label>Fournisseur / marque</label><input type="text" name="prod_fourn[]"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+/* ===================== CONFIG ===================== */
+// 1) Crée un workflow n8n avec un node "Webhook" (POST), copie son URL de PRODUCTION ici :
+const WEBHOOK_URL = "https://crealeads.app.n8n.cloud/webhook/onboarding-client";
+// 2) DEMO_MODE = true -> simule l'envoi (pour tester l'affichage sans n8n).
+//    Passe à false une fois le webhook n8n branché.
+const DEMO_MODE = false;
+/* ================================================== */
+
+const form = document.getElementById('form');
+const repNet = document.getElementById('rep-net');
+const repProd = document.getElementById('rep-prod');
+const STORE_KEY = 'crealeads_onboarding_v1';
+
+/* ---- repeatable rows ---- */
+function reindex(container, label){
+  [...container.children].forEach((c,i)=>{ const idx=c.querySelector('.rep-idx'); if(idx) idx.textContent = label+' '+(i+1); });
+}
+function addRow(type){
+  const tpl = document.getElementById(type==='net'?'tpl-net':'tpl-prod');
+  const node = tpl.content.firstElementChild.cloneNode(true);
+  node.querySelector('.rep-rm').addEventListener('click',()=>{
+    node.remove(); reindex(type==='net'?repNet:repProd, type==='net'?'Applicateur':'Produit'); save();
+  });
+  node.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',save));
+  (type==='net'?repNet:repProd).appendChild(node);
+  reindex(type==='net'?repNet:repProd, type==='net'?'Applicateur':'Produit');
+}
+document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{addRow(b.dataset.add);save();}));
+addRow('net'); addRow('prod');
+
+/* ---- file inputs: show list ---- */
+function fmtSize(b){ return b<1024?b+' o':b<1048576?(b/1024).toFixed(0)+' Ko':(b/1048576).toFixed(1)+' Mo'; }
+document.querySelectorAll('input[type=file]').forEach(inp=>{
+  const list = inp.closest('.f').querySelector('.filelist');
+  inp.addEventListener('change',()=>{
+    list.innerHTML='';
+    [...inp.files].forEach(f=>{
+      const r=document.createElement('div'); r.className='filerow';
+      r.innerHTML='<svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span class="nm"></span><span class="sz"></span>';
+      r.querySelector('.nm').textContent=f.name; r.querySelector('.sz').textContent=fmtSize(f.size);
+      list.appendChild(r);
+    });
+    updateProgress();
+  });
+});
+
+/* ---- progress ---- */
+const reqEls = [...form.querySelectorAll('[data-req]')];
+function isFilled(el){
+  if(el.type==='file') return el.files.length>0;
+  if(el.type==='checkbox'){ return form.querySelectorAll('input[name="'+el.name+'"]:checked').length>0; }
+  return el.value.trim()!=='';
+}
+function updateProgress(){
+  const seen={}; let total=0, done=0;
+  reqEls.forEach(el=>{
+    if(el.type==='checkbox'){ if(seen[el.name])return; seen[el.name]=1; }
+    total++; if(isFilled(el)) done++;
+  });
+  const pct = total? Math.round(done/total*100):0;
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progPct').textContent=pct+'%';
+}
+form.addEventListener('input',()=>{updateProgress();save();});
+form.addEventListener('change',()=>{updateProgress();});
+
+/* ---- section nav highlight + done ticks ---- */
+const navItems=[...document.querySelectorAll('.nav-item')];
+const secs=[...document.querySelectorAll('.sec')];
+const io=new IntersectionObserver((ents)=>{
+  ents.forEach(e=>{ if(e.isIntersecting){
+    const id=e.target.id; navItems.forEach(n=>n.classList.toggle('on', n.getAttribute('href')==='#'+id));
+  }});
+},{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(s=>io.observe(s));
+function markDone(){
+  secs.forEach((s,i)=>{
+    const reqs=[...s.querySelectorAll('[data-req]')];
+    const ok = reqs.length===0 ? false : reqs.every(isFilled);
+    navItems[i] && navItems[i].classList.toggle('done', ok && !navItems[i].classList.contains('on') ? true : ok);
+  });
+}
+form.addEventListener('input',markDone);
+form.addEventListener('change',markDone);
+
+/* ---- autosave (graceful) ---- */
+function save(){
+  try{
+    const data={};
+    form.querySelectorAll('input,select,textarea').forEach(el=>{
+      if(el.type==='file') return;
+      if(el.type==='checkbox'||el.type==='radio'){ if(el.checked){(data[el.name]=data[el.name]||[]).push(el.value);} }
+      else if(el.name){ data[el.name]=data[el.name]; if(el.name.endsWith('[]')){(data[el.name]=data[el.name]||[]).push(el.value);} else data[el.name]=el.value; }
+    });
+    localStorage.setItem(STORE_KEY, JSON.stringify(data));
+  }catch(e){}
+}
+function restore(){
+  try{
+    const raw=localStorage.getItem(STORE_KEY); if(!raw) return;
+    const data=JSON.parse(raw);
+    Object.keys(data).forEach(k=>{
+      if(k.endsWith('[]')) return; // repeatable rows not restored to keep it simple
+      const els=form.querySelectorAll('[name="'+k+'"]');
+      if(!els.length) return;
+      const val=data[k];
+      els.forEach(el=>{
+        if(el.type==='checkbox'||el.type==='radio'){ el.checked = Array.isArray(val)&&val.includes(el.value); }
+        else el.value = val;
+      });
+    });
+    updateProgress(); markDone();
+  }catch(e){}
+}
+restore();
+
+/* ---- validation + submit ---- */
+const errBox=document.getElementById('errBox');
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  errBox.style.display='none';
+  let firstBad=null, seen={};
+  reqEls.forEach(el=>{
+    if(el.type==='checkbox'){ if(seen[el.name])return; seen[el.name]=1; }
+    const ok=isFilled(el);
+    const target = el.type==='file'||el.type==='checkbox' ? el.closest('.f').querySelector('.drop,.pills,input,select,textarea') : el;
+    if(!ok){ el.classList.add('bad'); if(target&&target.classList)target.classList.add('bad'); if(!firstBad)firstBad=el.closest('.sec'); }
+    else { el.classList.remove('bad'); }
+  });
+  if(firstBad){
+    errBox.textContent='Il manque quelques infos obligatoires (marquées d\'une *). On t\'a remonté à l\'endroit à compléter.';
+    errBox.style.display='block';
+    firstBad.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='Envoi en cours…';
+
+  if(DEMO_MODE){ setTimeout(showDone, 700); return; }
+
+  try{
+    const fd=new FormData(form);
+    const res=await fetch(WEBHOOK_URL,{method:'POST',body:fd});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    showDone();
+  }catch(err){
+    btn.disabled=false; btn.textContent='Envoyer mes informations à CreaLeads';
+    errBox.textContent='L\'envoi n\'a pas abouti. Vérifie ta connexion et réessaie. Si ça bloque, écris-nous à contact.crealeads@gmail.com — on récupère tout manuellement.';
+    errBox.style.display='block';
+  }
+});
+function showDone(){
+  document.querySelector('.wrap').style.display='none';
+  document.querySelector('.hero').style.display='none';
+  document.getElementById('done').style.display='block';
+  document.getElementById('progFill').style.width='100%';
+  document.getElementById('progPct').textContent='100%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+updateProgress();
+</script>
+</body>
+</html>
