@@ -8,14 +8,15 @@ const offers = [
     tagline: "Vous partez seul",
     price: "1 500 €",
     priceDetail: "Paiement unique. Sans engagement.",
-    desc: "Le terrain d'essai. Un système professionnel pour tester l'acquisition digitale sans engagement mensuel. Vous repartez avec tout.",
+    agents: "Théo + Iris",
+    desc: "Le terrain d'essai. Vos pubs tournent, les demandes tombent dans votre téléphone. Vous repartez avec tout.",
     features: [
-      "1 campagne Meta Ads complète",
-      "CRM Google Sheets",
-      "Notification WhatsApp",
-      "2 à 3 visuels publicitaires",
-      "Formation d'une heure",
-      "Support par e-mail 30 jours",
+      "Théo — 1 campagne Meta Lead Ads ciblée",
+      "Iris — 2 à 3 visuels publicitaires",
+      "Ciblage zone + métier précis",
+      "Formulaire instantané + notification à chaque lead",
+      "CRM Google Sheets automatisé",
+      "Kickoff + support 1 mois",
     ],
     highlight: false,
     href: "/offres#decollage",
@@ -26,17 +27,16 @@ const offers = [
     tagline: "On avance ensemble",
     price: "2 500 €",
     priceDetail: "+ 500 €/mois · Engagement 3 mois",
-    desc: "Le choix le plus populaire. Un partenaire de croissance qui optimise vos campagnes chaque mois pour des résultats durables.",
+    agents: "Théo · Iris · Lucie · Victor",
+    desc: "Le plus choisi. Lucie répond à vos prospects, Victor surveille vos chiffres, on optimise chaque mois.",
     features: [
       "Tout DÉCOLLAGE, et en plus :",
-      "3 campagnes (prospection, retargeting, similaire)",
-      "Gestion de votre page Google My Business",
-      "CRM Airtable avancé",
-      "Compte Renalto inclus",
-      "Optimisation mensuelle",
-      "Rapport mensuel détaillé",
-      "Appel mensuel de suivi",
-      "Support WhatsApp prioritaire",
+      "Lucie — réceptionniste IA 24/7 (répond en < 1 min, qualifie, cale les visites)",
+      "Victor — bilan clair chaque semaine",
+      "2 à 3 campagnes + retargeting",
+      "Visuels pro renouvelés chaque mois",
+      "CRM avancé + alertes",
+      "Support prioritaire",
     ],
     highlight: true,
     href: "/offres#copilote",
@@ -47,16 +47,16 @@ const offers = [
     tagline: "L'IA pilote pour vous",
     price: "6 000 €",
     priceDetail: "+ 1 200 €/mois · Engagement 6 mois",
-    desc: "L'écosystème complet. Des agents intelligents qui qualifient vos prospects en continu, vous informent chaque matin et automatisent vos devis.",
+    agents: "+ Amandine · téléphonie IA",
+    desc: "L'écosystème complet. Lucie passe au téléphone, Amandine devient votre bras droit, vous dominez plusieurs zones.",
     features: [
       "Tout COPILOTE, et en plus :",
-      "Agent IA de qualification 24h/24",
-      "Brief matinal automatique",
-      "Renalto en API (devis sous 5 min)",
-      "WhatsApp Business dédié",
-      "Appel hebdomadaire",
-      "Co-pilotage stratégique",
-      "Support sous 1 heure",
+      "Amandine — votre bras droit (le point business par message)",
+      "Lucie + téléphonie IA",
+      "Relances + prise de RDV automatiques",
+      "Multi-zones : dominez plusieurs secteurs",
+      "Redistribution des leads de votre réseau",
+      "Pilotage & reporting avancé",
     ],
     highlight: false,
     href: "/offres#autopilote",
@@ -106,8 +106,12 @@ export default function OffersOverview() {
                   {offer.price}
                 </span>
               </div>
-              <div className={`text-xs mb-5 sm:mb-6 pb-5 sm:pb-6 border-b ${offer.highlight ? "text-bg/60 border-bg/10" : "text-ink-60 border-ink-10"}`}>
+              <div className={`text-xs mb-4 pb-5 sm:pb-6 border-b ${offer.highlight ? "text-bg/60 border-bg/10" : "text-ink-60 border-ink-10"}`}>
                 {offer.priceDetail}
+              </div>
+
+              <div className={`inline-flex items-center gap-2 text-xs font-bold mb-4 px-3 py-1.5 rounded-full self-start ${offer.highlight ? "bg-emerald text-ink" : "bg-emerald/10 text-emerald-dark"}`}>
+                <span aria-hidden>🤖</span> {offer.agents}
               </div>
 
               <p className={`text-sm mb-5 sm:mb-6 leading-relaxed ${offer.highlight ? "text-bg/80" : "text-ink-60"}`}>
@@ -139,7 +143,27 @@ export default function OffersOverview() {
           ))}
         </div>
 
-        <div className="text-center mt-10 sm:mt-12">
+        {/* Écosystème — sur-mesure */}
+        <div className="mt-6 sm:mt-8 rounded-2xl border border-ink-10 bg-bg p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="font-display font-bold text-lg">Écosystème</span>
+              <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-ink text-bg">Sur-mesure</span>
+            </div>
+            <p className="text-sm text-ink-60 leading-relaxed">
+              Pour les marques et réseaux : site complet, boutique, campagnes nationales, redistribution réseau, contenu (Marco) et <strong className="text-ink">tous vos agents</strong>. Sur devis.
+            </p>
+          </div>
+          <Link href="/#contact" className="inline-flex items-center justify-center gap-2 bg-ink text-bg font-semibold text-sm px-6 py-3 rounded-full hover:bg-ink/90 transition-colors whitespace-nowrap flex-shrink-0">
+            En parler
+          </Link>
+        </div>
+
+        <p className="text-center text-xs text-ink-60/70 mt-8">
+          Exclusivité : un seul artisan par métier et par zone · Budget publicitaire non inclus
+        </p>
+
+        <div className="text-center mt-8 sm:mt-10">
           <Link
             href="/tarifs"
             className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-emerald transition-colors"

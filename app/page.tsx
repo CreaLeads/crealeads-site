@@ -7,6 +7,7 @@ import CaseStudy from "@/components/CaseStudy";
 import ForYouIf from "@/components/ForYouIf";
 import Clients from "@/components/Clients";
 import Method from "@/components/Method";
+import Agents from "@/components/Agents";
 import OffersOverview from "@/components/OffersOverview";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -26,6 +27,7 @@ export default function Home() {
       <ForYouIf />
       <Clients />
       <Method />
+      <Agents />
       <OffersOverview />
       <Testimonials />
       <FAQ />
