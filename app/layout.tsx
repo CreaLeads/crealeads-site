@@ -100,7 +100,38 @@ const jsonLd = {
     "Génération de leads",
     "Gestion Google My Business",
     "Automatisation marketing",
+    "Agents IA conversationnels",
   ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Offres CreaLeads",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        name: "DÉCOLLAGE",
+        price: "1500",
+        priceCurrency: "EUR",
+        description: "Système d'acquisition clé en main, paiement unique sans engagement. Agents Théo & Iris.",
+        url: `${SITE_URL}/offres`,
+      },
+      {
+        "@type": "Offer",
+        name: "COPILOTE",
+        price: "2500",
+        priceCurrency: "EUR",
+        description: "Acquisition + réceptionniste IA 24/7 (Lucie) et bilan hebdomadaire (Victor). 500 €/mois, engagement 3 mois.",
+        url: `${SITE_URL}/offres`,
+      },
+      {
+        "@type": "Offer",
+        name: "AUTOPILOTE",
+        price: "6000",
+        priceCurrency: "EUR",
+        description: "Écosystème complet d'agents IA dont Amandine, votre bras droit. 1 200 €/mois, engagement 6 mois.",
+        url: `${SITE_URL}/offres`,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

@@ -1,10 +1,10 @@
 "use client";
 
 const stats = [
-  { value: "15", suffix: "", label: "artisans accompagnés" },
-  { value: "60", suffix: "+", label: "leads générés en 5 jours (record)" },
-  { value: "24h", suffix: "", label: "pour vos premiers leads" },
-  { value: "100%", suffix: "", label: "propriété de votre système" },
+  { value: "+20", suffix: "", label: "entreprises accompagnées" },
+  { value: "400", suffix: "+", label: "contacts générés en 2 mois (Eirlly)" },
+  { value: "40 k€", suffix: "", label: "de CA mensuel (SurfaceBéton)" },
+  { value: "×3", suffix: "", label: "de RDV mensuels (Adame)" },
 ];
 
 export default function Stats() {

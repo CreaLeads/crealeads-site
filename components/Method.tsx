@@ -3,64 +3,67 @@
 const steps = [
   {
     num: "01",
-    title: "Appel découverte",
-    desc: "Trente minutes en visio. On comprend votre métier, votre zone, votre volume actuel et vos objectifs. Sans discours commercial inutile.",
+    title: "On configure vos agents",
+    desc: "Votre métier, votre zone, votre panier moyen, votre façon de parler. Vos agents sont réglés sur VOTRE activité.",
   },
   {
     num: "02",
-    title: "Audit et stratégie",
-    desc: "On définit votre cible précise, on construit votre angle d'attaque, on cale vos audiences Meta avec exclusivité zone et métier.",
+    title: "Théo lance vos publicités",
+    desc: "Vos campagnes Meta géolocalisées partent en ligne. Les premières demandes arrivent sous 24 à 72 h.",
   },
   {
     num: "03",
-    title: "Mise en place en 10 jours",
-    desc: "On crée vos campagnes, vos visuels, votre formulaire, votre CRM et vos notifications. Vous validez tout avant le lancement.",
+    title: "Lucie répond et qualifie",
+    desc: "En moins d'une minute, 24h/24, elle engage chaque prospect, écarte les curieux et cale les visites.",
   },
   {
     num: "04",
-    title: "Lancement",
-    desc: "Vos premiers prospects arrivent sous 24 à 48 heures, directement sur votre téléphone. Vous rappelez, vous qualifiez, vous signez.",
+    title: "Vous recevez des RDV qualifiés",
+    desc: "Les visites de chantier tombent dans votre agenda. Vous validez et vous déplacez uniquement pour chiffrer.",
   },
   {
     num: "05",
-    title: "Optimisation continue",
-    desc: "Chaque mois, on analyse, on optimise et on renouvelle les visuels. Les campagnes deviennent plus performantes avec le temps.",
+    title: "Victor analyse, Théo optimise",
+    desc: "Chaque semaine, un bilan clair. Les campagnes s'ajustent pour faire baisser le coût et monter le volume.",
   },
 ];
 
 export default function Method() {
   return (
-    <section id="methode" className="py-16 sm:py-24 lg:py-32">
+    <section id="methode" className="py-16 sm:py-24 lg:py-32 scroll-mt-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mb-10 sm:mb-16 lg:mb-20">
+        <div className="max-w-3xl mb-10 sm:mb-14">
           <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
             Notre méthode
           </div>
           <h2 className="font-display text-display-md">
-            Du premier appel au premier chantier signé, en moins de 14 jours.
+            Un système, cinq étapes. <span className="text-emerald">Vous n&apos;intervenez qu&apos;à la fin.</span>
           </h2>
         </div>
 
-        <div className="space-y-4 sm:space-y-6">
+        {/* 2 colonnes sur mobile, 5 sur desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
           {steps.map((step, i) => (
             <div
               key={i}
-              className="card-hover flex flex-col sm:grid sm:grid-cols-12 gap-3 sm:gap-8 lg:gap-12 sm:items-start bg-bg border border-ink-10 rounded-2xl p-6 sm:p-8 lg:p-10"
+              className="card-hover bg-bg border border-ink-10 rounded-2xl p-4 sm:p-5 lg:p-6 flex flex-col"
             >
-              <div className="sm:col-span-2">
-                <div className="font-display text-display-sm text-emerald">{step.num}</div>
+              <div className="font-display text-2xl sm:text-3xl font-extrabold text-emerald/30 mb-2 sm:mb-3">
+                {step.num}
               </div>
-              <div className="sm:col-span-10">
-                <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold mb-2.5 sm:mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-ink-60 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl">
-                  {step.desc}
-                </p>
-              </div>
+              <h3 className="font-display text-sm sm:text-base lg:text-lg font-bold mb-1.5 sm:mb-2 leading-tight">
+                {step.title}
+              </h3>
+              <p className="text-ink-60 text-[12.5px] sm:text-sm leading-relaxed">
+                {step.desc}
+              </p>
             </div>
           ))}
         </div>
+
+        <p className="mt-6 sm:mt-8 text-sm text-ink-60 max-w-2xl">
+          <strong className="text-ink">Pourquoi pas juste un site web ?</strong> Un site seul n&apos;apporte aucun trafic avant 6 à 12 mois de référencement. Avec nos campagnes, les premiers leads tombent en 24 à 72 h.
+        </p>
       </div>
     </section>
   );
