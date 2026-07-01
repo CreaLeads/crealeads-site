@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Offres",
   description:
-    "Trois niveaux d'accompagnement pour les artisans du bâtiment : DÉCOLLAGE (1 500 €), COPILOTE (2 500 € + 500 €/mois) et AUTOPILOTE. Campagnes Meta Ads, leads qualifiés, CRM et gestion Google My Business.",
+    "Recrutez votre équipe d'agents IA. DÉCOLLAGE 490 €/mois, COPILOTE 890 €/mois, AUTOPILOTE 1 290 €/mois + 1 490 € de setup unique. Sans engagement. Campagnes Meta, réception 24/7 et qualification des leads pour artisans du bâtiment.",
   alternates: { canonical: "/offres" },
   openGraph: {
     title: "Offres — CreaLeads",

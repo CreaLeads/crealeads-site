@@ -10,8 +10,8 @@ const offers = [
     id: "decollage",
     name: "DÉCOLLAGE",
     tagline: "Vous partez seul",
-    price: "1 500 €",
-    priceDetail: "Paiement unique · Sans engagement",
+    price: "490 €/mois",
+    priceDetail: "+ 1 490 € de setup unique · Sans engagement",
     agents: "Théo + Iris",
     pitch: "Le terrain d'essai idéal. Théo lance vos publicités, Iris crée vos visuels. Les demandes tombent dans votre téléphone et vous pilotez ensuite en toute autonomie.",
     forWho: "L'artisan qui veut tester l'acquisition digitale sans s'engager, comprendre le fonctionnement par lui-même, et garder la main sur son marketing.",
@@ -38,8 +38,8 @@ const offers = [
     id: "copilote",
     name: "COPILOTE",
     tagline: "On avance ensemble",
-    price: "2 500 €",
-    priceDetail: "+ 500 €/mois · Engagement 3 mois · Préavis 30 jours",
+    price: "890 €/mois",
+    priceDetail: "+ 1 490 € de setup unique · Sans engagement",
     agents: "Théo · Iris · Lucie · Victor",
     pitch: "Le plus choisi. Lucie répond à vos prospects en moins d'une minute, 24h/24, et cale les visites. Victor surveille vos chiffres. On optimise chaque mois.",
     forWho: "L'artisan qui veut un partenaire de croissance sur la durée, déléguer la complexité du marketing tout en gardant le contrôle stratégique.",
@@ -66,8 +66,8 @@ const offers = [
     id: "autopilote",
     name: "AUTOPILOTE",
     tagline: "L'IA pilote pour vous",
-    price: "6 000 €",
-    priceDetail: "+ 1 200 €/mois · Engagement 6 mois · Préavis 30 jours",
+    price: "1 290 €/mois",
+    priceDetail: "+ 1 490 € de setup unique · Sans engagement",
     agents: "Théo · Iris · Lucie · Victor · Amandine",
     pitch: "L'écosystème complet. Lucie passe au téléphone, Amandine devient votre bras droit, et vous dominez plusieurs zones à la fois. Pour industrialiser votre acquisition.",
     forWho: "L'artisan ambitieux qui veut passer de 3 à 10 chantiers par mois sans embaucher, et sortir du quotidien marketing pour se concentrer sur ses chantiers.",
@@ -82,8 +82,8 @@ const offers = [
       "Support prioritaire (réponse sous 1 h)",
     ],
     notIncluded: [
-      "Marco, le contenu réseaux (offre Écosystème)",
-      "Site & boutique complets (offre Écosystème)",
+      "Marco — contenu réseaux / LinkedIn (add-on Écosystème, +290 €/mois)",
+      "Le budget publicitaire Meta (~750 €/mois, versé directement à Meta)",
     ],
     promise: "Un scaling autonome de votre acquisition. Volume estimé : 60 à 150 prospects par mois. Gain de temps quotidien estimé : 1 à 2 heures.",
     highlight: false,
@@ -199,21 +199,23 @@ export default function OffresPage() {
               <p className="text-sm sm:text-base text-bg/80 leading-relaxed">{current.promise}</p>
             </div>
 
-            <Link
-              href="/#contact"
+            <a
+              href="https://cal.eu/enzo-crealeads/20min"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block text-center btn-primary px-8 py-4 text-base font-semibold rounded-full"
             >
-              <span>Réserver un appel pour cette offre</span>
-            </Link>
+              <span>Réserver un appel</span>
+            </a>
           </div>
 
           {/* Garanties communes */}
           <div className="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
-              { t: "Livraison rapide", d: "7 jours (DÉCOLLAGE, COPILOTE) ou 21 jours (AUTOPILOTE)" },
-              { t: "Propriété totale", d: "Tous les accès et contenus créés vous appartiennent" },
-              { t: "Transparence", d: "Chaque indicateur est consultable à tout moment" },
-              { t: "Exclusivité", d: "Un seul artisan par zone et par métier" },
+              { t: "Budget pub à part", d: "Le budget publicitaire Meta (~750 €/mois) est versé directement à Meta — jamais inclus dans l'abonnement." },
+              { t: "Sans engagement", d: "Préavis de 30 jours. On arrête quand vous voulez, aucune durée minimale." },
+              { t: "Livraison sous 14 jours", d: "Vos campagnes sont en ligne sous deux semaines après le démarrage — garanti." },
+              { t: "Exclusivité", d: "Un seul artisan par métier et par zone." },
             ].map((g, i) => (
               <div key={i} className="bg-ink-05 rounded-2xl p-5">
                 <div className="font-display font-bold text-sm mb-1.5">{g.t}</div>

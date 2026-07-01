@@ -5,14 +5,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const rows = [
-  { label: "Prix de mise en place", values: ["1 500 €", "2 500 €", "6 000 €"], head: true },
-  { label: "Abonnement mensuel", values: ["—", "500 €/mois", "1 200 €/mois"], head: true },
-  { label: "Engagement", values: ["Aucun", "3 mois", "6 mois"] },
+  { label: "Setup unique (au démarrage)", values: ["1 490 €", "1 490 €", "1 490 €"], head: true },
+  { label: "Abonnement mensuel", values: ["490 €/mois", "890 €/mois", "1 290 €/mois"], head: true },
+  { label: "Engagement", values: ["Sans engagement", "Sans engagement", "Sans engagement"] },
   { label: "Théo — publicités Meta", values: ["1 campagne", "2-3 campagnes", "Multi-zones"] },
   { label: "Iris — visuels & vidéos", values: ["2 à 3", "Renouvelés/mois", "Illimités"] },
   { label: "Lucie — réceptionniste 24/7", values: [false, true, "Oui + téléphonie"] },
   { label: "Victor — bilan hebdomadaire", values: [false, true, true] },
   { label: "Amandine — votre bras droit", values: [false, false, true] },
+  { label: "Add-on Marco — contenu réseaux", values: ["+290 €/mois", "+290 €/mois", "+290 €/mois"] },
   { label: "Ciblage zone + métier", values: [true, true, true] },
   { label: "Notification à chaque lead", values: [true, true, true] },
   { label: "CRM", values: ["Google Sheets", "Avancé + alertes", "Avancé + IA"] },
@@ -22,8 +23,8 @@ const rows = [
   { label: "Multi-zones", values: [false, false, true] },
   { label: "Reporting", values: [false, "Hebdomadaire", "Avancé"] },
   { label: "Support", values: ["E-mail 30 jours", "Prioritaire", "Prioritaire sous 1 h"] },
+  { label: "Livraison sous 14 jours", values: [true, true, true] },
   { label: "Exclusivité zone et métier", values: [true, true, true] },
-  { label: "Garantie 50 % remboursé à 90 jours", values: [false, true, true] },
 ];
 
 function Cell({ value }: { value: boolean | string }) {
@@ -101,17 +102,25 @@ export default function TarifsPage() {
             ))}
           </div>
 
+          {/* Mentions communes */}
+          <div className="mt-6 rounded-2xl border border-ink-10 bg-ink-05 p-5 sm:p-6 text-sm text-ink-60 leading-relaxed space-y-1.5">
+            <p><strong className="text-ink">Setup unique de 1 490 €</strong> au démarrage, commun aux trois offres (build complet : campagnes, formulaire, CRM, agents).</p>
+            <p><strong className="text-ink">Budget publicitaire Meta (~750 €/mois) payé à part</strong> — versé directement à Meta, jamais inclus dans l&apos;abonnement.</p>
+            <p><strong className="text-ink">Sans engagement</strong> · préavis 30 jours · livraison sous 14 jours · exclusivité par zone et métier.</p>
+            <p>Add-on <strong className="text-ink">Écosystème (Marco, +290 €/mois)</strong> cumulable à n&apos;importe quel palier.</p>
+          </div>
+
           {/* CTAs par colonne */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-8">
-            <Link href="/#contact" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
+            <a href="https://cal.eu/enzo-crealeads/20min" target="_blank" rel="noopener noreferrer" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
               Choisir DÉCOLLAGE
-            </Link>
-            <Link href="/#contact" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm bg-emerald text-ink hover:bg-emerald-light transition-colors">
+            </a>
+            <a href="https://cal.eu/enzo-crealeads/20min" target="_blank" rel="noopener noreferrer" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm bg-emerald text-ink hover:bg-emerald-light transition-colors">
               Choisir COPILOTE
-            </Link>
-            <Link href="/#contact" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
+            </a>
+            <a href="https://cal.eu/enzo-crealeads/20min" target="_blank" rel="noopener noreferrer" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
               Choisir AUTOPILOTE
-            </Link>
+            </a>
           </div>
 
           <div className="text-center mt-10 sm:mt-12">
