@@ -83,7 +83,7 @@ export default function OffersOverview() {
         </div>
 
         {/* 3 cartes */}
-        <div className="grid lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 lg:items-start">
+        <div className="grid lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
           {offers.map((offer) => (
             <div
               key={offer.name}
