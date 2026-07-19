@@ -5,19 +5,31 @@ import { useState } from "react";
 const faqs = [
   {
     q: "C'est cher, non ?",
-    a: "Vous facturez environ 7 000 € par chantier. Notre installation COPILOTE coûte 2 500 €, soit 35 % d'un seul chantier signé. Si nous vous amenons un seul chantier de plus par mois, c'est rentabilisé. Si nous vous en amenons trois, c'est quatre fois votre investissement. La vraie question n'est pas le prix, mais notre capacité à vous amener au moins un chantier par mois.",
+    a: "Vous facturez environ 7 000 € par chantier. L'offre PRO coûte 397 € par mois, soit à peine 6 % d'un seul chantier signé. Si nous vous amenons un seul chantier de plus par mois, c'est près de dix-sept fois votre investissement mensuel. La vraie question n'est pas le prix, mais notre capacité à vous amener au moins un chantier par mois.",
+  },
+  {
+    q: "Il y a des frais de mise en place ?",
+    a: "Non, aucun. Le build complet — campagnes Meta, visuels, formulaire, chatbot SMS, CRM et site vitrine — est intégré dans l'abonnement mensuel. Vous ne payez rien au démarrage. Seul le budget publicitaire reste à part : il est versé directement à Meta, depuis votre propre compte.",
+  },
+  {
+    q: "Il y a un engagement ?",
+    a: "Aucun. Pas de durée minimale, pas de pénalité. Pour arrêter, un simple e-mail suffit : vous réglez le mois en cours et c'est terminé. Notre objectif est que vous restiez parce que les résultats sont là, pas parce qu'un contrat vous y oblige. Un conseil malgré tout : les campagnes Meta s'optimisent sur trente jours minimum, l'algorithme a besoin de données pour apprendre. Juger le système après une semaine n'aurait pas de sens.",
+  },
+  {
+    q: "Le budget publicitaire est-il inclus ?",
+    a: "Non, et c'est volontaire. Le budget publicitaire est versé directement à Meta depuis votre propre compte : nous n'y touchons jamais. Vous gardez la main dessus, vous voyez exactement ce qui est dépensé, et vous restez propriétaire de votre compte publicitaire. Le montant dépend de votre zone et de vos objectifs — on le définit ensemble lors de l'appel.",
   },
   {
     q: "J'ai déjà essayé les publicités Facebook, ça n'a pas marché.",
-    a: "C'est fréquent. La plupart des artisans qui lancent des publicités Meta seuls les configurent mal : audience trop large, visuels basiques, formulaire non optimisé, absence de retargeting. Nous faisons de la génération de leads ciblée, avec un ciblage métier et zone, trois campagnes coordonnées et un renouvellement régulier des visuels. Ce n'est pas comparable à une publication boostée à 50 € par mois.",
+    a: "C'est fréquent. La plupart des artisans qui lancent des publicités Meta seuls les configurent mal : audience trop large, visuels basiques, formulaire non optimisé, absence de retargeting. Nous faisons de la génération de leads ciblée, avec un ciblage métier et zone, des campagnes coordonnées et un renouvellement régulier des visuels. Ce n'est pas comparable à une publication boostée à 50 € par mois.",
   },
   {
-    q: "Pourquoi un engagement de 3 mois sur COPILOTE ?",
-    a: "Les campagnes Meta s'optimisent sur trente jours minimum. L'algorithme a besoin de données pour apprendre. Si vous testez un mois et vous arrêtez, vous ne voyez qu'une fraction du potentiel. À trois mois, nous pouvons vous garantir un retour. C'est une protection pour vous, pas pour nous. Si vous préférez aucun engagement, l'offre DÉCOLLAGE est faite pour ça.",
+    q: "Quelle est la différence entre STARTER, PRO et SCALE ?",
+    a: "STARTER (197 €/mois) lance votre acquisition : Théo diffuse une campagne Meta de prospection, Iris crée vos visuels, et un chatbot SMS qualifie vos demandes. PRO (397 €/mois) ajoute Lucie, qui répond à vos prospects en moins d'une minute 24h/24, et Victor, qui vous envoie le bilan chaque mois — avec une deuxième campagne de retargeting. SCALE (697 €/mois) ajoute Amandine, votre bras droit joignable par message, et Marco, qui alimente vos réseaux — plus les audiences lookalike, Google My Business, Google Ads et le multi-zone.",
   },
   {
     q: "Pouvez-vous me garantir un nombre de chantiers par mois ?",
-    a: "Non, et c'est une réponse honnête. Le résultat dépend de votre métier, de votre panier moyen, de votre budget publicitaire et de votre capacité à conclure en rendez-vous. Nous garantissons la qualité du système et une transparence totale sur les indicateurs. Et nous remboursons 50 % de l'installation si, après 90 jours, vous ne constatez aucune différence (offres COPILOTE et AUTOPILOTE).",
+    a: "Non, et c'est une réponse honnête. Le résultat dépend de votre métier, de votre panier moyen, de votre budget publicitaire et de votre capacité à conclure en rendez-vous. Nous garantissons la qualité du système et une transparence totale sur les indicateurs. Et comme il n'y a ni frais de mise en place ni engagement, vous ne prenez aucun risque à essayer.",
   },
   {
     q: "Avec combien d'artisans travaillez-vous en parallèle ?",
@@ -25,15 +37,7 @@ const faqs = [
   },
   {
     q: "Gérez-vous aussi les appels et les rendez-vous physiques ?",
-    a: "Non. Nous gérons l'acquisition digitale : publicités Meta et qualification WhatsApp pour l'offre AUTOPILOTE. Les appels et les rendez-vous physiques restent de votre ressort. Avec AUTOPILOTE, l'intelligence artificielle pré-qualifie les prospects pour que vous n'appeliez que les plus sérieux.",
-  },
-  {
-    q: "Quelle est la différence entre COPILOTE et AUTOPILOTE ?",
-    a: "Avec COPILOTE, nous pilotons vos campagnes Meta et vous gérez vos prospects manuellement. Avec AUTOPILOTE, nous pilotons les campagnes et une intelligence artificielle répond et qualifie vos prospects sur WhatsApp en moins de trente secondes, 24h/24. C'est l'équivalent d'un commercial junior, pour un coût bien inférieur.",
-  },
-  {
-    q: "Et si je veux arrêter avant la fin de l'engagement ?",
-    a: "Un préavis de trente jours, par e-mail, suffit. Vous réglez le mois en cours et le mois suivant, et c'est terminé. Aucune pénalité, aucun blocage. Notre objectif est que vous restiez parce que les résultats sont là, pas parce que vous êtes contraint.",
+    a: "Nous gérons l'acquisition digitale : publicités Meta, qualification automatique par SMS et prise de contact. Dès l'offre PRO, Lucie répond à vos prospects en moins d'une minute, 24h/24, les qualifie et écarte les curieux — pour que vous n'appeliez que les gens sérieux. Les rendez-vous physiques et la signature restent de votre ressort.",
   },
 ];
 

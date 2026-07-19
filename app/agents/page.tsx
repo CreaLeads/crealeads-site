@@ -4,34 +4,34 @@ import Footer from "@/components/Footer";
 
 const AGENTS = [
   {
-    i: "T", name: "Théo", role: "Acquisition Meta", tier: "dès DÉCOLLAGE",
+    i: "T", name: "Théo", role: "Acquisition Meta", tier: "dès STARTER",
     short: "Lance et optimise vos publicités Facebook & Instagram.",
     long: "Théo construit et pilote vos campagnes Meta géolocalisées, ciblées sur votre métier et votre zone. Il teste les audiences, fait tourner les visuels et ajuste les enchères pour faire baisser le coût par demande et monter le volume, semaine après semaine.",
   },
   {
-    i: "I", name: "Iris", role: "Studio créa", tier: "dès DÉCOLLAGE",
+    i: "I", name: "Iris", role: "Studio créa", tier: "dès STARTER",
     short: "Crée et renouvelle vos visuels et vidéos publicitaires.",
-    long: "Iris produit les créations qui arrêtent le scroll : visuels avant/après, vidéos de chantier, formats adaptés à chaque réseau. En COPILOTE et au-delà, elle renouvelle vos créas chaque mois pour éviter l'usure publicitaire.",
+    long: "Iris produit les créations qui arrêtent le scroll : visuels avant/après, vidéos de chantier, formats adaptés à chaque réseau. Dès l'offre PRO, elle renouvelle vos créas automatiquement pour éviter l'usure publicitaire.",
   },
   {
-    i: "L", name: "Lucie", role: "Réceptionniste 24/7", tier: "dès COPILOTE",
+    i: "L", name: "Lucie", role: "Réceptionniste 24/7", tier: "dès PRO",
     short: "Répond à vos prospects en moins d'1 min, 24h/24.",
-    long: "Lucie engage chaque nouvelle demande en moins d'une minute, à toute heure. Elle pose les bonnes questions, écarte les curieux, garde les prospects sérieux et cale directement les visites dans votre agenda. En AUTOPILOTE, elle passe aussi au téléphone.",
+    long: "Lucie engage chaque nouvelle demande en moins d'une minute, à toute heure. Elle pose les bonnes questions, écarte les curieux, garde les prospects sérieux et cale directement les visites dans votre agenda. Week-ends et jours fériés compris.",
   },
   {
-    i: "V", name: "Victor", role: "Analyste", tier: "dès COPILOTE",
-    short: "Surveille vos chiffres et vous envoie un bilan chaque semaine.",
-    long: "Victor suit en continu vos indicateurs : nombre de demandes, coût par lead, budget consommé, RDV calés. Chaque semaine, il vous envoie un bilan clair et lisible — aucune zone d'ombre, vous savez toujours où va votre argent.",
+    i: "V", name: "Victor", role: "Analyste", tier: "dès PRO",
+    short: "Surveille vos chiffres et vous envoie un bilan chaque mois.",
+    long: "Victor suit en continu vos indicateurs : nombre de demandes, coût par lead, budget consommé, RDV calés. Chaque mois, il vous envoie automatiquement un bilan clair et lisible — aucune zone d'ombre, vous savez toujours où va votre argent.",
   },
   {
-    i: "A", name: "Amandine", role: "Votre bras droit", tier: "dès AUTOPILOTE",
+    i: "A", name: "Amandine", role: "Votre bras droit", tier: "dès SCALE",
     short: "Vous lui demandez où en est votre business, elle répond.",
     long: "Amandine est votre interlocutrice directe. Vous lui écrivez un message — « combien de RDV cette semaine ? », « où en est ma campagne ? » — et elle vous répond avec les vrais chiffres. Le pilotage de votre acquisition au bout des doigts.",
   },
   {
-    i: "M", name: "Marco", role: "Contenu réseaux", tier: "Écosystème",
+    i: "M", name: "Marco", role: "Contenu réseaux", tier: "dès SCALE",
     short: "Alimente vos réseaux sociaux pour renforcer votre image.",
-    long: "Marco publie régulièrement sur vos réseaux pour renforcer votre crédibilité et votre image de marque. Réservé à l'offre Écosystème, pour les artisans et réseaux qui veulent une présence forte au-delà de la publicité.",
+    long: "Marco publie régulièrement sur vos réseaux pour renforcer votre crédibilité et votre image de marque. Inclus dans l'offre SCALE, pour les artisans et réseaux qui veulent une présence forte au-delà de la publicité.",
   },
 ];
 
@@ -93,9 +93,9 @@ export default function AgentsPage() {
           </h2>
           <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
             {[
-              { name: "DÉCOLLAGE", agents: "Théo + Iris", href: "/offres#decollage" },
-              { name: "COPILOTE", agents: "Théo · Iris · Lucie · Victor", href: "/offres#copilote", highlight: true },
-              { name: "AUTOPILOTE", agents: "Théo · Iris · Lucie · Victor · Amandine", href: "/offres#autopilote" },
+              { name: "STARTER", agents: "Théo + Iris", href: "/offres#starter" },
+              { name: "PRO", agents: "Théo · Iris · Lucie · Victor", href: "/offres#pro", highlight: true },
+              { name: "SCALE", agents: "Théo · Iris · Lucie · Victor · Amandine · Marco", href: "/offres#scale" },
             ].map((o) => (
               <Link
                 key={o.name}

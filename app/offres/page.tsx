@@ -7,83 +7,81 @@ import Footer from "@/components/Footer";
 
 const offers = [
   {
-    id: "decollage",
-    name: "DÉCOLLAGE",
-    tagline: "Vous partez seul",
-    price: "490 €/mois",
-    priceDetail: "+ 1 490 € de setup unique · Sans engagement",
+    id: "starter",
+    name: "STARTER",
+    tagline: "On allume la machine",
+    price: "197 €/mois",
+    priceDetail: "Sans frais de mise en place · Sans engagement",
     agents: "Théo + Iris",
-    pitch: "Le terrain d'essai idéal. Théo lance vos publicités, Iris crée vos visuels. Les demandes tombent dans votre téléphone et vous pilotez ensuite en toute autonomie.",
-    forWho: "L'artisan qui veut tester l'acquisition digitale sans s'engager, comprendre le fonctionnement par lui-même, et garder la main sur son marketing.",
+    pitch: "Le point de départ. Théo lance votre campagne Meta, Iris crée vos visuels, et un chatbot SMS qualifie chaque demande avant qu'elle n'arrive dans votre téléphone.",
+    forWho: "L'artisan qui veut lancer son acquisition digitale sans avance de frais, tester le canal Meta et récupérer ses premières demandes qualifiées.",
     included: [
-      "Théo — 1 campagne Meta Lead Ads (audience, ciblage zone + métier)",
-      "Iris — 2 à 3 visuels publicitaires créés sur mesure",
-      "Formulaire instantané rempli en 2 clics",
+      "Théo — 1 campagne Meta de prospection automatique (ciblage zone + métier)",
+      "Iris — visuels publicitaires créés sur mesure",
+      "Chatbot SMS qui qualifie vos leads automatiquement",
+      "CRM automatisé — chaque demande classée sans rien saisir",
+      "Site vitrine inclus",
       "Notification à chaque nouvelle demande",
-      "CRM Google Sheets automatisé",
-      "Page de remerciement après formulaire",
-      "Kickoff + support 1 mois",
-      "Propriété totale des accès et contenus",
+      "Exclusivité sur votre zone et votre métier",
     ],
     notIncluded: [
       "Lucie, la réceptionniste IA 24/7",
-      "Victor, le bilan hebdomadaire",
-      "Optimisation continue après livraison",
-      "Retargeting et audience similaire",
+      "Victor, le reporting automatique",
+      "Retargeting et audiences lookalike",
+      "Google My Business et Google Ads",
     ],
     promise: "Vos premiers prospects sous 24 à 72 heures après le lancement. Volume estimé : 10 à 30 prospects sur les 30 premiers jours.",
     highlight: false,
   },
   {
-    id: "copilote",
-    name: "COPILOTE",
+    id: "pro",
+    name: "PRO",
     tagline: "On avance ensemble",
-    price: "890 €/mois",
-    priceDetail: "+ 1 490 € de setup unique · Sans engagement",
+    price: "397 €/mois",
+    priceDetail: "Sans frais de mise en place · Sans engagement",
     agents: "Théo · Iris · Lucie · Victor",
-    pitch: "Le plus choisi. Lucie répond à vos prospects en moins d'une minute, 24h/24, et cale les visites. Victor surveille vos chiffres. On optimise chaque mois.",
-    forWho: "L'artisan qui veut un partenaire de croissance sur la durée, déléguer la complexité du marketing tout en gardant le contrôle stratégique.",
+    pitch: "Le plus choisi. Lucie répond à vos prospects en moins d'une minute, 24h/24. Victor vous envoie le bilan chaque mois. Vos visuels se renouvellent tout seuls.",
+    forWho: "L'artisan qui ne veut plus rappeler ses prospects lui-même, et qui veut un flux régulier de demandes traitées, qualifiées et suivies.",
     included: [
-      "Tout ce que comprend l'offre DÉCOLLAGE",
-      "Lucie — réceptionniste IA 24/7 : répond en < 1 min, qualifie, écarte les curieux, cale les visites",
-      "Victor — bilan clair et complet chaque semaine",
-      "Théo — 2 à 3 campagnes coordonnées (prospection + retargeting + audience similaire)",
-      "Iris — visuels pro renouvelés chaque mois",
+      "Tout ce que comprend l'offre STARTER",
+      "Lucie — réceptionniste IA 24/7 : répond en moins d'une minute, qualifie et écarte les curieux",
+      "Victor — reporting mensuel automatique",
+      "Théo — 2 campagnes coordonnées (prospection + retargeting)",
+      "Iris — visuels IA renouvelés automatiquement",
       "CRM avancé avec pipeline et alertes",
       "Optimisation continue des campagnes",
-      "Support prioritaire (réponse sous 4 h)",
+      "Support prioritaire",
     ],
     notIncluded: [
       "Amandine, votre bras droit",
-      "Lucie au téléphone (téléphonie IA)",
-      "Prise de RDV automatique",
-      "Multi-zones",
+      "Marco, le contenu réseaux",
+      "Audiences lookalike",
+      "Google My Business et Google Ads",
     ],
     promise: "Une croissance régulière de vos prospects, mois après mois. Volume estimé : 30 à 80 prospects par mois selon votre budget publicitaire.",
     highlight: true,
   },
   {
-    id: "autopilote",
-    name: "AUTOPILOTE",
-    tagline: "L'IA pilote pour vous",
-    price: "1 290 €/mois",
-    priceDetail: "+ 1 490 € de setup unique · Sans engagement",
-    agents: "Théo · Iris · Lucie · Victor · Amandine",
-    pitch: "L'écosystème complet. Lucie passe au téléphone, Amandine devient votre bras droit, et vous dominez plusieurs zones à la fois. Pour industrialiser votre acquisition.",
-    forWho: "L'artisan ambitieux qui veut passer de 3 à 10 chantiers par mois sans embaucher, et sortir du quotidien marketing pour se concentrer sur ses chantiers.",
+    id: "scale",
+    name: "SCALE",
+    tagline: "L'équipe au complet",
+    price: "697 €/mois",
+    priceDetail: "Sans frais de mise en place · Sans engagement",
+    agents: "Théo · Iris · Lucie · Victor · Amandine · Marco",
+    pitch: "L'écosystème complet. Amandine devient votre bras droit, Marco alimente vos réseaux, et votre acquisition s'étend à Google et à plusieurs zones à la fois.",
+    forWho: "L'artisan ambitieux qui veut passer de 3 à 10 chantiers par mois sans embaucher, et couvrir plusieurs secteurs ou plusieurs métiers en parallèle.",
     included: [
-      "Tout ce que comprend l'offre COPILOTE",
+      "Tout ce que comprend l'offre PRO",
       "Amandine — votre bras droit : vous lui demandez où en est votre business par message, elle vous répond",
-      "Lucie + téléphonie IA (elle appelle et reçoit les appels)",
-      "Relances + prise de RDV automatiques",
-      "Multi-zones : dominez plusieurs secteurs en parallèle",
-      "Redistribution des leads de votre réseau d'applicateurs",
-      "Pilotage & reporting avancé",
+      "Marco — contenu réseaux publié automatiquement",
+      "Audiences lookalike : Meta va chercher les jumeaux de vos meilleurs clients",
+      "Fiche Google My Business gérée de A à Z",
+      "Google Ads automatique",
+      "Multi-zone et multi-métier",
       "Support prioritaire (réponse sous 1 h)",
     ],
     notIncluded: [
-      "Marco — contenu réseaux / LinkedIn (add-on Écosystème, +290 €/mois)",
-      "Le budget publicitaire Meta (~750 €/mois, versé directement à Meta)",
+      "Le budget publicitaire Meta et Google — versé directement aux régies, depuis votre compte",
     ],
     promise: "Un scaling autonome de votre acquisition. Volume estimé : 60 à 150 prospects par mois. Gain de temps quotidien estimé : 1 à 2 heures.",
     highlight: false,
@@ -91,7 +89,7 @@ const offers = [
 ];
 
 export default function OffresPage() {
-  const [active, setActive] = useState("copilote");
+  const [active, setActive] = useState("pro");
   const current = offers.find((o) => o.id === active)!;
 
   return (
@@ -108,7 +106,7 @@ export default function OffresPage() {
             Trois façons de remplir votre agenda.
           </h1>
           <p className="text-base sm:text-lg text-ink-60 max-w-2xl mx-auto leading-relaxed">
-            Choisissez le niveau d'accompagnement qui correspond à votre ambition. De l'essai sans engagement à l'automatisation complète par l'intelligence artificielle.
+            Choisissez le niveau d'accompagnement qui correspond à votre ambition. Un abonnement mensuel, sans frais de mise en place et sans engagement.
           </p>
         </div>
       </section>
@@ -212,9 +210,9 @@ export default function OffresPage() {
           {/* Garanties communes */}
           <div className="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
-              { t: "Budget pub à part", d: "Le budget publicitaire Meta (~750 €/mois) est versé directement à Meta — jamais inclus dans l'abonnement." },
-              { t: "Sans engagement", d: "Préavis de 30 jours. On arrête quand vous voulez, aucune durée minimale." },
-              { t: "Livraison sous 14 jours", d: "Vos campagnes sont en ligne sous deux semaines après le démarrage — garanti." },
+              { t: "Aucun frais de mise en place", d: "Tout est intégré dans l'abonnement mensuel. Vous ne payez rien au démarrage." },
+              { t: "Budget pub à part", d: "Le budget publicitaire est versé directement à Meta, depuis votre compte — jamais inclus dans l'abonnement." },
+              { t: "Sans engagement", d: "Aucune durée minimale. On arrête quand vous voulez." },
               { t: "Exclusivité", d: "Un seul artisan par métier et par zone." },
             ].map((g, i) => (
               <div key={i} className="bg-ink-05 rounded-2xl p-5">

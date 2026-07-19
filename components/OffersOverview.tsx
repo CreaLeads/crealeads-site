@@ -1,9 +1,4 @@
-"use client";
-
-import { useState } from "react";
-
 const CAL = "https://cal.eu/enzo-crealeads/20min";
-const SETUP = "1 490 €";
 
 const AGENT_ROLE: Record<string, { i: string; role: string }> = {
   Théo: { i: "T", role: "Acquisition Meta" },
@@ -11,28 +6,47 @@ const AGENT_ROLE: Record<string, { i: string; role: string }> = {
   Lucie: { i: "L", role: "Réceptionniste 24/7" },
   Victor: { i: "V", role: "Analyste" },
   Amandine: { i: "A", role: "Votre bras droit" },
+  Marco: { i: "M", role: "Contenu réseaux" },
 };
 
 const offers = [
   {
-    name: "DÉCOLLAGE",
-    tagline: "Les fondations",
-    monthly: "490",
+    name: "STARTER",
+    tagline: "On allume la machine",
+    monthly: "197",
     agents: ["Théo", "Iris"],
+    features: [
+      "1 campagne Meta prospection automatique",
+      "Chatbot SMS de qualification des leads",
+      "CRM automatisé + site vitrine",
+    ],
     highlight: false,
   },
   {
-    name: "COPILOTE",
+    name: "PRO",
     tagline: "On avance ensemble",
-    monthly: "890",
+    monthly: "397",
     agents: ["Théo", "Iris", "Lucie", "Victor"],
+    features: [
+      "Tout STARTER, et en plus :",
+      "2 campagnes (prospection + retargeting)",
+      "Visuels IA renouvelés automatiquement",
+      "Reporting mensuel automatique",
+    ],
     highlight: true,
   },
   {
-    name: "AUTOPILOTE",
+    name: "SCALE",
     tagline: "L'équipe au complet",
-    monthly: "1 290",
-    agents: ["Théo", "Iris", "Lucie", "Victor", "Amandine"],
+    monthly: "697",
+    agents: ["Théo", "Iris", "Lucie", "Victor", "Amandine", "Marco"],
+    features: [
+      "Tout PRO, et en plus :",
+      "Audiences lookalike",
+      "Fiche Google My Business gérée",
+      "Google Ads automatique",
+      "Multi-zone / multi-métier",
+    ],
     highlight: false,
   },
 ];
@@ -53,8 +67,6 @@ function AgentRow({ name, dark }: { name: string; dark?: boolean }) {
 }
 
 export default function OffersOverview() {
-  const [eco, setEco] = useState(false);
-
   return (
     <section id="offres" className="py-16 sm:py-24 lg:py-32 bg-ink-05 scroll-mt-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
@@ -66,37 +78,8 @@ export default function OffersOverview() {
             Recrutez votre équipe d&apos;agents.
           </h2>
           <p className="text-base sm:text-lg text-ink-60 leading-relaxed">
-            Vous ne payez pas un logiciel. Vous activez une équipe qui bosse pour vous — plus vous montez en palier, plus il y a d&apos;agents au travail.
+            Un abonnement mensuel, sans frais de mise en place. Plus vous montez de palier, plus il y a d&apos;agents au travail pour vous.
           </p>
-        </div>
-
-        {/* Bandeau setup commun */}
-        <div className="mb-6 sm:mb-8 rounded-2xl bg-ink text-bg p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-center sm:text-left">
-          <div className="flex items-baseline justify-center gap-2 sm:flex-shrink-0">
-            <span className="font-display text-3xl sm:text-4xl font-extrabold text-emerald">{SETUP}</span>
-            <span className="text-sm text-bg/70">de setup unique</span>
-          </div>
-          <p className="text-sm text-bg/70 leading-relaxed sm:border-l sm:border-bg/15 sm:pl-6">
-            Le build complet, payé une seule fois au démarrage : campagnes Meta géolocalisées, formulaire de demande de devis, CRM et agents configurés sur votre activité.
-          </p>
-        </div>
-
-        {/* Toggle add-on Écosystème */}
-        <div className="mb-6 sm:mb-8 flex justify-center">
-          <button
-            type="button"
-            onClick={() => setEco((v) => !v)}
-            aria-pressed={eco}
-            className={`inline-flex items-center gap-3 rounded-full border px-4 py-2.5 text-sm font-medium transition-all ${eco ? "border-emerald bg-emerald/10 text-ink" : "border-ink-10 bg-bg text-ink-60 hover:border-ink/25"}`}
-          >
-            <span className={`relative w-9 h-5 rounded-full transition-colors flex-shrink-0 ${eco ? "bg-emerald" : "bg-ink-20"}`}>
-              <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${eco ? "translate-x-4" : ""}`} />
-            </span>
-            <span>
-              Ajouter <strong>Marco</strong> — Contenu réseaux / LinkedIn{" "}
-              <span className="text-emerald-dark font-semibold">+ 290 €/mois</span>
-            </span>
-          </button>
         </div>
 
         {/* 3 cartes */}
@@ -125,29 +108,28 @@ export default function OffersOverview() {
                 </span>
                 <span className={`text-sm ${offer.highlight ? "text-bg/60" : "text-ink-60"}`}>/mois</span>
               </div>
-              {eco && (
-                <div className="text-sm font-semibold text-emerald-dark mt-1">+ 290 €/mois · Marco</div>
-              )}
               <div className={`text-xs mt-2 mb-5 pb-5 border-b ${offer.highlight ? "text-bg/60 border-bg/10" : "text-ink-60 border-ink-10"}`}>
-                + {SETUP} de setup unique
+                Sans frais de mise en place · sans engagement
               </div>
 
               <div className={`text-xs font-semibold uppercase tracking-wider mb-3 ${offer.highlight ? "text-emerald" : "text-emerald-dark"}`}>
                 L&apos;équipe incluse
               </div>
-              <ul className="space-y-3 mb-7 flex-grow">
+              <ul className="space-y-3 mb-6">
                 {offer.agents.map((name) => (
                   <AgentRow key={name} name={name} dark={offer.highlight} />
                 ))}
-                {eco && (
-                  <li className="flex items-center gap-3">
-                    <span className={`w-8 h-8 rounded-full flex items-center justify-center font-display font-extrabold text-xs flex-shrink-0 ${offer.highlight ? "bg-emerald/20 text-emerald" : "bg-emerald/15 text-emerald-dark"}`}>M</span>
-                    <span className="text-sm">
-                      <strong className={offer.highlight ? "text-bg" : "text-ink"}>Marco</strong>
-                      <span className={offer.highlight ? "text-bg/60" : "text-ink-60"}> — Contenu réseaux</span>
-                    </span>
+              </ul>
+
+              <ul className="space-y-2.5 mb-7 flex-grow">
+                {offer.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-sm">
+                    <svg className="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className={offer.highlight ? "text-bg/90" : "text-ink"}>{f}</span>
                   </li>
-                )}
+                ))}
               </ul>
 
               <a
@@ -167,11 +149,10 @@ export default function OffersOverview() {
         </div>
 
         {/* Mentions communes */}
-        <div className="mt-8 sm:mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="mt-8 sm:mt-10 grid sm:grid-cols-3 gap-3 sm:gap-4">
           {[
-            { t: "💳 Budget pub payé à part", d: "Le budget publicitaire Meta (~750 €/mois) n'est jamais inclus : il est versé directement à Meta, sur votre compte." },
-            { t: "🔓 Sans engagement", d: "Préavis de 30 jours, on arrête quand vous voulez. Aucune durée minimale imposée." },
-            { t: "⏱️ Livraison sous 14 jours", d: "Vos campagnes sont en ligne sous deux semaines après le démarrage — garanti." },
+            { t: "💳 Budget pub payé à part", d: "Le budget publicitaire Meta n'est pas inclus : il reste sur votre compte et est versé directement à Meta." },
+            { t: "🔓 Sans engagement", d: "Aucune durée minimale. Vous arrêtez quand vous voulez." },
             { t: "📍 Exclusivité de zone", d: "Un seul artisan par métier et par secteur. Une fois prise, votre zone n'est plus proposée." },
           ].map((m) => (
             <div key={m.t} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5">

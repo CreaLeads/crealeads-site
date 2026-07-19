@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Tarifs",
   description:
-    "Tarifs CreaLeads pour artisans du bâtiment : setup unique 1 490 € puis 490, 890 ou 1 290 €/mois selon les agents activés. Sans engagement, budget pub payé à part. Comparatif détaillé des offres DÉCOLLAGE, COPILOTE et AUTOPILOTE.",
+    "Tarifs CreaLeads pour artisans du bâtiment : 197, 397 ou 697 €/mois selon les agents activés. Sans frais de mise en place, sans engagement, budget pub payé à part. Comparatif détaillé des offres STARTER, PRO et SCALE.",
   alternates: { canonical: "/tarifs" },
   openGraph: {
     title: "Tarifs — CreaLeads",

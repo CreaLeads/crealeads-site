@@ -5,25 +5,28 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const rows = [
-  { label: "Setup unique (au démarrage)", values: ["1 490 €", "1 490 €", "1 490 €"], head: true },
-  { label: "Abonnement mensuel", values: ["490 €/mois", "890 €/mois", "1 290 €/mois"], head: true },
+  { label: "Abonnement mensuel", values: ["197 €/mois", "397 €/mois", "697 €/mois"], head: true },
+  { label: "Frais de mise en place", values: ["Aucun", "Aucun", "Aucun"], head: true },
   { label: "Engagement", values: ["Sans engagement", "Sans engagement", "Sans engagement"] },
-  { label: "Théo — publicités Meta", values: ["1 campagne", "2-3 campagnes", "Multi-zones"] },
-  { label: "Iris — visuels & vidéos", values: ["2 à 3", "Renouvelés/mois", "Illimités"] },
-  { label: "Lucie — réceptionniste 24/7", values: [false, true, "Oui + téléphonie"] },
-  { label: "Victor — bilan hebdomadaire", values: [false, true, true] },
+  { label: "Théo — acquisition Meta", values: [true, true, true] },
+  { label: "Iris — studio créa", values: [true, true, true] },
+  { label: "Lucie — réceptionniste 24/7", values: [false, true, true] },
+  { label: "Victor — analyste", values: [false, true, true] },
   { label: "Amandine — votre bras droit", values: [false, false, true] },
-  { label: "Add-on Marco — contenu réseaux", values: ["+290 €/mois", "+290 €/mois", "+290 €/mois"] },
-  { label: "Ciblage zone + métier", values: [true, true, true] },
+  { label: "Marco — contenu réseaux", values: [false, false, true] },
+  { label: "Campagnes Meta", values: ["1 (prospection)", "2 (prospection + retargeting)", "2 + lookalike"] },
+  { label: "Visuels IA", values: ["Visuels de lancement", "Renouvelés automatiquement", "Renouvelés automatiquement"] },
+  { label: "Chatbot SMS de qualification", values: [true, true, true] },
+  { label: "CRM automatisé", values: [true, true, true] },
+  { label: "Site vitrine", values: [true, true, true] },
   { label: "Notification à chaque lead", values: [true, true, true] },
-  { label: "CRM", values: ["Google Sheets", "Avancé + alertes", "Avancé + IA"] },
-  { label: "Retargeting & audience similaire", values: [false, true, true] },
-  { label: "Prise de RDV automatique", values: [false, true, true] },
-  { label: "Relances automatiques", values: [false, false, true] },
-  { label: "Multi-zones", values: [false, false, true] },
-  { label: "Reporting", values: [false, "Hebdomadaire", "Avancé"] },
-  { label: "Support", values: ["E-mail 30 jours", "Prioritaire", "Prioritaire sous 1 h"] },
-  { label: "Livraison sous 14 jours", values: [true, true, true] },
+  { label: "Retargeting", values: [false, true, true] },
+  { label: "Reporting automatique", values: [false, "Mensuel", "Mensuel"] },
+  { label: "Audiences lookalike", values: [false, false, true] },
+  { label: "Google My Business géré", values: [false, false, true] },
+  { label: "Google Ads automatique", values: [false, false, true] },
+  { label: "Multi-zone / multi-métier", values: [false, false, true] },
+  { label: "Support", values: ["E-mail", "Prioritaire", "Prioritaire sous 1 h"] },
   { label: "Exclusivité zone et métier", values: [true, true, true] },
 ];
 
@@ -59,7 +62,7 @@ export default function TarifsPage() {
             Des prix clairs, sans surprise.
           </h1>
           <p className="text-base sm:text-lg text-ink-60 max-w-2xl mx-auto leading-relaxed">
-            Comparez nos trois offres en détail. Aucun coût caché, aucune mauvaise surprise. Vous savez exactement ce que vous payez et ce que vous obtenez.
+            Comparez nos trois offres en détail. Aucun frais de mise en place, aucun coût caché. Vous savez exactement ce que vous payez et ce que vous obtenez.
           </p>
         </div>
       </section>
@@ -70,14 +73,14 @@ export default function TarifsPage() {
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-4 mb-2 sticky top-20 sm:top-24 bg-bg/95 backdrop-blur-sm py-4 z-10 rounded-2xl">
             <div className="hidden sm:block" />
             <div className="text-center">
-              <div className="font-display font-bold text-sm sm:text-lg">DÉCOLLAGE</div>
+              <div className="font-display font-bold text-sm sm:text-lg">STARTER</div>
             </div>
             <div className="text-center relative">
-              <div className="font-display font-bold text-sm sm:text-lg text-emerald">COPILOTE</div>
+              <div className="font-display font-bold text-sm sm:text-lg text-emerald">PRO</div>
               <div className="text-[10px] sm:text-xs text-ink-60">Le plus choisi</div>
             </div>
             <div className="text-center">
-              <div className="font-display font-bold text-sm sm:text-lg">AUTOPILOTE</div>
+              <div className="font-display font-bold text-sm sm:text-lg">SCALE</div>
             </div>
           </div>
 
@@ -104,22 +107,21 @@ export default function TarifsPage() {
 
           {/* Mentions communes */}
           <div className="mt-6 rounded-2xl border border-ink-10 bg-ink-05 p-5 sm:p-6 text-sm text-ink-60 leading-relaxed space-y-1.5">
-            <p><strong className="text-ink">Setup unique de 1 490 €</strong> au démarrage, commun aux trois offres (build complet : campagnes, formulaire, CRM, agents).</p>
-            <p><strong className="text-ink">Budget publicitaire Meta (~750 €/mois) payé à part</strong> — versé directement à Meta, jamais inclus dans l&apos;abonnement.</p>
-            <p><strong className="text-ink">Sans engagement</strong> · préavis 30 jours · livraison sous 14 jours · exclusivité par zone et métier.</p>
-            <p>Add-on <strong className="text-ink">Écosystème (Marco, +290 €/mois)</strong> cumulable à n&apos;importe quel palier.</p>
+            <p><strong className="text-ink">Aucun frais de mise en place</strong> — le build complet (campagnes, formulaire, CRM, site vitrine, agents) est intégré dans l&apos;abonnement.</p>
+            <p><strong className="text-ink">Budget publicitaire payé à part</strong> — versé directement à Meta depuis votre compte, jamais inclus dans l&apos;abonnement.</p>
+            <p><strong className="text-ink">Sans engagement</strong> · livraison sous 14 jours · exclusivité par zone et métier.</p>
           </div>
 
           {/* CTAs par colonne */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-8">
             <a href="https://cal.eu/enzo-crealeads/20min" target="_blank" rel="noopener noreferrer" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
-              Choisir DÉCOLLAGE
+              Choisir STARTER
             </a>
             <a href="https://cal.eu/enzo-crealeads/20min" target="_blank" rel="noopener noreferrer" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm bg-emerald text-ink hover:bg-emerald-light transition-colors">
-              Choisir COPILOTE
+              Choisir PRO
             </a>
             <a href="https://cal.eu/enzo-crealeads/20min" target="_blank" rel="noopener noreferrer" className="text-center px-6 py-3.5 rounded-full font-semibold text-sm border border-ink-20 hover:border-ink transition-colors">
-              Choisir AUTOPILOTE
+              Choisir SCALE
             </a>
           </div>
 

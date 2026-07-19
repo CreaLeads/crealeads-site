@@ -6,12 +6,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const AGENTS = [
-  { i: "T", name: "Théo", role: "Acquisition Meta", desc: "Lance et optimise vos pubs Facebook & Instagram, ciblées métier et zone.", tier: "dès DÉCOLLAGE" },
-  { i: "I", name: "Iris", role: "Studio créa", desc: "Crée et renouvelle vos visuels et vidéos qui arrêtent le scroll.", tier: "dès DÉCOLLAGE" },
-  { i: "L", name: "Lucie", role: "Réceptionniste 24/7", desc: "Répond à vos prospects en moins d'1 min, les qualifie et cale les visites.", tier: "dès COPILOTE" },
-  { i: "V", name: "Victor", role: "Analyste", desc: "Surveille vos chiffres et vous envoie un bilan clair chaque semaine.", tier: "dès COPILOTE" },
-  { i: "A", name: "Amandine", role: "Votre bras droit", desc: "Vous lui demandez où en est votre business par message, elle répond.", tier: "dès AUTOPILOTE" },
-  { i: "M", name: "Marco", role: "Contenu réseaux", desc: "Alimente vos réseaux pour renforcer votre image et votre crédibilité.", tier: "Écosystème" },
+  { i: "T", name: "Théo", role: "Acquisition Meta", desc: "Lance et optimise vos pubs Facebook & Instagram, ciblées métier et zone.", tier: "dès STARTER" },
+  { i: "I", name: "Iris", role: "Studio créa", desc: "Crée et renouvelle vos visuels et vidéos qui arrêtent le scroll.", tier: "dès STARTER" },
+  { i: "L", name: "Lucie", role: "Réceptionniste 24/7", desc: "Répond à vos prospects en moins d'1 min, les qualifie et cale les visites.", tier: "dès PRO" },
+  { i: "V", name: "Victor", role: "Analyste", desc: "Surveille vos chiffres et vous envoie un bilan clair chaque mois.", tier: "dès PRO" },
+  { i: "A", name: "Amandine", role: "Votre bras droit", desc: "Vous lui demandez où en est votre business par message, elle répond.", tier: "dès SCALE" },
+  { i: "M", name: "Marco", role: "Contenu réseaux", desc: "Alimente vos réseaux pour renforcer votre image et votre crédibilité.", tier: "dès SCALE" },
 ];
 
 export default function Agents() {
