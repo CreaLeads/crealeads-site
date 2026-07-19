@@ -273,7 +273,7 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
     <div class="card-title">📤 Envoyer pendant le call</div>
     <button class="btn btn-green" onclick="openContractModal()">
       <span class="btn-icon">✍️</span>
-      <div class="btn-info"><div class="btn-main">Générer &amp; envoyer le contrat</div><div class="btn-sub">DÉCOLLAGE 1 500€ / COPILOTE 2 500€ + 500€/m / AUTOPILOTE 6 000€ + 1 200€/m</div></div>
+      <div class="btn-info"><div class="btn-main">Générer &amp; envoyer le contrat</div><div class="btn-sub">STARTER 197€/m · PRO 397€/m · SCALE 697€/m — sans setup, sans engagement</div></div>
     </button>
     <button id="btn-sms" class="btn btn-calcom" onclick="envoyerLienRDV()">
       <span class="btn-icon">📲</span>
@@ -334,17 +334,17 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
   <div class="card">
     <div class="card-title">🎯 Offre CreaLeads — sélectionne le pack à présenter</div>
     <div class="pack-tabs" id="main-pack-tabs">
-      <div class="pack-tab" id="tab-dec" onclick="showPack('decollage')">
-        <div class="pack-tab-name">DÉCOLLAGE</div>
-        <div class="pack-tab-price">1 500€ one-shot</div>
+      <div class="pack-tab" id="tab-sta" onclick="showPack('starter')">
+        <div class="pack-tab-name">STARTER</div>
+        <div class="pack-tab-price">197€/mois</div>
       </div>
-      <div class="pack-tab active" id="tab-cop" onclick="showPack('copilote')">
-        <div class="pack-tab-name">⭐ COPILOTE</div>
-        <div class="pack-tab-price">2 500€ + 500€/m</div>
+      <div class="pack-tab active" id="tab-pro" onclick="showPack('pro')">
+        <div class="pack-tab-name">⭐ PRO</div>
+        <div class="pack-tab-price">397€/mois</div>
       </div>
-      <div class="pack-tab" id="tab-aut" onclick="showPack('autopilote')">
-        <div class="pack-tab-name">AUTOPILOTE</div>
-        <div class="pack-tab-price">6 000€ + 1 200€/m</div>
+      <div class="pack-tab" id="tab-sca" onclick="showPack('scale')">
+        <div class="pack-tab-name">SCALE</div>
+        <div class="pack-tab-price">697€/mois</div>
       </div>
     </div>
     <div id="pack-content"></div>
@@ -478,23 +478,23 @@ body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--navy);min-
       <div>
         <label class="field-label" style="margin-bottom:8px;display:block;font-size:12px;font-weight:700;color:white;">Pack / Formule *</label>
         <div class="tarif-grid">
-          <div class="tarif-btn" id="tarif-dec" onclick="selectPack('decollage')">
-            <div style="font-size:15px;font-weight:900;color:#00C896;">1 500 €</div>
-            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">One-shot</div>
-            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">DÉCOLLAGE</div>
-            <div style="font-size:8px;color:#3d5166;margin-top:2px;">Paiement unique à la signature</div>
+          <div class="tarif-btn" id="tarif-sta" onclick="selectPack('starter')">
+            <div style="font-size:15px;font-weight:900;color:#00C896;">197 €<span style="font-size:10px;">/mois</span></div>
+            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">Théo + Iris</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">STARTER</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">Sans setup · sans engagement</div>
           </div>
-          <div class="tarif-btn" id="tarif-cop" onclick="selectPack('copilote')" style="border-color:#00C896;background:rgba(0,200,150,.1);">
-            <div style="font-size:15px;font-weight:900;color:#00C896;">2 500 € <span style="font-size:10px;">setup</span></div>
-            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 500 €/mois</div>
-            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">⭐ COPILOTE</div>
-            <div style="font-size:8px;color:#3d5166;margin-top:2px;">3 mois min · 2 × 1 250€</div>
+          <div class="tarif-btn" id="tarif-pro" onclick="selectPack('pro')" style="border-color:#00C896;background:rgba(0,200,150,.1);">
+            <div style="font-size:15px;font-weight:900;color:#00C896;">397 €<span style="font-size:10px;">/mois</span></div>
+            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ Lucie + Victor</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">⭐ PRO</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">Sans setup · sans engagement</div>
           </div>
-          <div class="tarif-btn" id="tarif-aut" onclick="selectPack('autopilote')">
-            <div style="font-size:15px;font-weight:900;color:#00C896;">6 000 € <span style="font-size:10px;">setup</span></div>
-            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ 1 200 €/mois</div>
-            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">AUTOPILOTE</div>
-            <div style="font-size:8px;color:#3d5166;margin-top:2px;">6 mois min · 2 × 3 000€</div>
+          <div class="tarif-btn" id="tarif-sca" onclick="selectPack('scale')">
+            <div style="font-size:15px;font-weight:900;color:#00C896;">697 €<span style="font-size:10px;">/mois</span></div>
+            <div style="font-size:9px;color:#fbd38d;margin-top:2px;">+ Amandine + Marco</div>
+            <div style="font-size:9px;color:#00C896;margin-top:2px;font-weight:700;">SCALE</div>
+            <div style="font-size:8px;color:#3d5166;margin-top:2px;">Sans setup · sans engagement</div>
           </div>
         </div>
       </div>
@@ -591,59 +591,58 @@ function openLink(key){
 
 // ── PACK DISPLAY ──
 const PACKS={
-  decollage:{
+  starter:{
     items:[
-      '🎯 1 campagne Lead Ads Meta + formulaire instantané',
+      '🤖 Théo (acquisition Meta) + Iris (studio créa)',
+      '🎯 1 campagne Meta de prospection automatique',
       '📍 Ciblage zone + métier précis',
-      '🔔 Notification instantanée à chaque demande',
+      '💬 Chatbot SMS de qualification des leads',
       '📋 CRM automatisé',
-      '🎨 2-3 visuels publicitaires',
-      '🌐 Page de crédibilité',
-      '📞 Kickoff 30 min + support 1 mois'
+      '🌐 Site vitrine inclus',
+      '🔔 Notification instantanée à chaque demande',
+      '📍 Exclusivité zone + métier'
     ],
-    price:'1 500 €',
+    price:'197 €/mois',
     monthly:null,
-    sub:'Paiement unique · Sans engagement',
+    sub:'Sans frais de mise en place · Sans engagement',
     note:''
   },
-  copilote:{
+  pro:{
     items:[
-      '✅ Tout le pack DÉCOLLAGE',
-      '🔄 3 campagnes (prospection + retargeting + audience similaire)',
-      '🤖 Assistant IA : réponse auto en 30 sec + relances + rappels de RDV',
-      '🟢 Gestion fiche Google',
-      '🎨 5 visuels pro renouvelés chaque mois',
-      '📊 CRM avancé + pipeline & alertes',
-      '📈 Optimisation mensuelle des campagnes',
-      '📋 Rapport mensuel + appel de suivi',
-      '💬 Support prioritaire 4h'
+      '✅ Tout le pack STARTER',
+      '🤖 + Lucie (réceptionniste 24/7) + Victor (analyste)',
+      '🔄 2 campagnes (prospection + retargeting)',
+      '🎨 Visuels IA renouvelés automatiquement',
+      '📊 Reporting mensuel automatique',
+      '📈 Optimisation continue des campagnes',
+      '💬 Support prioritaire'
     ],
-    price:'2 500 €',
-    monthly:'+ 500 €/mois',
-    sub:'Setup 2 × 1 250€ · Mensuel au lancement · 3 mois min',
+    price:'397 €/mois',
+    monthly:null,
+    sub:'Sans frais de mise en place · Sans engagement',
     note:'⭐ Best-seller'
   },
-  autopilote:{
+  scale:{
     items:[
-      '✅ Tout le pack COPILOTE',
-      '🧠 Agent IA conversationnel COMPLET : qualifie les prospects de A à Z par message',
-      '🔥 Scoring automatique des leads (chauds / tièdes)',
-      '📆 Prise & déplacement de RDV autonome',
-      '✍️ Génération de contenu automatique',
-      '🔌 Intégration aux outils de devis en API',
-      '🎯 Accompagnement stratégique dédié'
+      '✅ Tout le pack PRO',
+      '🤖 + Amandine (bras droit) + Marco (contenu)',
+      '🎯 Audiences lookalike',
+      '🟢 Fiche Google My Business gérée',
+      '🔍 Google Ads automatique',
+      '🗺️ Multi-zone / multi-métier',
+      '💬 Support prioritaire sous 1h'
     ],
-    price:'6 000 €',
-    monthly:'+ 1 200 €/mois',
-    sub:'Setup 2 × 3 000€ · Mensuel au lancement · 6 mois min',
-    note:'Haut de gamme — IA complète'
+    price:'697 €/mois',
+    monthly:null,
+    sub:'Sans frais de mise en place · Sans engagement',
+    note:'Équipe complète — 6 agents'
   }
 };
-let activePack='copilote';
+let activePack='pro';
 function showPack(pack){
   activePack=pack;
   // Tabs
-  ['decollage','copilote','autopilote'].forEach(p=>{
+  ['starter','pro','scale'].forEach(p=>{
     const tab=document.getElementById('tab-'+p.slice(0,3));
     if(!tab)return;
     tab.classList.toggle('active',p===pack);
@@ -667,7 +666,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.modal-overlay').forEach(o=>{
     o.addEventListener('click',e=>{if(e.target===o)o.style.display='none';});
   });
-  showPack('copilote');
+  showPack('pro');
   loadLinks();loadEJS();loadNotes();loadMyInfo();
   if(location.protocol==='file:')console.warn('[CreaLeads] file:// — EmailJS peut échouer.');
   if(!isEmailjsLoaded())setEJSStatus('❌ Librairie non chargée (CDN bloqué ?)','#fc8181');
@@ -697,15 +696,15 @@ function openContractModal(){
   document.getElementById('c-moi-ville').value=localStorage.getItem('cl_moi_ville')||'Paris';
   const errEl=document.getElementById('modal-error');
   if(errEl)errEl.style.display='none';
-  selectPack(selectedPack||'copilote');
+  selectPack(selectedPack||'pro');
   document.getElementById('contract-modal').style.display='block';
 }
 
 // ── PACK / TARIF SELECTION (contract modal) ──
-let selectedPack='copilote';
+let selectedPack='pro';
 function selectPack(pack){
   selectedPack=pack;
-  ['decollage','copilote','autopilote'].forEach(p=>{
+  ['starter','pro','scale'].forEach(p=>{
     const btn=document.getElementById('tarif-'+p.slice(0,3));
     if(!btn)return;
     const active=(p===pack);
@@ -864,42 +863,42 @@ async function sendRDV(){
 
 // ── CONTRACT GENERATOR ──
 function getPackServices(pack){
-  if(pack==='decollage')return[
-    '01 · Création de la campagne Lead Ads Meta avec formulaire instantané',
+  if(pack==='starter')return[
+    '01 · Campagne Meta Lead Ads de prospection avec formulaire instantané (agent Théo)',
     '02 · Ciblage zone géographique + métier précis (audience Advantage+)',
-    '03 · Notification instantanée à chaque nouvelle demande',
-    '04 · CRM automatisé (la demande arrive directement en fiche)',
-    '05 · Création de 2 à 3 visuels publicitaires (formats Meta)',
-    '06 · Création de la page de crédibilité',
-    '07 · Kickoff call 30 min + support 1 mois post-livraison',
+    '03 · Création des visuels publicitaires, formats Meta (agent Iris)',
+    '04 · Chatbot SMS de qualification automatique des demandes entrantes',
+    '05 · CRM automatisé (la demande arrive directement en fiche)',
+    '06 · Site vitrine',
+    '07 · Notification instantanée à chaque nouvelle demande',
   ];
-  if(pack==='copilote')return[
-    '01 · Tout le contenu du pack DÉCOLLAGE',
-    '02 · 3 campagnes Lead Ads Meta : prospection + retargeting + audience similaire',
-    '03 · Assistant IA : réponse automatique aux demandes en 30 secondes + relances + rappels de RDV',
-    '04 · Gestion de la fiche Google (Google Business Profile)',
-    '05 · 5 visuels publicitaires professionnels renouvelés chaque mois',
+  if(pack==='pro')return[
+    '01 · Tout le contenu du pack STARTER',
+    '02 · 2 campagnes Meta Lead Ads : prospection + retargeting',
+    '03 · Lucie, réceptionniste IA 24/7 : réponse en moins d\'une minute et qualification des prospects',
+    '04 · Victor, analyste : reporting mensuel automatique',
+    '05 · Visuels publicitaires renouvelés automatiquement',
     '06 · CRM avancé avec pipeline et alertes',
-    '07 · Optimisation mensuelle des campagnes (CPL, audiences, visuels)',
-    '08 · Rapport mensuel + appel de suivi',
-    '09 · Support prioritaire — réponse sous 4h',
+    '07 · Optimisation continue des campagnes (CPL, audiences, visuels)',
+    '08 · Support prioritaire',
   ];
   return[
-    '01 · Tout le contenu du pack COPILOTE',
-    '02 · Agent IA conversationnel complet : qualification des prospects de A à Z par message',
-    '03 · Scoring automatique des leads (chauds / tièdes)',
-    '04 · Prise et déplacement de rendez-vous de façon autonome',
-    '05 · Génération de contenu automatique',
-    '06 · Intégration aux outils de devis en API',
-    '07 · Accompagnement stratégique dédié',
+    '01 · Tout le contenu du pack PRO',
+    '02 · Amandine, assistante de pilotage joignable par message',
+    '03 · Marco, publication automatique de contenu sur les réseaux sociaux',
+    '04 · Audiences lookalike (jumeaux statistiques des meilleurs clients)',
+    '05 · Gestion complète de la fiche Google Business Profile',
+    '06 · Campagnes Google Ads automatisées',
+    '07 · Déploiement multi-zone et multi-métier',
+    '08 · Support prioritaire — réponse sous 1h',
   ];
 }
 function getPackFinancials(pack){
-  if(pack==='decollage')return{setup:1500,acompte:null,solde:null,monthly:null,engagement:null,single:true};
-  if(pack==='copilote')return{setup:2500,acompte:1250,solde:1250,monthly:500,engagement:3};
-  return{setup:6000,acompte:3000,solde:3000,monthly:1200,engagement:6};
+  if(pack==='starter')return{monthly:197};
+  if(pack==='pro')return{monthly:397};
+  return{monthly:697};
 }
-function getPackName(pack){return pack==='decollage'?'DÉCOLLAGE':pack==='copilote'?'COPILOTE':'AUTOPILOTE';}
+function getPackName(pack){return pack==='starter'?'STARTER':pack==='pro'?'PRO':'SCALE';}
 
 function generateContract(){
   const nom=document.getElementById('c-nom').value.trim();
@@ -920,29 +919,20 @@ function generateContract(){
   const packName=getPackName(selectedPack);
 
   let serviceRows=services.map(s=>`<tr><td class="num">${s.slice(0,2)}</td><td>${s.slice(5)}</td></tr>`).join('');
-  let priceBlock;
-  if(fin.single){
-    priceBlock=`
-    <tr><td class="label-col">Prestation complète</td><td class="total">${fin.setup.toLocaleString('fr-FR')} EUR</td><td>—</td><td>—</td></tr>
-    <tr><td class="label-col">Paiement unique</td><td class="green">${fin.setup.toLocaleString('fr-FR')} EUR</td><td>Virement bancaire</td><td>À la signature</td></tr>
+  const priceBlock=`
+    <tr><td class="label-col">Abonnement mensuel — pack ${packName}</td><td class="total">${fin.monthly.toLocaleString('fr-FR')} EUR HT/mois</td><td>—</td><td>—</td></tr>
+    <tr><td class="label-col">Frais de mise en place</td><td class="green">0 EUR</td><td>—</td><td>Aucun</td></tr>
+    <tr><td class="label-col">1re mensualité</td><td class="green">${fin.monthly.toLocaleString('fr-FR')} EUR</td><td>Virement bancaire</td><td>À la signature</td></tr>
+    <tr><td class="label-col">Mensualités suivantes</td><td>${fin.monthly.toLocaleString('fr-FR')} EUR/mois</td><td>Virement bancaire</td><td>Chaque mois, à date anniversaire</td></tr>
     `;
-  }else{
-    priceBlock=`
-    <tr><td class="label-col">Frais de mise en place (setup)</td><td class="total">${fin.setup.toLocaleString('fr-FR')} EUR</td><td>—</td><td>—</td></tr>
-    <tr><td class="label-col">Acompte (50% setup)</td><td class="green">${fin.acompte.toLocaleString('fr-FR')} EUR</td><td>Virement bancaire</td><td>À la signature</td></tr>
-    <tr><td class="label-col">Solde (50% setup)</td><td>${fin.solde.toLocaleString('fr-FR')} EUR</td><td>Virement bancaire</td><td>À la livraison</td></tr>
-    `;
-  }
-  let monthlyClause='';
-  if(fin.monthly){
-    priceBlock+=`<tr><td class="label-col">Mensualité (gestion continue)</td><td class="green">${fin.monthly.toLocaleString('fr-FR')} EUR/mois</td><td>Virement bancaire</td><td>Au lancement + chaque mois</td></tr>`;
-    monthlyClause=`
-      <div class="section-title">4b. MODALITÉS ABONNEMENT MENSUEL</div>
-      <p class="article">Le présent contrat inclut une prestation mensuelle de gestion et d'optimisation d'un montant de <strong>${fin.monthly.toLocaleString('fr-FR')} EUR HT par mois</strong>, débutant à la date de lancement des campagnes.</p>
-      <p class="article"><strong>Durée d'engagement minimum :</strong> ${fin.engagement} mois à compter du lancement. Passé cette période, résiliation possible avec un préavis de 30 jours par email recommandé.</p>
+  const monthlyClause=`
+      <div class="section-title">4b. MODALITÉS DE L'ABONNEMENT MENSUEL</div>
+      <p class="article">Le présent contrat porte sur une prestation mensuelle de gestion et d'optimisation d'un montant de <strong>${fin.monthly.toLocaleString('fr-FR')} EUR HT par mois</strong>, débutant à la date de lancement des campagnes.</p>
+      <p class="article"><strong>Aucun frais de mise en place :</strong> la configuration initiale (campagnes, visuels, formulaire, chatbot SMS, CRM, site vitrine, agents) est intégrée à l'abonnement et n'est facturée séparément à aucun moment.</p>
+      <p class="article"><strong>Sans engagement de durée :</strong> le Client peut résilier à tout moment par email. La prestation prend alors fin à l'échéance du mois en cours, déjà réglé. Aucune pénalité ni indemnité n'est due de part et d'autre.</p>
+      <p class="article"><strong>Budget publicitaire :</strong> le budget publicitaire (Meta, Google) n'est pas inclus dans l'abonnement. Il est réglé directement aux régies depuis le compte publicitaire du Client, qui en reste propriétaire.</p>
       <p class="article"><strong>Révision tarifaire :</strong> CreaLeads se réserve le droit de modifier le tarif mensuel avec un préavis de 60 jours par email.</p>
     `;
-  }
 
   const html=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/><title>Contrat CreaLeads — ${nomSociete}</title>
   <style>
@@ -1030,9 +1020,9 @@ function generateContract(){
   <p class="article"><strong>CreaLeads s'engage à :</strong><br/>— Réaliser les prestations définies à l'article 3 avec soin et professionnalisme.<br/>— Livrer dans le délai contractuel de 7 à 14 jours.<br/>— Respecter la confidentialité des informations transmises par le Client.</p>
   <p class="article"><strong>Le Client s'engage à :</strong><br/>— Fournir les accès et informations nécessaires dans les délais convenus.<br/>— Assurer le traitement des leads générés dans les meilleurs délais.<br/>— Régler les sommes dues aux échéances prévues.</p>
   <div class="section-title">7. PROPRIÉTÉ ET CONFIDENTIALITÉ</div>
-  <p class="article">À compter du paiement intégral du setup, le Client devient propriétaire de l'ensemble des livrables (campagnes, visuels, CRM, pages). Les deux parties s'engagent à garder confidentielles les informations échangées.</p>
+  <p class="article">Pendant toute la durée de l'abonnement, le Client dispose de l'ensemble des livrables (campagnes, visuels, CRM, pages, site vitrine) et reste propriétaire de ses comptes publicitaires et de ses données. Les deux parties s'engagent à garder confidentielles les informations échangées.</p>
   <div class="section-title">8. RÉSILIATION</div>
-  <p class="article">${fin.monthly?`En cas de résiliation avant la fin de la période d'engagement minimum (${fin.engagement} mois), le Client reste redevable des mensualités correspondant à la période d'engagement restante. Au-delà de cette période, résiliation possible avec préavis de 30 jours par email.`:'En cas de résiliation après démarrage de la prestation, le paiement versé reste acquis à CreaLeads à titre de dédommagement pour le travail réalisé.'}</p>
+  <p class="article">Le contrat est sans engagement de durée. Chaque partie peut y mettre fin à tout moment par simple email. La prestation se poursuit jusqu'à l'échéance du mois en cours, déjà réglé, et prend fin à cette date. Aucune pénalité ni indemnité n'est due de part et d'autre, et la mensualité en cours reste acquise à CreaLeads pour le mois effectivement réalisé.</p>
   <div class="section-title">9. LOI APPLICABLE</div>
   <p class="article">Le présent contrat est soumis au droit français. Tout litige sera soumis, à défaut d'accord amiable, aux juridictions compétentes du ressort de ${moi_ville}.</p>
   <div class="section-title">10. SIGNATURES</div>
