@@ -66,11 +66,11 @@ export default function OffersOverview() {
 
             <div className="text-center mt-2 mb-6">
               <div className="flex items-baseline justify-center gap-1.5">
-                <span className="font-display text-5xl sm:text-6xl font-extrabold text-emerald">350 €</span>
+                <span className="font-display text-5xl sm:text-6xl font-extrabold text-emerald">497 €</span>
                 <span className="text-sm text-bg/60">/mois</span>
               </div>
               <div className="text-xs text-bg/60 mt-3">
-                Zéro frais de mise en place · Engagement 3 mois puis mois par mois
+                Zéro frais de mise en place · Sans engagement
               </div>
             </div>
 
@@ -118,7 +118,7 @@ export default function OffersOverview() {
               Vous ajoutez, quand vous voulez.
             </h3>
             <p className="text-sm sm:text-base text-ink-60 mt-3 max-w-xl mx-auto leading-relaxed">
-              Tout est optionnel. On commence par l&apos;offre à 350 € et on renforce le système au fil de votre croissance.
+              Tout est optionnel. On commence par l&apos;offre à 497 € et on renforce le système au fil de votre croissance.
             </p>
           </div>
 
@@ -163,7 +163,7 @@ export default function OffersOverview() {
         <div className="mt-10 sm:mt-12 grid sm:grid-cols-3 gap-3 sm:gap-4 max-w-5xl mx-auto">
           {[
             { t: "💳 Budget pub à part", d: "Le budget publicitaire (~300 €/mois conseillé) reste sur votre compte Meta et est versé directement à Meta. Jamais inclus dans l'abonnement." },
-            { t: "📅 Engagement 3 mois", d: "Trois mois pour laisser l'algorithme apprendre, puis mois par mois. Résiliation par simple e-mail avec 30 jours de préavis." },
+            { t: "🔓 Sans engagement", d: "Aucune durée minimale. Vous arrêtez quand vous voulez, par simple e-mail. Aucune pénalité." },
             { t: "📍 Exclusivité de zone", d: "Un seul artisan par métier et par secteur. Une fois votre zone prise, elle n'est plus proposée à personne." },
           ].map((m) => (
             <div key={m.t} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5">

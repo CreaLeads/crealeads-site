@@ -46,7 +46,7 @@ export default function TarifsPage() {
             Une offre claire, sans surprise.
           </h1>
           <p className="text-base sm:text-lg text-ink-60 max-w-2xl mx-auto leading-relaxed">
-            Un seul abonnement à 350 €/mois, quatre agents inclus, zéro frais de mise en place. Vous ajoutez des options seulement quand vous en avez besoin.
+            Un seul abonnement à 497 €/mois, quatre agents inclus, zéro frais de mise en place. Vous ajoutez des options seulement quand vous en avez besoin.
           </p>
         </div>
       </section>
@@ -62,11 +62,11 @@ export default function TarifsPage() {
 
             <div className="text-center mt-2 mb-8">
               <div className="flex items-baseline justify-center gap-1.5">
-                <span className="font-display text-5xl sm:text-6xl font-extrabold text-emerald">350 €</span>
+                <span className="font-display text-5xl sm:text-6xl font-extrabold text-emerald">497 €</span>
                 <span className="text-sm text-bg/60">/mois</span>
               </div>
               <div className="text-xs text-bg/60 mt-3">
-                Zéro frais de mise en place · Engagement 3 mois puis mois par mois · Préavis 30 jours
+                Zéro frais de mise en place · Sans engagement
               </div>
             </div>
 
@@ -170,9 +170,9 @@ export default function TarifsPage() {
 
           {/* Mentions communes */}
           <div className="mt-8 rounded-2xl border border-ink-10 bg-ink-05 p-5 sm:p-6 text-sm text-ink-60 leading-relaxed space-y-1.5">
-            <p><strong className="text-ink">Zéro frais de mise en place</strong> — le build complet (campagnes, visuels, formulaire, chatbot SMS, CRM, agents) est intégré dans l&apos;abonnement de 350 €.</p>
+            <p><strong className="text-ink">Zéro frais de mise en place</strong> — le build complet (campagnes, visuels, formulaire, chatbot SMS, CRM, agents) est intégré dans l&apos;abonnement de 497 €.</p>
             <p><strong className="text-ink">Budget publicitaire à part</strong> — environ 300 €/mois conseillé, versé directement à Meta depuis votre compte, jamais inclus dans l&apos;abonnement.</p>
-            <p><strong className="text-ink">Engagement 3 mois puis mois par mois</strong> · préavis 30 jours · exclusivité par zone et métier.</p>
+            <p><strong className="text-ink">Sans engagement</strong> · résiliable à tout moment · exclusivité par zone et métier.</p>
           </div>
 
           {/* CTA final */}

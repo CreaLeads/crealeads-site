@@ -42,7 +42,7 @@ export default function Agents() {
             Six agents au travail <span className="text-emerald">pour vous.</span>
           </h2>
           <p className="text-base sm:text-lg text-ink-60 leading-relaxed">
-            Pas un logiciel de plus. Une équipe d&apos;agents intelligents, orientés bâtiment, qui lancent vos pubs, répondent à vos prospects et vous tiennent au courant — pendant que vous êtes sur le chantier. <span className="text-ink font-medium">Quatre sont inclus dans l&apos;abonnement à 350 €, deux s&apos;ajoutent en option.</span>
+            Pas un logiciel de plus. Une équipe d&apos;agents intelligents, orientés bâtiment, qui lancent vos pubs, répondent à vos prospects et vous tiennent au courant — pendant que vous êtes sur le chantier. <span className="text-ink font-medium">Quatre sont inclus dans l&apos;abonnement à 497 €, deux s&apos;ajoutent en option.</span>
           </p>
         </div>
 

@@ -97,7 +97,7 @@ export default function AgentsPage() {
               className="rounded-2xl p-6 sm:p-8 bg-ink text-bg transition-all hover:opacity-95"
             >
               <div className="text-xs font-semibold uppercase tracking-wider text-emerald mb-2">
-                Inclus dans l&apos;abonnement — 350 €/mois
+                Inclus dans l&apos;abonnement — 497 €/mois
               </div>
               <div className="font-display font-bold text-lg mb-2">Théo · Iris · Lucie · Victor</div>
               <div className="text-sm text-bg/70">Les quatre agents qui lancent vos pubs, qualifient vos leads et suivent vos résultats — sans frais de mise en place.</div>

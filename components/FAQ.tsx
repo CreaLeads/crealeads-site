@@ -5,19 +5,19 @@ import { useState } from "react";
 const faqs = [
   {
     q: "C'est cher, non ?",
-    a: "Faisons le calcul : 350 € d'abonnement par mois, plus environ 300 € de budget publicitaire versé directement à Meta, soit à peu près 650 € par mois pour un système d'acquisition complet. Un seul chantier de résine se facture entre 3 000 et 8 000 €. Le premier chantier signé vous rembourse donc environ quatre mois d'abonnement. La vraie question n'est pas le prix, mais notre capacité à vous amener au moins un chantier de plus par mois — et c'est exactement ce que le système est fait pour faire.",
+    a: "Faisons le calcul : 497 € d'abonnement par mois, plus environ 300 € de budget publicitaire versé directement à Meta, soit à peu près 797 € par mois pour un système d'acquisition complet. Un seul chantier de résine se facture entre 3 000 et 8 000 €. Le premier chantier signé vous rembourse donc environ quatre mois d'abonnement. La vraie question n'est pas le prix, mais notre capacité à vous amener au moins un chantier de plus par mois — et c'est exactement ce que le système est fait pour faire.",
   },
   {
-    q: "Qu'est-ce qui est compris dans les 350 € par mois ?",
+    q: "Qu'est-ce qui est compris dans les 497 € par mois ?",
     a: "Tout le système d'acquisition, avec quatre agents inclus : Théo diffuse votre campagne Meta ciblée sur votre zone et votre métier, Iris crée et renouvelle vos visuels par IA, Lucie qualifie vos leads par SMS 24h/24, et Victor optimise vos campagnes chaque semaine et vous envoie le bilan chaque mois. S'ajoutent le CRM automatisé, la notification à chaque lead et l'exclusivité sur votre zone. Vous pouvez ensuite renforcer le système avec des options : retargeting (+97 €/mois), contenu réseaux avec Marco (+147 €/mois), zone supplémentaire (+97 €/mois), Google Ads (+197 €/mois) ou votre agent personnel Amandine (+97 €/mois). Et en une fois : un site vitrine pro (490 €) ou un audit de vos pubs actuelles (290 €).",
   },
   {
     q: "Il y a des frais de mise en place ?",
-    a: "Non, aucun. Tout le build — campagne Meta, visuels IA, formulaire, chatbot SMS de qualification et CRM — est intégré dans l'abonnement mensuel de 350 €. Vous ne payez rien au démarrage. Seul le budget publicitaire reste à part : environ 300 €/mois, versé directement à Meta depuis votre propre compte. Le site vitrine, lui, est disponible en option à 490 €.",
+    a: "Non, aucun. Tout le build — campagne Meta, visuels IA, formulaire, chatbot SMS de qualification et CRM — est intégré dans l'abonnement mensuel de 497 €. Vous ne payez rien au démarrage. Seul le budget publicitaire reste à part : environ 300 €/mois, versé directement à Meta depuis votre propre compte. Le site vitrine, lui, est disponible en option à 490 €.",
   },
   {
     q: "Il y a un engagement ?",
-    a: "Un engagement de 3 mois au démarrage, puis c'est mois par mois. Pourquoi trois mois ? Parce que les campagnes Meta ont besoin d'au moins trente jours pour que l'algorithme apprenne, et de quelques semaines de plus pour livrer leur plein potentiel : juger le système après une semaine n'aurait aucun sens. Passé ces trois mois, vous continuez au mois le mois et vous pouvez arrêter quand vous voulez, avec un simple e-mail et 30 jours de préavis. Aucune pénalité.",
+    a: "Aucun. Pas de durée minimale, pas de pénalité : pour arrêter, un simple e-mail suffit, vous réglez le mois en cours et c'est terminé. Notre objectif est que vous restiez parce que les résultats sont là, pas parce qu'un contrat vous y oblige. Un conseil malgré tout : laissez au moins trente jours aux campagnes Meta — l'algorithme a besoin de ce temps pour apprendre et livrer son plein potentiel. Juger le système après une semaine n'aurait pas de sens.",
   },
   {
     q: "Le budget publicitaire est-il inclus ?",
@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: "Pouvez-vous me garantir un nombre de chantiers par mois ?",
-    a: "Non, et c'est une réponse honnête. Le résultat dépend de votre métier, de votre panier moyen, de votre budget publicitaire et de votre capacité à conclure en rendez-vous. Nous garantissons la qualité du système et une transparence totale sur les indicateurs. Et comme il n'y a aucun frais de mise en place, vous démarrez sans avance : votre seul engagement, ce sont trois mois pour laisser aux campagnes le temps de tourner.",
+    a: "Non, et c'est une réponse honnête. Le résultat dépend de votre métier, de votre panier moyen, de votre budget publicitaire et de votre capacité à conclure en rendez-vous. Nous garantissons la qualité du système et une transparence totale sur les indicateurs. Et comme il n'y a aucun frais de mise en place et aucun engagement, vous démarrez sans avance et vous ne prenez aucun risque à essayer.",
   },
   {
     q: "Avec combien d'artisans travaillez-vous en parallèle ?",

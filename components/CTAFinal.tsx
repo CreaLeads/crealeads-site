@@ -17,7 +17,7 @@ export default function CTAFinal() {
         </h2>
 
         <p className="text-base sm:text-lg text-bg/70 mb-10 sm:mb-12 max-w-2xl mx-auto leading-relaxed">
-          Trente minutes en visio pour comprendre votre activité. Sans pression. Et si nous ne sommes pas faits pour travailler ensemble, nous vous le dirons honnêtement.
+          Trente minutes en visio pour comprendre votre activité. Aucun engagement. Et si nous ne sommes pas faits pour travailler ensemble, nous vous le dirons honnêtement.
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
@@ -46,7 +46,7 @@ export default function CTAFinal() {
             <svg className="w-5 h-5 text-emerald flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
-            <span>Sans pression</span>
+            <span>Aucun engagement</span>
           </div>
           <div className="flex items-center justify-center gap-2">
             <svg className="w-5 h-5 text-emerald flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">

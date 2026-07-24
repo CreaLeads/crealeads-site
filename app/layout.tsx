@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import ChatWidget from "@/components/ChatWidget";
 import "./globals.css";
 
 const inter = Inter({
@@ -110,9 +111,9 @@ const jsonLd = {
       {
         "@type": "Offer",
         name: "Abonnement CreaLeads",
-        price: "350",
+        price: "497",
         priceCurrency: "EUR",
-        description: "350 €/mois, zéro frais de mise en place, engagement 3 mois puis mois par mois. Quatre agents inclus : Théo (Campagne Meta Ads), Iris (Visuels IA), Lucie (Chatbot SMS de qualification 24h/24) et Victor (Reporting et optimisation). Budget publicitaire à part, versé directement à Meta.",
+        description: "497 €/mois, zéro frais de mise en place, sans engagement. Quatre agents inclus : Théo (Campagne Meta Ads), Iris (Visuels IA), Lucie (Chatbot SMS de qualification 24h/24) et Victor (Reporting et optimisation). Budget publicitaire à part, versé directement à Meta.",
         url: `${SITE_URL}/offres`,
       },
       {
@@ -160,6 +161,7 @@ export default function RootLayout({
     <html lang="fr" className={`${inter.variable} ${outfit.variable}`}>
       <body>
         {children}
+        <ChatWidget />
         <Analytics />
         <script
           type="application/ld+json"

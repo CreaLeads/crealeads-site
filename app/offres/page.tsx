@@ -45,7 +45,7 @@ export default function OffresPage() {
             Une offre. Toute une équipe.
           </h1>
           <p className="text-base sm:text-lg text-ink-60 max-w-2xl mx-auto leading-relaxed">
-            Un seul abonnement à 350 €/mois, quatre agents au travail pour vous. Zéro frais de mise en place, engagement de 3 mois puis mois par mois. Vous renforcez le système avec des options quand vous en avez besoin.
+            Un seul abonnement à 497 €/mois, quatre agents au travail pour vous. Zéro frais de mise en place, sans engagement. Vous renforcez le système avec des options quand vous en avez besoin.
           </p>
         </div>
       </section>
@@ -64,8 +64,8 @@ export default function OffresPage() {
                 </div>
               </div>
               <div className="sm:text-right">
-                <div className="font-display text-4xl sm:text-5xl font-bold text-emerald">350 €<span className="text-lg text-ink-60 font-normal">/mois</span></div>
-                <div className="text-xs text-ink-60 mt-1">Zéro setup · Engagement 3 mois puis mois par mois</div>
+                <div className="font-display text-4xl sm:text-5xl font-bold text-emerald">497 €<span className="text-lg text-ink-60 font-normal">/mois</span></div>
+                <div className="text-xs text-ink-60 mt-1">Zéro setup · Sans engagement</div>
               </div>
             </div>
 
@@ -143,7 +143,7 @@ export default function OffresPage() {
                 Renforcez le système, quand vous voulez.
               </h2>
               <p className="text-sm sm:text-base text-ink-60 mt-3 max-w-xl mx-auto leading-relaxed">
-                Tout est optionnel. On commence par l&apos;offre à 350 € et on ajoute au fil de votre croissance.
+                Tout est optionnel. On commence par l&apos;offre à 497 € et on ajoute au fil de votre croissance.
               </p>
             </div>
 
@@ -183,7 +183,7 @@ export default function OffresPage() {
             {[
               { t: "Zéro frais de mise en place", d: "Tout le build est intégré dans l'abonnement. Vous ne payez rien au démarrage." },
               { t: "Budget pub à part", d: "~300 €/mois conseillé, versé directement à Meta depuis votre compte — jamais inclus dans l'abonnement." },
-              { t: "Engagement 3 mois", d: "Trois mois pour laisser l'algorithme apprendre, puis mois par mois. Préavis 30 jours." },
+              { t: "Sans engagement", d: "Aucune durée minimale — vous arrêtez quand vous voulez, par simple e-mail. Aucune pénalité." },
               { t: "Exclusivité", d: "Un seul artisan par métier et par zone." },
             ].map((g, i) => (
               <div key={i} className="bg-ink-05 rounded-2xl p-5">
