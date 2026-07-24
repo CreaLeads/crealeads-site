@@ -5,31 +5,31 @@ import { useState } from "react";
 const faqs = [
   {
     q: "C'est cher, non ?",
-    a: "Vous facturez environ 7 000 € par chantier. L'offre PRO coûte 397 € par mois, soit à peine 6 % d'un seul chantier signé. Si nous vous amenons un seul chantier de plus par mois, c'est près de dix-sept fois votre investissement mensuel. La vraie question n'est pas le prix, mais notre capacité à vous amener au moins un chantier par mois.",
+    a: "Faisons le calcul : 350 € d'abonnement par mois, plus environ 300 € de budget publicitaire versé directement à Meta, soit à peu près 650 € par mois pour un système d'acquisition complet. Un seul chantier de résine se facture entre 3 000 et 8 000 €. Le premier chantier signé vous rembourse donc environ quatre mois d'abonnement. La vraie question n'est pas le prix, mais notre capacité à vous amener au moins un chantier de plus par mois — et c'est exactement ce que le système est fait pour faire.",
+  },
+  {
+    q: "Qu'est-ce qui est compris dans les 350 € par mois ?",
+    a: "Tout le système d'acquisition, avec quatre agents inclus : Théo diffuse votre campagne Meta ciblée sur votre zone et votre métier, Iris crée et renouvelle vos visuels par IA, Lucie qualifie vos leads par SMS 24h/24, et Victor optimise vos campagnes chaque semaine et vous envoie le bilan chaque mois. S'ajoutent le CRM automatisé, la notification à chaque lead et l'exclusivité sur votre zone. Vous pouvez ensuite renforcer le système avec des options : retargeting (+97 €/mois), contenu réseaux avec Marco (+147 €/mois), zone supplémentaire (+97 €/mois), Google Ads (+197 €/mois) ou votre agent personnel Amandine (+97 €/mois). Et en une fois : un site vitrine pro (490 €) ou un audit de vos pubs actuelles (290 €).",
   },
   {
     q: "Il y a des frais de mise en place ?",
-    a: "Non, aucun. Le build complet — campagnes Meta, visuels, formulaire, chatbot SMS, CRM et site vitrine — est intégré dans l'abonnement mensuel. Vous ne payez rien au démarrage. Seul le budget publicitaire reste à part : il est versé directement à Meta, depuis votre propre compte.",
+    a: "Non, aucun. Tout le build — campagne Meta, visuels IA, formulaire, chatbot SMS de qualification et CRM — est intégré dans l'abonnement mensuel de 350 €. Vous ne payez rien au démarrage. Seul le budget publicitaire reste à part : environ 300 €/mois, versé directement à Meta depuis votre propre compte. Le site vitrine, lui, est disponible en option à 490 €.",
   },
   {
     q: "Il y a un engagement ?",
-    a: "Aucun. Pas de durée minimale, pas de pénalité. Pour arrêter, un simple e-mail suffit : vous réglez le mois en cours et c'est terminé. Notre objectif est que vous restiez parce que les résultats sont là, pas parce qu'un contrat vous y oblige. Un conseil malgré tout : les campagnes Meta s'optimisent sur trente jours minimum, l'algorithme a besoin de données pour apprendre. Juger le système après une semaine n'aurait pas de sens.",
+    a: "Un engagement de 3 mois au démarrage, puis c'est mois par mois. Pourquoi trois mois ? Parce que les campagnes Meta ont besoin d'au moins trente jours pour que l'algorithme apprenne, et de quelques semaines de plus pour livrer leur plein potentiel : juger le système après une semaine n'aurait aucun sens. Passé ces trois mois, vous continuez au mois le mois et vous pouvez arrêter quand vous voulez, avec un simple e-mail et 30 jours de préavis. Aucune pénalité.",
   },
   {
     q: "Le budget publicitaire est-il inclus ?",
-    a: "Non, et c'est volontaire. Le budget publicitaire est versé directement à Meta depuis votre propre compte : nous n'y touchons jamais. Vous gardez la main dessus, vous voyez exactement ce qui est dépensé, et vous restez propriétaire de votre compte publicitaire. Le montant dépend de votre zone et de vos objectifs — on le définit ensemble lors de l'appel.",
+    a: "Non, et c'est volontaire. Le budget publicitaire — en général autour de 300 €/mois — est versé directement à Meta depuis votre propre compte : nous n'y touchons jamais. Vous gardez la main dessus, vous voyez exactement ce qui est dépensé, et vous restez propriétaire de votre compte publicitaire. Le montant exact dépend de votre zone et de vos objectifs — on le définit ensemble lors de l'appel.",
   },
   {
     q: "J'ai déjà essayé les publicités Facebook, ça n'a pas marché.",
     a: "C'est fréquent. La plupart des artisans qui lancent des publicités Meta seuls les configurent mal : audience trop large, visuels basiques, formulaire non optimisé, absence de retargeting. Nous faisons de la génération de leads ciblée, avec un ciblage métier et zone, des campagnes coordonnées et un renouvellement régulier des visuels. Ce n'est pas comparable à une publication boostée à 50 € par mois.",
   },
   {
-    q: "Quelle est la différence entre STARTER, PRO et SCALE ?",
-    a: "STARTER (197 €/mois) lance votre acquisition : Théo diffuse une campagne Meta de prospection, Iris crée vos visuels, et un chatbot SMS qualifie vos demandes. PRO (397 €/mois) ajoute Lucie, qui répond à vos prospects en moins d'une minute 24h/24, et Victor, qui vous envoie le bilan chaque mois — avec une deuxième campagne de retargeting. SCALE (697 €/mois) ajoute Amandine, votre bras droit joignable par message, et Marco, qui alimente vos réseaux — plus les audiences lookalike, Google My Business, Google Ads et le multi-zone.",
-  },
-  {
     q: "Pouvez-vous me garantir un nombre de chantiers par mois ?",
-    a: "Non, et c'est une réponse honnête. Le résultat dépend de votre métier, de votre panier moyen, de votre budget publicitaire et de votre capacité à conclure en rendez-vous. Nous garantissons la qualité du système et une transparence totale sur les indicateurs. Et comme il n'y a ni frais de mise en place ni engagement, vous ne prenez aucun risque à essayer.",
+    a: "Non, et c'est une réponse honnête. Le résultat dépend de votre métier, de votre panier moyen, de votre budget publicitaire et de votre capacité à conclure en rendez-vous. Nous garantissons la qualité du système et une transparence totale sur les indicateurs. Et comme il n'y a aucun frais de mise en place, vous démarrez sans avance : votre seul engagement, ce sont trois mois pour laisser aux campagnes le temps de tourner.",
   },
   {
     q: "Avec combien d'artisans travaillez-vous en parallèle ?",
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: "Gérez-vous aussi les appels et les rendez-vous physiques ?",
-    a: "Nous gérons l'acquisition digitale : publicités Meta, qualification automatique par SMS et prise de contact. Dès l'offre PRO, Lucie répond à vos prospects en moins d'une minute, 24h/24, les qualifie et écarte les curieux — pour que vous n'appeliez que les gens sérieux. Les rendez-vous physiques et la signature restent de votre ressort.",
+    a: "Nous gérons l'acquisition digitale : publicités Meta, qualification automatique par SMS et prise de contact. Lucie, incluse dans l'abonnement, répond à vos prospects en moins d'une minute, 24h/24, les qualifie et écarte les curieux — pour que vous n'appeliez que les gens sérieux. Les rendez-vous physiques et la signature restent de votre ressort.",
   },
 ];
 

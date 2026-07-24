@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -104,31 +105,47 @@ const jsonLd = {
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Offres CreaLeads",
+    name: "Offre CreaLeads",
     itemListElement: [
       {
         "@type": "Offer",
-        name: "STARTER",
+        name: "Abonnement CreaLeads",
+        price: "350",
+        priceCurrency: "EUR",
+        description: "350 €/mois, zéro frais de mise en place, engagement 3 mois puis mois par mois. Quatre agents inclus : Théo (Campagne Meta Ads), Iris (Visuels IA), Lucie (Chatbot SMS de qualification 24h/24) et Victor (Reporting et optimisation). Budget publicitaire à part, versé directement à Meta.",
+        url: `${SITE_URL}/offres`,
+      },
+      {
+        "@type": "Offer",
+        name: "Option Retargeting automatique",
+        price: "97",
+        priceCurrency: "EUR",
+        description: "Retargeting automatique des visiteurs qui n'ont pas encore pris contact. +97 €/mois, en option de l'abonnement.",
+        url: `${SITE_URL}/tarifs`,
+      },
+      {
+        "@type": "Offer",
+        name: "Option Contenu réseaux sociaux (Marco)",
+        price: "147",
+        priceCurrency: "EUR",
+        description: "Contenu réseaux sociaux publié automatiquement par l'agent Marco. +147 €/mois, en option de l'abonnement.",
+        url: `${SITE_URL}/tarifs`,
+      },
+      {
+        "@type": "Offer",
+        name: "Option Google Ads automatique",
         price: "197",
         priceCurrency: "EUR",
-        description: "197 €/mois, sans frais de mise en place ni engagement. Agents Théo (Acquisition Meta) & Iris (Studio créa).",
-        url: `${SITE_URL}/offres`,
+        description: "Campagnes Google Ads automatisées en complément de Meta. +197 €/mois, en option de l'abonnement.",
+        url: `${SITE_URL}/tarifs`,
       },
       {
         "@type": "Offer",
-        name: "PRO",
-        price: "397",
+        name: "Site vitrine professionnel",
+        price: "490",
         priceCurrency: "EUR",
-        description: "397 €/mois, sans frais de mise en place ni engagement. Théo, Iris, Lucie (Réceptionniste 24/7) et Victor (Analyste).",
-        url: `${SITE_URL}/offres`,
-      },
-      {
-        "@type": "Offer",
-        name: "SCALE",
-        price: "697",
-        priceCurrency: "EUR",
-        description: "697 €/mois, sans frais de mise en place ni engagement. L'équipe complète dont Amandine (bras droit) et Marco (contenu).",
-        url: `${SITE_URL}/offres`,
+        description: "Site vitrine professionnel livré clé en main. Prestation ponctuelle, paiement unique de 490 €.",
+        url: `${SITE_URL}/tarifs`,
       },
     ],
   },
@@ -143,6 +160,7 @@ export default function RootLayout({
     <html lang="fr" className={`${inter.variable} ${outfit.variable}`}>
       <body>
         {children}
+        <Analytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

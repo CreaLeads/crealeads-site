@@ -6,12 +6,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const AGENTS = [
-  { i: "T", name: "Théo", role: "Acquisition Meta", desc: "Lance et optimise vos pubs Facebook & Instagram, ciblées métier et zone.", tier: "dès STARTER" },
-  { i: "I", name: "Iris", role: "Studio créa", desc: "Crée et renouvelle vos visuels et vidéos qui arrêtent le scroll.", tier: "dès STARTER" },
-  { i: "L", name: "Lucie", role: "Réceptionniste 24/7", desc: "Répond à vos prospects en moins d'1 min, les qualifie et cale les visites.", tier: "dès PRO" },
-  { i: "V", name: "Victor", role: "Analyste", desc: "Surveille vos chiffres et vous envoie un bilan clair chaque mois.", tier: "dès PRO" },
-  { i: "A", name: "Amandine", role: "Votre bras droit", desc: "Vous lui demandez où en est votre business par message, elle répond.", tier: "dès SCALE" },
-  { i: "M", name: "Marco", role: "Contenu réseaux", desc: "Alimente vos réseaux pour renforcer votre image et votre crédibilité.", tier: "dès SCALE" },
+  { i: "T", name: "Théo", role: "Acquisition Meta", desc: "Lance et optimise vos pubs Facebook & Instagram, ciblées métier et zone.", tier: "Inclus", included: true },
+  { i: "I", name: "Iris", role: "Studio créa", desc: "Crée et renouvelle vos visuels et vidéos qui arrêtent le scroll.", tier: "Inclus", included: true },
+  { i: "L", name: "Lucie", role: "Réceptionniste 24/7", desc: "Répond à vos prospects en moins d'1 min, les qualifie et cale les visites.", tier: "Inclus", included: true },
+  { i: "V", name: "Victor", role: "Analyste", desc: "Surveille vos chiffres et vous envoie un bilan clair chaque mois.", tier: "Inclus", included: true },
+  { i: "A", name: "Amandine", role: "Votre bras droit", desc: "Vous lui demandez où en est votre business par message, elle répond.", tier: "Option +97 €/mois", included: false },
+  { i: "M", name: "Marco", role: "Contenu réseaux", desc: "Alimente vos réseaux pour renforcer votre image et votre crédibilité.", tier: "Option +147 €/mois", included: false },
 ];
 
 export default function Agents() {
@@ -42,7 +42,7 @@ export default function Agents() {
             Six agents au travail <span className="text-emerald">pour vous.</span>
           </h2>
           <p className="text-base sm:text-lg text-ink-60 leading-relaxed">
-            Pas un logiciel de plus. Une équipe d&apos;agents intelligents, orientés bâtiment, qui lancent vos pubs, répondent à vos prospects et vous tiennent au courant — pendant que vous êtes sur le chantier.
+            Pas un logiciel de plus. Une équipe d&apos;agents intelligents, orientés bâtiment, qui lancent vos pubs, répondent à vos prospects et vous tiennent au courant — pendant que vous êtes sur le chantier. <span className="text-ink font-medium">Quatre sont inclus dans l&apos;abonnement à 350 €, deux s&apos;ajoutent en option.</span>
           </p>
         </div>
 
@@ -60,8 +60,8 @@ export default function Agents() {
                 </div>
               </div>
               <p className="text-[12.5px] sm:text-sm text-ink-60 leading-relaxed mb-3 sm:mb-4">{a.desc}</p>
-              <span className="inline-block text-[10px] sm:text-[11px] font-semibold px-2 sm:px-2.5 py-1 rounded-full bg-ink-05 text-ink-60">
-                {a.tier}
+              <span className={`inline-block text-[10px] sm:text-[11px] font-semibold px-2 sm:px-2.5 py-1 rounded-full ${a.included ? "bg-emerald/15 text-emerald-dark" : "bg-ink-05 text-ink-60"}`}>
+                {a.included ? "✓ Inclus dans l'abonnement" : a.tier}
               </span>
             </div>
           ))}

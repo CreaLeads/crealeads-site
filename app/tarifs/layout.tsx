@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Tarifs",
   description:
-    "Tarifs CreaLeads pour artisans du bâtiment : 197, 397 ou 697 €/mois selon les agents activés. Sans frais de mise en place, sans engagement, budget pub payé à part. Comparatif détaillé des offres STARTER, PRO et SCALE.",
+    "Tarifs CreaLeads pour artisans du bâtiment : une offre unique à 350 €/mois, quatre agents inclus, zéro frais de mise en place. Engagement 3 mois puis mois par mois, budget pub payé à part. Options à la carte : retargeting, Google Ads, contenu réseaux, site vitrine.",
   alternates: { canonical: "/tarifs" },
   openGraph: {
     title: "Tarifs — CreaLeads",
-    description: "Des prix clairs, sans surprise. Comparez nos trois offres en détail.",
+    description: "Une offre claire à 350 €/mois, sans surprise. Quatre agents inclus, options à la carte.",
     url: "https://crealeads.fr/tarifs",
   },
 };

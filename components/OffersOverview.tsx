@@ -1,66 +1,41 @@
 const CAL = "https://cal.eu/enzo-crealeads/20min";
 
-const AGENT_ROLE: Record<string, { i: string; role: string }> = {
-  Théo: { i: "T", role: "Acquisition Meta" },
-  Iris: { i: "I", role: "Studio créa" },
-  Lucie: { i: "L", role: "Réceptionniste 24/7" },
-  Victor: { i: "V", role: "Analyste" },
-  Amandine: { i: "A", role: "Votre bras droit" },
-  Marco: { i: "M", role: "Contenu réseaux" },
-};
-
-const offers = [
-  {
-    name: "STARTER",
-    tagline: "On allume la machine",
-    monthly: "197",
-    agents: ["Théo", "Iris"],
-    features: [
-      "1 campagne Meta prospection automatique",
-      "Chatbot SMS de qualification des leads",
-      "CRM automatisé + site vitrine",
-    ],
-    highlight: false,
-  },
-  {
-    name: "PRO",
-    tagline: "On avance ensemble",
-    monthly: "397",
-    agents: ["Théo", "Iris", "Lucie", "Victor"],
-    features: [
-      "Tout STARTER, et en plus :",
-      "2 campagnes (prospection + retargeting)",
-      "Visuels IA renouvelés automatiquement",
-      "Reporting mensuel automatique",
-    ],
-    highlight: true,
-  },
-  {
-    name: "SCALE",
-    tagline: "L'équipe au complet",
-    monthly: "697",
-    agents: ["Théo", "Iris", "Lucie", "Victor", "Amandine", "Marco"],
-    features: [
-      "Tout PRO, et en plus :",
-      "Audiences lookalike",
-      "Fiche Google My Business gérée",
-      "Google Ads automatique",
-      "Multi-zone / multi-métier",
-    ],
-    highlight: false,
-  },
+const AGENTS_INCLUS = [
+  { i: "T", name: "Théo", role: "Campagne Meta Ads automatique — 1 zone, 1 métier" },
+  { i: "I", name: "Iris", role: "Visuels publicitaires renouvelés par IA" },
+  { i: "L", name: "Lucie", role: "Chatbot SMS qui qualifie vos leads 24h/24" },
+  { i: "V", name: "Victor", role: "Reporting mensuel + optimisation hebdo" },
 ];
 
-function AgentRow({ name, dark }: { name: string; dark?: boolean }) {
-  const a = AGENT_ROLE[name];
+const INCLUS = [
+  "CRM automatisé — chaque demande classée sans rien saisir",
+  "Notification instantanée à chaque nouveau lead",
+  "Exclusivité totale sur votre zone et votre métier",
+];
+
+const UPSELLS_ONESHOT = [
+  { name: "Site vitrine pro", price: "490 €", desc: "Un site qui inspire confiance, livré clé en main." },
+  { name: "Audit de vos pubs existantes", price: "290 €", desc: "On passe vos campagnes au crible et on vous dit quoi corriger." },
+];
+
+const UPSELLS_RECURRENTS = [
+  { name: "Retargeting automatique", price: "+97 €/mois", desc: "Relance ceux qui ont vu vos pubs sans passer à l'action." },
+  { name: "Contenu réseaux sociaux — Marco", price: "+147 €/mois", desc: "Vos réseaux alimentés automatiquement, chaque semaine." },
+  { name: "Zone géographique supplémentaire", price: "+97 €/mois", desc: "Une deuxième zone couverte en parallèle." },
+  { name: "Google Ads automatique", price: "+197 €/mois", desc: "Captez aussi la demande déjà présente sur Google." },
+  { name: "Agent IA personnel — Amandine", price: "+97 €/mois", desc: "Votre bras droit : vous lui demandez où en est votre business, elle répond." },
+];
+
+function AgentRow({ name, role }: { name: string; role: string }) {
+  const i = name.charAt(0);
   return (
-    <li className="flex items-center gap-3">
-      <span className={`w-8 h-8 rounded-full flex items-center justify-center font-display font-extrabold text-xs flex-shrink-0 ${dark ? "bg-emerald/20 text-emerald" : "bg-emerald/15 text-emerald-dark"}`}>
-        {a.i}
+    <li className="flex items-start gap-3">
+      <span className="w-8 h-8 rounded-full flex items-center justify-center font-display font-extrabold text-xs flex-shrink-0 bg-emerald/20 text-emerald mt-0.5">
+        {i}
       </span>
       <span className="text-sm">
-        <strong className={dark ? "text-bg" : "text-ink"}>{name}</strong>
-        <span className={dark ? "text-bg/60" : "text-ink-60"}> — {a.role}</span>
+        <strong className="text-bg">{name}</strong>
+        <span className="text-bg/60"> — {role}</span>
       </span>
     </li>
   );
@@ -72,88 +47,124 @@ export default function OffersOverview() {
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
-            Nos offres
+            Notre offre
           </div>
           <h2 className="font-display text-display-md mb-4 sm:mb-6">
-            Recrutez votre équipe d&apos;agents.
+            Une offre. Toute une équipe.
           </h2>
           <p className="text-base sm:text-lg text-ink-60 leading-relaxed">
-            Un abonnement mensuel, sans frais de mise en place. Plus vous montez de palier, plus il y a d&apos;agents au travail pour vous.
+            Un seul abonnement, quatre agents au travail pour vous. Pas de palier à décoder, pas de frais de mise en place. Vous ajoutez des options seulement quand vous en avez besoin.
           </p>
         </div>
 
-        {/* 3 cartes */}
-        <div className="grid lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
-          {offers.map((offer) => (
-            <div
-              key={offer.name}
-              className={`relative card-hover rounded-3xl p-6 sm:p-8 flex flex-col ${
-                offer.highlight
-                  ? "bg-ink text-bg border-2 border-emerald lg:-mt-4 lg:pb-12 shadow-2xl shadow-emerald/10"
-                  : "bg-bg border border-ink-10"
-              }`}
-            >
-              {offer.highlight && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-emerald text-ink rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-                  Recommandé
-                </div>
-              )}
-
-              <div className="font-display text-xl sm:text-2xl font-bold mb-1 mt-2">{offer.name}</div>
-              <div className={`text-sm mb-5 ${offer.highlight ? "text-bg/60" : "text-ink-60"}`}>{offer.tagline}</div>
-
-              <div className="flex items-baseline gap-1.5">
-                <span className={`font-display text-4xl sm:text-5xl font-extrabold ${offer.highlight ? "text-emerald" : ""}`}>
-                  {offer.monthly} €
-                </span>
-                <span className={`text-sm ${offer.highlight ? "text-bg/60" : "text-ink-60"}`}>/mois</span>
-              </div>
-              <div className={`text-xs mt-2 mb-5 pb-5 border-b ${offer.highlight ? "text-bg/60 border-bg/10" : "text-ink-60 border-ink-10"}`}>
-                Sans frais de mise en place · sans engagement
-              </div>
-
-              <div className={`text-xs font-semibold uppercase tracking-wider mb-3 ${offer.highlight ? "text-emerald" : "text-emerald-dark"}`}>
-                L&apos;équipe incluse
-              </div>
-              <ul className="space-y-3 mb-6">
-                {offer.agents.map((name) => (
-                  <AgentRow key={name} name={name} dark={offer.highlight} />
-                ))}
-              </ul>
-
-              <ul className="space-y-2.5 mb-7 flex-grow">
-                {offer.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-sm">
-                    <svg className="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className={offer.highlight ? "text-bg/90" : "text-ink"}>{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href={CAL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`block text-center px-6 py-3.5 rounded-full font-semibold text-sm transition-all ${
-                  offer.highlight
-                    ? "bg-emerald text-ink hover:bg-emerald-light"
-                    : "bg-ink text-bg hover:bg-ink/90"
-                }`}
-              >
-                Réserver un appel
-              </a>
+        {/* Carte offre unique */}
+        <div className="max-w-lg mx-auto">
+          <div className="relative card-hover rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col bg-ink text-bg border-2 border-emerald shadow-2xl shadow-emerald/10">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-emerald text-ink rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap">
+              L&apos;offre CreaLeads
             </div>
-          ))}
+
+            <div className="text-center mt-2 mb-6">
+              <div className="flex items-baseline justify-center gap-1.5">
+                <span className="font-display text-5xl sm:text-6xl font-extrabold text-emerald">350 €</span>
+                <span className="text-sm text-bg/60">/mois</span>
+              </div>
+              <div className="text-xs text-bg/60 mt-3">
+                Zéro frais de mise en place · Engagement 3 mois puis mois par mois
+              </div>
+            </div>
+
+            <div className="text-xs font-semibold uppercase tracking-wider mb-3 text-emerald">
+              Vos 4 agents inclus
+            </div>
+            <ul className="space-y-3 mb-6">
+              {AGENTS_INCLUS.map((a) => (
+                <AgentRow key={a.name} name={a.name} role={a.role} />
+              ))}
+            </ul>
+
+            <ul className="space-y-2.5 mb-7 pt-6 border-t border-bg/10">
+              {INCLUS.map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-sm">
+                  <svg className="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-bg/90">{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href={CAL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-center px-6 py-4 rounded-full font-semibold text-sm bg-emerald text-ink hover:bg-emerald-light transition-all"
+            >
+              Réserver un appel
+            </a>
+            <div className="text-center text-xs text-bg/50 mt-3">
+              Budget publicitaire à part (~300 €/mois conseillé, sur votre compte Meta)
+            </div>
+          </div>
+        </div>
+
+        {/* Upsells */}
+        <div className="mt-14 sm:mt-20 max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-2">
+              Options à la carte
+            </div>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold">
+              Vous ajoutez, quand vous voulez.
+            </h3>
+            <p className="text-sm sm:text-base text-ink-60 mt-3 max-w-xl mx-auto leading-relaxed">
+              Tout est optionnel. On commence par l&apos;offre à 350 € et on renforce le système au fil de votre croissance.
+            </p>
+          </div>
+
+          {/* Récurrents */}
+          <div className="mb-6">
+            <div className="text-xs font-semibold uppercase tracking-wider text-ink-60 mb-3 px-1">
+              À ajouter à l&apos;abonnement
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              {UPSELLS_RECURRENTS.map((u) => (
+                <div key={u.name} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5 flex flex-col">
+                  <div className="flex items-start justify-between gap-3 mb-1.5">
+                    <div className="font-display font-bold text-sm leading-tight">{u.name}</div>
+                    <div className="font-display font-extrabold text-sm text-emerald whitespace-nowrap">{u.price}</div>
+                  </div>
+                  <div className="text-xs text-ink-60 leading-relaxed">{u.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* One-shot */}
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-ink-60 mb-3 px-1">
+              Prestations ponctuelles (paiement unique)
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+              {UPSELLS_ONESHOT.map((u) => (
+                <div key={u.name} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5 flex flex-col">
+                  <div className="flex items-start justify-between gap-3 mb-1.5">
+                    <div className="font-display font-bold text-sm leading-tight">{u.name}</div>
+                    <div className="font-display font-extrabold text-sm text-emerald whitespace-nowrap">{u.price}</div>
+                  </div>
+                  <div className="text-xs text-ink-60 leading-relaxed">{u.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Mentions communes */}
-        <div className="mt-8 sm:mt-10 grid sm:grid-cols-3 gap-3 sm:gap-4">
+        <div className="mt-10 sm:mt-12 grid sm:grid-cols-3 gap-3 sm:gap-4 max-w-5xl mx-auto">
           {[
-            { t: "💳 Budget pub payé à part", d: "Le budget publicitaire Meta n'est pas inclus : il reste sur votre compte et est versé directement à Meta." },
-            { t: "🔓 Sans engagement", d: "Aucune durée minimale. Vous arrêtez quand vous voulez." },
-            { t: "📍 Exclusivité de zone", d: "Un seul artisan par métier et par secteur. Une fois prise, votre zone n'est plus proposée." },
+            { t: "💳 Budget pub à part", d: "Le budget publicitaire (~300 €/mois conseillé) reste sur votre compte Meta et est versé directement à Meta. Jamais inclus dans l'abonnement." },
+            { t: "📅 Engagement 3 mois", d: "Trois mois pour laisser l'algorithme apprendre, puis mois par mois. Résiliation par simple e-mail avec 30 jours de préavis." },
+            { t: "📍 Exclusivité de zone", d: "Un seul artisan par métier et par secteur. Une fois votre zone prise, elle n'est plus proposée à personne." },
           ].map((m) => (
             <div key={m.t} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5">
               <div className="font-display font-bold text-sm mb-1.5">{m.t}</div>
@@ -164,7 +175,7 @@ export default function OffersOverview() {
 
         <div className="text-center mt-8 sm:mt-10">
           <a href="/tarifs" className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-emerald transition-colors">
-            Comparer les offres en détail
+            Voir le détail de l&apos;offre et des options
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>

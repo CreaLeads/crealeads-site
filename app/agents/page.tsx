@@ -4,34 +4,34 @@ import Footer from "@/components/Footer";
 
 const AGENTS = [
   {
-    i: "T", name: "Théo", role: "Acquisition Meta", tier: "dès STARTER",
+    i: "T", name: "Théo", role: "Acquisition Meta", tier: "Inclus", included: true,
     short: "Lance et optimise vos publicités Facebook & Instagram.",
-    long: "Théo construit et pilote vos campagnes Meta géolocalisées, ciblées sur votre métier et votre zone. Il teste les audiences, fait tourner les visuels et ajuste les enchères pour faire baisser le coût par demande et monter le volume, semaine après semaine.",
+    long: "Théo construit et pilote votre campagne Meta géolocalisée, ciblée sur votre métier et votre zone. Il teste les audiences, fait tourner les visuels et ajuste les enchères pour faire baisser le coût par demande et monter le volume, semaine après semaine.",
   },
   {
-    i: "I", name: "Iris", role: "Studio créa", tier: "dès STARTER",
+    i: "I", name: "Iris", role: "Studio créa", tier: "Inclus", included: true,
     short: "Crée et renouvelle vos visuels et vidéos publicitaires.",
-    long: "Iris produit les créations qui arrêtent le scroll : visuels avant/après, vidéos de chantier, formats adaptés à chaque réseau. Dès l'offre PRO, elle renouvelle vos créas automatiquement pour éviter l'usure publicitaire.",
+    long: "Iris produit les créations qui arrêtent le scroll : visuels avant/après, vidéos de chantier, formats adaptés à chaque réseau. Elle renouvelle vos créas automatiquement par IA pour éviter l'usure publicitaire.",
   },
   {
-    i: "L", name: "Lucie", role: "Réceptionniste 24/7", tier: "dès PRO",
+    i: "L", name: "Lucie", role: "Réceptionniste 24/7", tier: "Inclus", included: true,
     short: "Répond à vos prospects en moins d'1 min, 24h/24.",
-    long: "Lucie engage chaque nouvelle demande en moins d'une minute, à toute heure. Elle pose les bonnes questions, écarte les curieux, garde les prospects sérieux et cale directement les visites dans votre agenda. Week-ends et jours fériés compris.",
+    long: "Lucie engage chaque nouvelle demande par SMS en moins d'une minute, à toute heure. Elle pose les bonnes questions, écarte les curieux, garde les prospects sérieux et cale directement les visites dans votre agenda. Week-ends et jours fériés compris.",
   },
   {
-    i: "V", name: "Victor", role: "Analyste", tier: "dès PRO",
+    i: "V", name: "Victor", role: "Analyste", tier: "Inclus", included: true,
     short: "Surveille vos chiffres et vous envoie un bilan chaque mois.",
-    long: "Victor suit en continu vos indicateurs : nombre de demandes, coût par lead, budget consommé, RDV calés. Chaque mois, il vous envoie automatiquement un bilan clair et lisible — aucune zone d'ombre, vous savez toujours où va votre argent.",
+    long: "Victor suit en continu vos indicateurs : nombre de demandes, coût par lead, budget consommé, RDV calés. Il optimise vos campagnes chaque semaine et vous envoie automatiquement un bilan mensuel clair et lisible — aucune zone d'ombre, vous savez toujours où va votre argent.",
   },
   {
-    i: "A", name: "Amandine", role: "Votre bras droit", tier: "dès SCALE",
+    i: "A", name: "Amandine", role: "Votre bras droit", tier: "Option +97 €/mois", included: false,
     short: "Vous lui demandez où en est votre business, elle répond.",
-    long: "Amandine est votre interlocutrice directe. Vous lui écrivez un message — « combien de RDV cette semaine ? », « où en est ma campagne ? » — et elle vous répond avec les vrais chiffres. Le pilotage de votre acquisition au bout des doigts.",
+    long: "Amandine est votre interlocutrice directe. Vous lui écrivez un message — « combien de RDV cette semaine ? », « où en est ma campagne ? » — et elle vous répond avec les vrais chiffres. Le pilotage de votre acquisition au bout des doigts. En option, à ajouter à votre abonnement quand vous le souhaitez.",
   },
   {
-    i: "M", name: "Marco", role: "Contenu réseaux", tier: "dès SCALE",
+    i: "M", name: "Marco", role: "Contenu réseaux", tier: "Option +147 €/mois", included: false,
     short: "Alimente vos réseaux sociaux pour renforcer votre image.",
-    long: "Marco publie régulièrement sur vos réseaux pour renforcer votre crédibilité et votre image de marque. Inclus dans l'offre SCALE, pour les artisans et réseaux qui veulent une présence forte au-delà de la publicité.",
+    long: "Marco publie régulièrement sur vos réseaux pour renforcer votre crédibilité et votre image de marque. En option, pour les artisans et réseaux qui veulent une présence forte au-delà de la publicité.",
   },
 ];
 
@@ -69,8 +69,8 @@ export default function AgentsPage() {
                     <div className="font-display text-xl font-bold leading-none">{a.name}</div>
                     <div className="text-[11px] font-semibold uppercase tracking-wide text-emerald mt-1.5">{a.role}</div>
                   </div>
-                  <span className="ml-auto text-[11px] font-semibold px-2.5 py-1 rounded-full bg-ink-05 text-ink-60 whitespace-nowrap">
-                    {a.tier}
+                  <span className={`ml-auto text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${a.included ? "bg-emerald/15 text-emerald-dark" : "bg-ink-05 text-ink-60"}`}>
+                    {a.included ? "✓ Inclus" : a.tier}
                   </span>
                 </div>
                 <p className="text-sm text-ink-60 leading-relaxed">{a.long}</p>
@@ -85,27 +85,33 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      {/* Tier mapping */}
+      {/* Inclus vs options */}
       <section className="py-12 sm:py-16 bg-ink-05 border-y border-ink-10">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8">
           <h2 className="font-display text-display-sm text-center mb-8 sm:mb-10">
-            Quels agents dans quelle offre ?
+            Une seule offre, tout est clair.
           </h2>
-          <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
-            {[
-              { name: "STARTER", agents: "Théo + Iris", href: "/offres#starter" },
-              { name: "PRO", agents: "Théo · Iris · Lucie · Victor", href: "/offres#pro", highlight: true },
-              { name: "SCALE", agents: "Théo · Iris · Lucie · Victor · Amandine · Marco", href: "/offres#scale" },
-            ].map((o) => (
-              <Link
-                key={o.name}
-                href={o.href}
-                className={`rounded-2xl p-6 text-center transition-all ${o.highlight ? "bg-ink text-bg" : "bg-bg border border-ink-10 hover:border-ink/25"}`}
-              >
-                <div className={`font-display font-bold text-lg mb-2 ${o.highlight ? "text-emerald" : ""}`}>{o.name}</div>
-                <div className={`text-sm ${o.highlight ? "text-bg/80" : "text-ink-60"}`}>{o.agents}</div>
-              </Link>
-            ))}
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+            <Link
+              href="/offres"
+              className="rounded-2xl p-6 sm:p-8 bg-ink text-bg transition-all hover:opacity-95"
+            >
+              <div className="text-xs font-semibold uppercase tracking-wider text-emerald mb-2">
+                Inclus dans l&apos;abonnement — 350 €/mois
+              </div>
+              <div className="font-display font-bold text-lg mb-2">Théo · Iris · Lucie · Victor</div>
+              <div className="text-sm text-bg/70">Les quatre agents qui lancent vos pubs, qualifient vos leads et suivent vos résultats — sans frais de mise en place.</div>
+            </Link>
+            <Link
+              href="/tarifs"
+              className="rounded-2xl p-6 sm:p-8 bg-bg border border-ink-10 transition-all hover:border-ink/25"
+            >
+              <div className="text-xs font-semibold uppercase tracking-wider text-emerald-dark mb-2">
+                En option, quand vous voulez
+              </div>
+              <div className="font-display font-bold text-lg mb-2">Amandine <span className="text-ink-60 font-normal text-sm">+97 €/mois</span> · Marco <span className="text-ink-60 font-normal text-sm">+147 €/mois</span></div>
+              <div className="text-sm text-ink-60">Votre bras droit joignable par message, et le contenu réseaux publié automatiquement. À ajouter au fil de votre croissance.</div>
+            </Link>
           </div>
         </div>
       </section>

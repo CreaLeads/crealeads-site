@@ -81,7 +81,7 @@ export default function Contact() {
             Réservez votre zone.
           </h2>
           <p className="text-base sm:text-lg text-ink-60 leading-relaxed">
-            On travaille en exclusivité : un seul artisan par métier et par secteur. 30 minutes pour voir si on peut remplir votre agenda — aucun engagement.
+            On travaille en exclusivité : un seul artisan par métier et par secteur. 30 minutes pour voir si on peut remplir votre agenda — sans pression.
           </p>
         </div>
 
