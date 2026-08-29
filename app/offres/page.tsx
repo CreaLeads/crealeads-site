@@ -32,13 +32,13 @@ const ONESHOT = [
 
 export default function OffresPage() {
   return (
-    <main className="min-h-screen bg-bg">
+    <main className="min-h-screen bg-canvas">
       <Navbar />
 
       {/* Header */}
       <section className="pt-28 pb-10 sm:pt-36 sm:pb-12 lg:pt-40">
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 text-center">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             Notre offre
           </div>
           <h1 className="font-display text-display-lg mb-4 sm:mb-6">
@@ -54,12 +54,12 @@ export default function OffresPage() {
         <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8">
 
           {/* Bloc offre */}
-          <div className="bg-bg border border-ink-10 rounded-3xl p-6 sm:p-10 lg:p-12">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8 pb-8 border-b border-ink-10">
+          <div className="bg-surface border border-stroke shadow-ds-sm rounded-[24px] p-6 sm:p-10 lg:p-12">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8 pb-8 border-b border-stroke">
               <div>
                 <div className="text-sm text-ink-60 mb-1">L&apos;offre CreaLeads</div>
                 <div className="font-display text-display-md">Le système complet</div>
-                <div className="inline-flex items-center gap-2 text-xs font-bold mt-3 px-3 py-1.5 rounded-full bg-emerald/10 text-emerald-dark">
+                <div className="inline-flex items-center gap-2 text-xs font-bold mt-3 px-3 py-1.5 rounded-full bg-brand-50 text-brand-700">
                   <span aria-hidden>🤖</span> Théo · Iris · Lucie · Victor
                 </div>
               </div>
@@ -73,8 +73,8 @@ export default function OffresPage() {
               Théo lance votre campagne Meta, Iris crée et renouvelle vos visuels, Lucie répond à chaque prospect en moins d&apos;une minute 24h/24, et Victor vous envoie le bilan chaque semaine — le tout dans votre tableau de bord. Un système qui tourne pendant que vous êtes sur le chantier.
             </p>
 
-            <div className="bg-ink-05 rounded-2xl p-5 sm:p-6 mb-8">
-              <div className="text-xs font-semibold text-emerald uppercase tracking-wider mb-2">
+            <div className="bg-surface-alt border border-stroke rounded-[20px] p-5 sm:p-6 mb-8">
+              <div className="text-xs font-semibold text-emerald-dark uppercase tracking-wider mb-2">
                 Pour qui ?
               </div>
               <p className="text-sm sm:text-base text-ink-60 leading-relaxed">
@@ -86,9 +86,9 @@ export default function OffresPage() {
             <div className="font-display font-bold text-base mb-4">Vos 4 agents inclus</div>
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
               {AGENTS_INCLUS.map((a) => (
-                <div key={a.name} className="rounded-2xl border border-ink-10 bg-bg p-5">
+                <div key={a.name} className="rounded-[20px] border border-stroke bg-surface shadow-ds-sm p-5">
                   <div className="flex items-center gap-3 mb-2.5">
-                    <div className="w-10 h-10 rounded-full bg-emerald/15 flex items-center justify-center font-display font-extrabold text-base text-emerald-dark flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center font-display font-extrabold text-base text-emerald-dark flex-shrink-0">
                       {a.i}
                     </div>
                     <div>
@@ -114,8 +114,8 @@ export default function OffresPage() {
               ))}
             </ul>
 
-            <div className="bg-ink text-bg rounded-2xl p-5 sm:p-6 mb-8">
-              <div className="text-xs font-semibold text-emerald uppercase tracking-wider mb-2">
+            <div className="bg-ink text-bg rounded-[24px] p-5 sm:p-6 mb-8">
+              <div className="text-xs font-semibold text-emerald-dark uppercase tracking-wider mb-2">
                 Notre promesse
               </div>
               <p className="text-sm sm:text-base text-bg/80 leading-relaxed">
@@ -136,7 +136,7 @@ export default function OffresPage() {
           {/* Options */}
           <div className="mt-14 sm:mt-20">
             <div className="text-center mb-8">
-              <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-2">
+              <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-2">
                 Options à la carte
               </div>
               <h2 className="font-display text-2xl sm:text-3xl font-bold">
@@ -152,7 +152,7 @@ export default function OffresPage() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6">
               {RECURRENTS.map((u) => (
-                <div key={u.name} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5 flex flex-col">
+                <div key={u.name} className="rounded-[20px] border border-stroke bg-surface shadow-ds-sm p-4 sm:p-5 flex flex-col">
                   <div className="flex items-start justify-between gap-3 mb-1.5">
                     <div className="font-display font-bold text-sm leading-tight">{u.name}</div>
                     <div className="font-display font-extrabold text-sm text-emerald whitespace-nowrap">{u.price}</div>
@@ -167,7 +167,7 @@ export default function OffresPage() {
             </div>
             <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
               {ONESHOT.map((u) => (
-                <div key={u.name} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5 flex flex-col">
+                <div key={u.name} className="rounded-[20px] border border-stroke bg-surface shadow-ds-sm p-4 sm:p-5 flex flex-col">
                   <div className="flex items-start justify-between gap-3 mb-1.5">
                     <div className="font-display font-bold text-sm leading-tight">{u.name}</div>
                     <div className="font-display font-extrabold text-sm text-emerald whitespace-nowrap">{u.price}</div>
@@ -186,7 +186,7 @@ export default function OffresPage() {
               { t: "Sans engagement", d: "Aucune durée minimale — vous arrêtez quand vous voulez, par simple e-mail. Aucune pénalité." },
               { t: "Exclusivité", d: "Un seul artisan par métier et par zone." },
             ].map((g, i) => (
-              <div key={i} className="bg-ink-05 rounded-2xl p-5">
+              <div key={i} className="bg-surface-alt border border-stroke rounded-[20px] p-5">
                 <div className="font-display font-bold text-sm mb-1.5">{g.t}</div>
                 <div className="text-xs text-ink-60 leading-relaxed">{g.d}</div>
               </div>

@@ -37,7 +37,7 @@ const AGENTS = [
 
 export default function AgentsPage() {
   return (
-    <main className="min-h-screen bg-bg">
+    <main className="min-h-screen bg-canvas">
       <Navbar />
 
       {/* Header */}
@@ -60,16 +60,16 @@ export default function AgentsPage() {
         <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
             {AGENTS.map((a) => (
-              <div key={a.name} className="rounded-3xl border border-ink-10 bg-bg p-6 sm:p-8 shadow-sm">
+              <div key={a.name} className="rounded-[24px] border border-stroke bg-surface shadow-ds-sm p-6 sm:p-8 shadow-sm">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-full bg-emerald/15 flex items-center justify-center font-display font-extrabold text-xl text-emerald-dark flex-shrink-0">
+                  <div className="w-14 h-14 rounded-full bg-brand-50 flex items-center justify-center font-display font-extrabold text-xl text-emerald-dark flex-shrink-0">
                     {a.i}
                   </div>
                   <div>
                     <div className="font-display text-xl font-bold leading-none">{a.name}</div>
                     <div className="text-[11px] font-semibold uppercase tracking-wide text-emerald mt-1.5">{a.role}</div>
                   </div>
-                  <span className={`ml-auto text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${a.included ? "bg-emerald/15 text-emerald-dark" : "bg-ink-05 text-ink-60"}`}>
+                  <span className={`ml-auto text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${a.included ? "bg-brand-50 text-emerald-dark" : "bg-stroke text-muted"}`}>
                     {a.included ? "✓ Inclus" : a.tier}
                   </span>
                 </div>
@@ -86,7 +86,7 @@ export default function AgentsPage() {
       </section>
 
       {/* Inclus vs options */}
-      <section className="py-12 sm:py-16 bg-ink-05 border-y border-ink-10">
+      <section className="py-12 sm:py-16 bg-canvas border-y border-stroke">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8">
           <h2 className="font-display text-display-sm text-center mb-8 sm:mb-10">
             Une seule offre, tout est clair.
@@ -94,7 +94,7 @@ export default function AgentsPage() {
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
             <Link
               href="/offres"
-              className="rounded-2xl p-6 sm:p-8 bg-ink text-bg transition-all hover:opacity-95"
+              className="rounded-[24px] p-6 sm:p-8 bg-ink text-bg transition-all hover:opacity-95"
             >
               <div className="text-xs font-semibold uppercase tracking-wider text-emerald mb-2">
                 Inclus dans l&apos;abonnement — 497 €/mois
@@ -104,7 +104,7 @@ export default function AgentsPage() {
             </Link>
             <Link
               href="/tarifs"
-              className="rounded-2xl p-6 sm:p-8 bg-bg border border-ink-10 transition-all hover:border-ink/25"
+              className="rounded-[20px] p-6 sm:p-8 bg-surface border border-stroke shadow-ds-sm transition-all hover:border-ink/25"
             >
               <div className="text-xs font-semibold uppercase tracking-wider text-emerald-dark mb-2">
                 En option, quand vous voulez

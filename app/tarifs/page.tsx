@@ -34,12 +34,12 @@ const ONESHOT = [
 
 export default function TarifsPage() {
   return (
-    <main className="min-h-screen bg-bg">
+    <main className="min-h-screen bg-canvas">
       <Navbar />
 
       <section className="pt-28 pb-10 sm:pt-36 sm:pb-12 lg:pt-40">
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 text-center">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             Tarifs
           </div>
           <h1 className="font-display text-display-lg mb-4 sm:mb-6">
@@ -55,7 +55,7 @@ export default function TarifsPage() {
         <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
 
           {/* Carte offre centrale */}
-          <div className="relative rounded-3xl p-6 sm:p-10 bg-ink text-bg border-2 border-emerald shadow-2xl shadow-emerald/10 mb-12 sm:mb-16">
+          <div className="relative rounded-[24px] p-6 sm:p-10 bg-ink text-bg border-2 border-emerald shadow-lift mb-12 sm:mb-16">
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-emerald text-ink rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap">
               L&apos;offre CreaLeads
             </div>
@@ -118,7 +118,7 @@ export default function TarifsPage() {
 
           {/* Tableau des options */}
           <div className="mb-4 text-center">
-            <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-2">
+            <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-2">
               Options à la carte
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-bold">
@@ -131,7 +131,7 @@ export default function TarifsPage() {
             <div className="text-xs font-semibold uppercase tracking-wider text-ink-60 mb-3 px-1">
               À ajouter à l&apos;abonnement
             </div>
-            <div className="border border-ink-10 rounded-2xl overflow-hidden">
+            <div className="border border-stroke rounded-[20px] overflow-hidden bg-surface shadow-ds-sm">
               {RECURRENTS.map((u, i) => (
                 <div
                   key={u.name}
@@ -152,7 +152,7 @@ export default function TarifsPage() {
             <div className="text-xs font-semibold uppercase tracking-wider text-ink-60 mb-3 px-1">
               Prestations ponctuelles (paiement unique)
             </div>
-            <div className="border border-ink-10 rounded-2xl overflow-hidden">
+            <div className="border border-stroke rounded-[20px] overflow-hidden bg-surface shadow-ds-sm">
               {ONESHOT.map((u, i) => (
                 <div
                   key={u.name}
@@ -169,7 +169,7 @@ export default function TarifsPage() {
           </div>
 
           {/* Mentions communes */}
-          <div className="mt-8 rounded-2xl border border-ink-10 bg-ink-05 p-5 sm:p-6 text-sm text-ink-60 leading-relaxed space-y-1.5">
+          <div className="mt-8 rounded-[20px] border border-stroke bg-surface-alt p-5 sm:p-6 text-sm text-ink-60 leading-relaxed space-y-1.5">
             <p><strong className="text-ink">Zéro frais de mise en place</strong> — le build complet (campagnes, visuels, formulaire, chatbot SMS, CRM, agents) est intégré dans l&apos;abonnement de 497 €.</p>
             <p><strong className="text-ink">Budget publicitaire à part</strong> — environ 300 €/mois conseillé, versé directement à Meta depuis votre compte, jamais inclus dans l&apos;abonnement.</p>
             <p><strong className="text-ink">Sans engagement</strong> · résiliable à tout moment · exclusivité par zone et métier.</p>
