@@ -3,28 +3,28 @@
 const steps = [
   {
     num: "01",
-    title: "On configure vos agents",
-    desc: "Votre métier, votre zone, votre panier moyen, votre façon de parler. Vos agents sont réglés sur VOTRE activité.",
+    title: "On règle le système sur votre activité",
+    desc: "Votre métier, votre zone, votre panier moyen, votre façon de parler. Tout est calibré sur VOTRE chantier avant le premier euro dépensé.",
   },
   {
     num: "02",
-    title: "Théo lance vos publicités",
-    desc: "Vos campagnes Meta géolocalisées partent en ligne. Les premières demandes arrivent sous 24 à 72 h.",
+    title: "Vos publicités partent en ligne",
+    desc: "Vos campagnes Meta géolocalisées se lancent. Les premières demandes tombent sous 24 à 72 h.",
   },
   {
     num: "03",
-    title: "Lucie répond et qualifie",
-    desc: "En moins d'une minute, 24h/24, elle engage chaque prospect, écarte les curieux et cale les visites.",
+    title: "La demande arrive dans votre tableau de bord",
+    desc: "Déjà qualifiée, avec la ville, le projet et le délai. Les curieux sont écartés — vous ne voyez que les demandes sérieuses.",
   },
   {
     num: "04",
-    title: "Vous recevez des RDV qualifiés",
-    desc: "Les visites de chantier tombent dans votre agenda. Vous validez et vous déplacez uniquement pour chiffrer.",
+    title: "Vous validez, vous chiffrez",
+    desc: "La visite se cale dans votre agenda. Au retour, vous dictez ce que vous avez vu et le devis se prépare à vos prix.",
   },
   {
     num: "05",
-    title: "Victor analyse, Théo optimise",
-    desc: "Chaque semaine, un bilan clair. Les campagnes s'ajustent pour faire baisser le coût et monter le volume.",
+    title: "Chaque lundi, le bilan tombe",
+    desc: "Ce que la semaine a coûté, ce qu'elle a rapporté, les chantiers signés. Et le système s'ajuste pour faire baisser le coût.",
   },
 ];
 

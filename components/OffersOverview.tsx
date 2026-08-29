@@ -8,8 +8,8 @@ const AGENTS_INCLUS = [
 ];
 
 const INCLUS = [
-  "CRM automatisé — chaque demande classée sans rien saisir",
-  "Notification instantanée à chaque nouveau lead",
+  "Votre tableau de bord — demandes, devis, messages et bilan hebdo au même endroit",
+  "Notification instantanée à chaque nouvelle demande",
   "Exclusivité totale sur votre zone et votre métier",
 ];
 

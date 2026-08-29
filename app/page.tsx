@@ -7,7 +7,8 @@ import CaseStudy from "@/components/CaseStudy";
 import ForYouIf from "@/components/ForYouIf";
 import Clients from "@/components/Clients";
 import Method from "@/components/Method";
-import Agents from "@/components/Agents";
+import ProductPreview from "@/components/ProductPreview";
+import AdToChantier from "@/components/AdToChantier";
 import OffersOverview from "@/components/OffersOverview";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -27,7 +28,8 @@ export default function Home() {
       <ForYouIf />
       <Clients />
       <Method />
-      <Agents />
+      <ProductPreview />
+      <AdToChantier />
       <OffersOverview />
       <Testimonials />
       <FAQ />

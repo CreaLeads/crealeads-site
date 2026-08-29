@@ -9,16 +9,52 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#FAFAF8",
-        ink: "#1A1A1A",
-        emerald: "#00C896",
-        "ink-60": "rgba(26, 26, 26, 0.6)",
-        "ink-40": "rgba(26, 26, 26, 0.4)",
-        "ink-20": "rgba(26, 26, 26, 0.2)",
-        "ink-10": "rgba(26, 26, 26, 0.1)",
-        "ink-05": "rgba(26, 26, 26, 0.05)",
-        "emerald-dark": "#00A87E",
-        "emerald-light": "#33D5AC",
+        // ─── Cœur, recalé sur la charte du dashboard CreaLeads ───
+        bg: "#f7f8f7", // fond d'app (dashboard: --color-background)
+        ink: "#0f1a16", // texte (dashboard: --color-foreground)
+        emerald: "#40ce9b", // accent marque (dashboard: brand-400)
+        "emerald-dark": "#17936b", // brand-600 — vert texte lisible
+        "emerald-light": "#6fddb5", // brand-300 — hover clair
+        "ink-60": "rgba(15, 26, 22, 0.6)",
+        "ink-40": "rgba(15, 26, 22, 0.4)",
+        "ink-20": "rgba(15, 26, 22, 0.2)",
+        "ink-10": "rgba(15, 26, 22, 0.1)",
+        "ink-05": "rgba(15, 26, 22, 0.05)",
+
+        // ─── Tokens sémantiques du dashboard (composants produit portés) ───
+        brand: {
+          50: "#ecfbf5",
+          100: "#d2f5e7",
+          200: "#a6ebd0",
+          300: "#6fddb5",
+          400: "#40ce9b",
+          500: "#22b584",
+          600: "#17936b",
+          700: "#147553",
+          900: "#0b3e2d",
+        },
+        canvas: "#edeeec", // fond derrière la carte flottante (shell)
+        surface: "#ffffff", // cartes
+        "surface-alt": "#fbfcfb", // zones secondaires / en-têtes de table
+        stroke: "#e8ebe9", // bordure
+        "stroke-strong": "#d4dad6",
+        foreground: "#0f1a16",
+        muted: "#5c6b64", // texte secondaire
+        faint: "#8b9891", // texte tertiaire / labels
+        primary: "#40ce9b",
+        success: "#22b584",
+        warning: "#e8a33d",
+        danger: "#dc5b4a",
+        info: "#3b82c4",
+      },
+      borderRadius: {
+        pill: "999px",
+        card: "20px",
+      },
+      boxShadow: {
+        lift: "0 8px 24px rgba(15, 26, 22, 0.08)",
+        "ds-sm": "0 1px 2px rgba(15, 26, 22, 0.04)",
+        "ds-md": "0 2px 8px rgba(15, 26, 22, 0.06), 0 1px 2px rgba(15, 26, 22, 0.04)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

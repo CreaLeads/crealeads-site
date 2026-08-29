@@ -3,9 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --bg: #FAFAF8;
-  --ink: #1A1A1A;
-  --emerald: #00C896;
+  /* Cœur, recalé sur la charte du dashboard CreaLeads */
+  --bg: #f7f8f7;
+  --ink: #0f1a16;
+  --emerald: #40ce9b;
+
+  /* Ramp de marque (turquoise) — utilisée par les composants produit portés */
+  --color-brand-50: #ecfbf5;
+  --color-brand-100: #d2f5e7;
+  --color-brand-200: #a6ebd0;
+  --color-brand-300: #6fddb5;
+  --color-brand-400: #40ce9b;
+  --color-brand-500: #22b584;
+  --color-brand-600: #17936b;
+  --color-brand-700: #147553;
+  --color-brand-900: #0b3e2d;
 }
 
 html {
@@ -31,14 +43,19 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(26, 26, 26, 0.05);
+  background: rgba(15, 26, 22, 0.05);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(26, 26, 26, 0.2);
+  background: rgba(15, 26, 22, 0.2);
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(26, 26, 26, 0.4);
+  background: rgba(15, 26, 22, 0.4);
+}
+
+/* Chiffres tabulaires (montants / KPI) — cohérence avec le dashboard */
+.tnum {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Marquee container fix */
@@ -86,7 +103,7 @@ body {
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -10px rgba(26, 26, 26, 0.12);
+  box-shadow: 0 12px 32px -12px rgba(15, 26, 22, 0.14);
 }
 
 /* Section dark variant */

@@ -12,8 +12,8 @@ const AGENTS_INCLUS = [
 ];
 
 const INCLUS = [
-  "CRM automatisé — chaque demande arrive classée, sans rien saisir",
-  "Notification instantanée à chaque nouveau lead",
+  "Votre tableau de bord — demandes, devis, messages et bilan hebdo au même endroit",
+  "Notification instantanée à chaque nouvelle demande",
   "Exclusivité totale sur votre zone et votre métier",
 ];
 
@@ -70,7 +70,7 @@ export default function OffresPage() {
             </div>
 
             <p className="text-base sm:text-lg leading-relaxed mb-8">
-              Théo lance votre campagne Meta, Iris crée et renouvelle vos visuels, Lucie répond à chaque prospect en moins d&apos;une minute 24h/24, et Victor vous envoie le bilan chaque mois. Une équipe d&apos;agents qui tourne pendant que vous êtes sur le chantier.
+              Théo lance votre campagne Meta, Iris crée et renouvelle vos visuels, Lucie répond à chaque prospect en moins d&apos;une minute 24h/24, et Victor vous envoie le bilan chaque semaine — le tout dans votre tableau de bord. Un système qui tourne pendant que vous êtes sur le chantier.
             </p>
 
             <div className="bg-ink-05 rounded-2xl p-5 sm:p-6 mb-8">

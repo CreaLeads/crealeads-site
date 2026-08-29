@@ -43,14 +43,14 @@ export default function AgentsPage() {
       {/* Header */}
       <section className="pt-28 pb-10 sm:pt-36 sm:pb-12 lg:pt-40">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 text-center">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
-            Votre équipe IA
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
+            Ce que le système automatise
           </div>
           <h1 className="font-display text-display-lg mb-4 sm:mb-6">
-            Six agents au travail pour vous.
+            Tout ce que votre système fait pour vous.
           </h1>
           <p className="text-base sm:text-lg text-ink-60 max-w-2xl mx-auto leading-relaxed">
-            Pas un logiciel de plus. Une équipe d&apos;agents intelligents, orientés bâtiment, qui lancent vos pubs, répondent à vos prospects et vous tiennent au courant — pendant que vous êtes sur le chantier.
+            Derrière votre tableau de bord, des automatisations orientées bâtiment lancent vos pubs, qualifient vos demandes, préparent vos devis et suivent vos résultats — pendant que vous êtes sur le chantier. On leur a donné un nom, pour que vous sachiez exactement qui fait quoi.
           </p>
         </div>
       </section>
