@@ -16,7 +16,7 @@ OFFRE (unique, ne jamais inventer d'autre formule) :
 - Zéro frais de mise en place (zéro setup).
 - Budget publicitaire à part : environ 300 €/mois, versé directement à Meta depuis le compte du client. Jamais inclus dans l'abonnement.
 - Sans engagement : le client arrête quand il veut, par simple e-mail. Aucune durée minimale, aucune pénalité. (Conseil : laisser au moins 30 jours aux campagnes Meta, le temps que l'algorithme apprenne.)
-- 4 agents inclus : Théo (campagne Meta Ads), Iris (visuels IA), Lucie (chatbot SMS de qualification 24h/24), Victor (reporting + optimisation).
+- 4 agents inclus : Théo (campagne Meta Ads), Iris (visuels IA), Lucie (qualification automatique des demandes 24h/24), Victor (reporting + optimisation).
 - Options récurrentes : Retargeting +97 €/mois, Contenu réseaux Marco +147 €/mois, Zone supplémentaire +97 €/mois, Google Ads +197 €/mois, Agent perso Amandine +97 €/mois.
 - Options ponctuelles : Site vitrine pro 490 €, Audit de pubs existantes 290 €.
 - Exclusivité : un seul artisan par métier et par zone.
@@ -45,12 +45,12 @@ const QUICK = [
 // Base de connaissances scriptée (sans backend)
 const ANSWERS: Record<string, string> = {
   prix: "L'offre CreaLeads, c'est 497 €/mois — et zéro frais de mise en place. À côté, vous gardez votre budget publicitaire (~300 €/mois), versé directement à Meta depuis votre compte. Pour situer : un seul chantier de résine (3 000 à 8 000 €) rembourse environ 4 mois d'abonnement.",
-  how: "Quatre agents IA travaillent pour vous : Théo lance vos pubs Meta ciblées sur votre zone et votre métier, Iris crée vos visuels, Lucie qualifie vos prospects par SMS 24h/24, et Victor optimise et vous envoie le bilan. Vous recevez des demandes qualifiées — vous n'avez plus qu'à faire les devis.",
+  how: "Quatre agents IA travaillent pour vous : Théo lance vos pubs Meta ciblées sur votre zone et votre métier, Iris crée vos visuels, Lucie qualifie vos demandes automatiquement, 24h/24, et Victor optimise et vous envoie le bilan. Vous recevez des demandes qualifiées — vous n'avez plus qu'à faire les devis.",
   engagement: "Aucun engagement. Pas de durée minimale, pas de pénalité : vous arrêtez quand vous voulez, par simple e-mail. Un conseil quand même — laissez au moins 30 jours aux campagnes Meta, le temps que l'algorithme apprenne et livre son plein potentiel.",
   budget: "Le budget publicitaire (~300 €/mois conseillé) reste sur VOTRE compte Meta et est versé directement à Meta. On n'y touche jamais, vous gardez la main et la propriété du compte. Il n'est jamais inclus dans les 497 €.",
-  agents: "Inclus dans les 497 € : Théo (pubs Meta), Iris (visuels IA), Lucie (qualification SMS 24h/24) et Victor (reporting + optimisation). En option : Amandine, votre bras droit (+97 €/mois), et Marco pour le contenu réseaux (+147 €/mois).",
+  agents: "Inclus dans les 497 € : Théo (pubs Meta), Iris (visuels IA), Lucie (qualification automatique 24h/24) et Victor (reporting + optimisation). En option : Amandine, votre bras droit (+97 €/mois), et Marco pour le contenu réseaux (+147 €/mois).",
   options: "En option, à ajouter quand vous voulez : Retargeting +97 €/mois, Contenu réseaux (Marco) +147 €/mois, Zone supplémentaire +97 €/mois, Google Ads +197 €/mois, Agent perso Amandine +97 €/mois. Et en une fois : site vitrine pro 490 € ou audit de vos pubs actuelles 290 €.",
-  setup: "Aucun frais de mise en place. Tout le build — campagne Meta, visuels, formulaire, chatbot SMS et CRM — est intégré dans l'abonnement de 497 €/mois. Vous ne payez rien au démarrage.",
+  setup: "Aucun frais de mise en place. Tout le build — campagne Meta, visuels, formulaire, qualification automatique et CRM — est intégré dans l'abonnement de 497 €/mois. Vous ne payez rien au démarrage.",
   results: "Vos premiers prospects arrivent en général sous 24 à 72 h après le lancement des campagnes, puis le volume monte au fil des semaines à mesure que l'algorithme s'optimise.",
   exclu: "On travaille en exclusivité : un seul artisan par métier et par secteur. Une fois votre zone prise, on ne la propose plus à un concurrent.",
   negociate: "Le prix est unique et transparent : 497 €/mois, le même pour tout le monde. C'est ce qui garantit l'équité entre artisans — donc pas de négociation. Le mieux, c'est d'en parler 20 min avec Enzo pour voir si c'est fait pour vous.",

@@ -9,11 +9,11 @@ const faqs = [
   },
   {
     q: "Qu'est-ce qui est compris dans les 497 € par mois ?",
-    a: "Tout le système d'acquisition, avec quatre agents inclus : Théo diffuse votre campagne Meta ciblée sur votre zone et votre métier, Iris crée et renouvelle vos visuels par IA, Lucie qualifie vos leads par SMS 24h/24, et Victor optimise vos campagnes chaque semaine et vous envoie le bilan chaque mois. S'ajoutent le CRM automatisé, la notification à chaque lead et l'exclusivité sur votre zone. Vous pouvez ensuite renforcer le système avec des options : retargeting (+97 €/mois), contenu réseaux avec Marco (+147 €/mois), zone supplémentaire (+97 €/mois), Google Ads (+197 €/mois) ou votre agent personnel Amandine (+97 €/mois). Et en une fois : un site vitrine pro (490 €) ou un audit de vos pubs actuelles (290 €).",
+    a: "Tout le système d'acquisition, avec quatre agents inclus : Théo diffuse votre campagne Meta ciblée sur votre zone et votre métier, Iris crée et renouvelle vos visuels par IA, Lucie qualifie vos demandes automatiquement 24h/24, et Victor optimise vos campagnes chaque semaine et vous envoie le bilan chaque mois. S'ajoutent le CRM automatisé, la notification à chaque lead et l'exclusivité sur votre zone. Vous pouvez ensuite renforcer le système avec des options : retargeting (+97 €/mois), contenu réseaux avec Marco (+147 €/mois), zone supplémentaire (+97 €/mois), Google Ads (+197 €/mois) ou votre agent personnel Amandine (+97 €/mois). Et en une fois : un site vitrine pro (490 €) ou un audit de vos pubs actuelles (290 €).",
   },
   {
     q: "Il y a des frais de mise en place ?",
-    a: "Non, aucun. Tout le build — campagne Meta, visuels IA, formulaire, chatbot SMS de qualification et CRM — est intégré dans l'abonnement mensuel de 497 €. Vous ne payez rien au démarrage. Seul le budget publicitaire reste à part : environ 300 €/mois, versé directement à Meta depuis votre propre compte. Le site vitrine, lui, est disponible en option à 490 €.",
+    a: "Non, aucun. Tout le build — campagne Meta, visuels IA, formulaire, qualification automatique des demandes et CRM — est intégré dans l'abonnement mensuel de 497 €. Vous ne payez rien au démarrage. Seul le budget publicitaire reste à part : environ 300 €/mois, versé directement à Meta depuis votre propre compte. Le site vitrine, lui, est disponible en option à 490 €.",
   },
   {
     q: "Il y a un engagement ?",
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: "Gérez-vous aussi les appels et les rendez-vous physiques ?",
-    a: "Nous gérons l'acquisition digitale : publicités Meta, qualification automatique par SMS et prise de contact. Lucie, incluse dans l'abonnement, répond à vos prospects en moins d'une minute, 24h/24, les qualifie et écarte les curieux — pour que vous n'appeliez que les gens sérieux. Les rendez-vous physiques et la signature restent de votre ressort.",
+    a: "Nous gérons l'acquisition digitale : publicités Meta, qualification automatique des demandes et prise de contact. Lucie, incluse dans l'abonnement, capte chaque demande dès son arrivée, 24h/24, la qualifie et écarte les curieux — pour que vous n'appeliez que les gens sérieux. Les rendez-vous physiques et la signature restent de votre ressort.",
   },
 ];
 

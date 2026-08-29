@@ -7,7 +7,7 @@ const CAL = "https://cal.eu/enzo-crealeads/20min";
 const AGENTS_INCLUS = [
   { i: "T", name: "Théo", role: "Acquisition Meta", desc: "Lance et pilote votre campagne Meta Ads automatique, ciblée sur 1 zone et 1 métier. Il teste les audiences et ajuste les enchères pour faire baisser le coût par demande." },
   { i: "I", name: "Iris", role: "Studio créa", desc: "Crée vos visuels publicitaires et les renouvelle automatiquement par IA, pour éviter l'usure et garder des pubs qui arrêtent le scroll." },
-  { i: "L", name: "Lucie", role: "Réceptionniste 24/7", desc: "Chatbot SMS qui engage et qualifie chaque nouvelle demande en moins d'une minute, 24h/24. Elle écarte les curieux et garde les prospects sérieux." },
+  { i: "L", name: "Lucie", role: "Réceptionniste 24/7", desc: "Capte et qualifie chaque nouvelle demande dès son arrivée, 24h/24 : ville, projet, budget, délai. Elle écarte les curieux et garde les prospects sérieux." },
   { i: "V", name: "Victor", role: "Analyste", desc: "Vous envoie un reporting mensuel automatique et optimise vos campagnes chaque semaine. Vous savez toujours où va votre argent." },
 ];
 
@@ -70,7 +70,7 @@ export default function OffresPage() {
             </div>
 
             <p className="text-base sm:text-lg leading-relaxed mb-8">
-              Théo lance votre campagne Meta, Iris crée et renouvelle vos visuels, Lucie répond à chaque prospect en moins d&apos;une minute 24h/24, et Victor vous envoie le bilan chaque semaine — le tout dans votre tableau de bord. Un système qui tourne pendant que vous êtes sur le chantier.
+              Théo lance votre campagne Meta, Iris crée et renouvelle vos visuels, Lucie capte et qualifie chaque demande dès son arrivée 24h/24, et Victor vous envoie le bilan chaque semaine — le tout dans votre tableau de bord. Un système qui tourne pendant que vous êtes sur le chantier.
             </p>
 
             <div className="bg-surface-alt border border-stroke rounded-[20px] p-5 sm:p-6 mb-8">
@@ -195,7 +195,7 @@ export default function OffresPage() {
 
           <div className="text-center mt-10 sm:mt-12">
             <Link
-              href="/tarifs"
+              href="/plateforme"
               className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-emerald transition-colors"
             >
               Voir le tableau des tarifs et options

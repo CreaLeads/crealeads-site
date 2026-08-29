@@ -113,7 +113,7 @@ const jsonLd = {
         name: "Abonnement CreaLeads",
         price: "497",
         priceCurrency: "EUR",
-        description: "497 €/mois, zéro frais de mise en place, sans engagement. Quatre agents inclus : Théo (Campagne Meta Ads), Iris (Visuels IA), Lucie (Chatbot SMS de qualification 24h/24) et Victor (Reporting et optimisation). Budget publicitaire à part, versé directement à Meta.",
+        description: "497 €/mois, zéro frais de mise en place, sans engagement. Quatre agents inclus : Théo (Campagne Meta Ads), Iris (Visuels IA), Lucie (qualification automatique des demandes 24h/24) et Victor (Reporting et optimisation). Budget publicitaire à part, versé directement à Meta.",
         url: `${SITE_URL}/offres`,
       },
       {
@@ -122,7 +122,7 @@ const jsonLd = {
         price: "97",
         priceCurrency: "EUR",
         description: "Retargeting automatique des visiteurs qui n'ont pas encore pris contact. +97 €/mois, en option de l'abonnement.",
-        url: `${SITE_URL}/tarifs`,
+        url: `${SITE_URL}/plateforme`,
       },
       {
         "@type": "Offer",
@@ -130,7 +130,7 @@ const jsonLd = {
         price: "147",
         priceCurrency: "EUR",
         description: "Contenu réseaux sociaux publié automatiquement par l'agent Marco. +147 €/mois, en option de l'abonnement.",
-        url: `${SITE_URL}/tarifs`,
+        url: `${SITE_URL}/plateforme`,
       },
       {
         "@type": "Offer",
@@ -138,7 +138,7 @@ const jsonLd = {
         price: "197",
         priceCurrency: "EUR",
         description: "Campagnes Google Ads automatisées en complément de Meta. +197 €/mois, en option de l'abonnement.",
-        url: `${SITE_URL}/tarifs`,
+        url: `${SITE_URL}/plateforme`,
       },
       {
         "@type": "Offer",
@@ -146,7 +146,7 @@ const jsonLd = {
         price: "490",
         priceCurrency: "EUR",
         description: "Site vitrine professionnel livré clé en main. Prestation ponctuelle, paiement unique de 490 €.",
-        url: `${SITE_URL}/tarifs`,
+        url: `${SITE_URL}/plateforme`,
       },
     ],
   },

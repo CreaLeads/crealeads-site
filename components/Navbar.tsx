@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 
 const links = [
   { href: "/offres", label: "Offres" },
-  { href: "/tarifs", label: "Tarifs" },
-  { href: "/#methode", label: "Méthode" },
+  { href: "/plateforme", label: "Plateforme" },
   { href: "/agents", label: "Agents" },
-  { href: "/#faq", label: "FAQ" },
+  { href: "/blog", label: "Blog" },
+  { href: "/#methode", label: "Méthode" },
   { href: "/#contact", label: "Contact" },
 ];
 

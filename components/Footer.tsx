@@ -31,9 +31,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-sm text-ink-60">
               <li><Link href="/offres" className="hover:text-emerald">Offres</Link></li>
-              <li><Link href="/tarifs" className="hover:text-emerald">Tarifs</Link></li>
-              <li><Link href="#methode" className="hover:text-emerald">Méthode</Link></li>
-              <li><Link href="#temoignages" className="hover:text-emerald">Témoignages</Link></li>
+              <li><Link href="/plateforme" className="hover:text-emerald">Plateforme</Link></li>
+              <li><Link href="/agents" className="hover:text-emerald">Agents</Link></li>
+              <li><Link href="/blog" className="hover:text-emerald">Blog</Link></li>
               <li><Link href="#faq" className="hover:text-emerald">FAQ</Link></li>
             </ul>
           </div>

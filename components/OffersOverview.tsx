@@ -3,7 +3,7 @@ const CAL = "https://cal.eu/enzo-crealeads/20min";
 const AGENTS_INCLUS = [
   { i: "T", name: "Théo", role: "Campagne Meta Ads automatique — 1 zone, 1 métier" },
   { i: "I", name: "Iris", role: "Visuels publicitaires renouvelés par IA" },
-  { i: "L", name: "Lucie", role: "Chatbot SMS qui qualifie vos leads 24h/24" },
+  { i: "L", name: "Lucie", role: "Réception & qualification des demandes 24h/24" },
   { i: "V", name: "Victor", role: "Reporting mensuel + optimisation hebdo" },
 ];
 
@@ -174,7 +174,7 @@ export default function OffersOverview() {
         </div>
 
         <div className="text-center mt-8 sm:mt-10">
-          <a href="/tarifs" className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-emerald transition-colors">
+          <a href="/plateforme" className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-emerald transition-colors">
             Voir le détail de l&apos;offre et des options
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />

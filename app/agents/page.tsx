@@ -15,8 +15,8 @@ const AGENTS = [
   },
   {
     i: "L", name: "Lucie", role: "Réceptionniste 24/7", tier: "Inclus", included: true,
-    short: "Répond à vos prospects en moins d'1 min, 24h/24.",
-    long: "Lucie engage chaque nouvelle demande par SMS en moins d'une minute, à toute heure. Elle pose les bonnes questions, écarte les curieux, garde les prospects sérieux et cale directement les visites dans votre agenda. Week-ends et jours fériés compris.",
+    short: "Capte et qualifie chaque demande dès son arrivée, 24h/24.",
+    long: "Lucie capte et qualifie chaque nouvelle demande dès son arrivée, à toute heure : elle récupère les bonnes informations (ville, projet, budget, délai), écarte les curieux et garde les prospects sérieux, prêts pour la visite. Week-ends et jours fériés compris.",
   },
   {
     i: "V", name: "Victor", role: "Analyste", tier: "Inclus", included: true,
@@ -103,7 +103,7 @@ export default function AgentsPage() {
               <div className="text-sm text-bg/70">Les quatre agents qui lancent vos pubs, qualifient vos leads et suivent vos résultats — sans frais de mise en place.</div>
             </Link>
             <Link
-              href="/tarifs"
+              href="/plateforme"
               className="rounded-[20px] p-6 sm:p-8 bg-surface border border-stroke shadow-ds-sm transition-all hover:border-ink/25"
             >
               <div className="text-xs font-semibold uppercase tracking-wider text-emerald-dark mb-2">

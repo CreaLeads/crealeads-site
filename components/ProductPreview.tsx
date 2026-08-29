@@ -263,7 +263,7 @@ function RelancesView() {
           </li>
         ))}
       </ul>
-      <p className="mt-3 text-[12px] text-faint">Lucie relance automatiquement par SMS ; vous n'intervenez que sur les contacts chauds.</p>
+      <p className="mt-3 text-[12px] text-faint">Lucie repère les contacts sans réponse et vous dit qui relancer ; vous n&apos;intervenez que sur les contacts chauds.</p>
     </CardBox>
   );
 }
