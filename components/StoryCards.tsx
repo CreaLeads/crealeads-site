@@ -34,7 +34,7 @@ export default function StoryCards() {
   }, []);
 
   return (
-    <section ref={ref} className="py-16 sm:py-24 lg:py-28 bg-bg border-b border-stroke">
+    <section ref={ref} className="py-16 sm:py-24 lg:py-28 bg-canvas border-b border-stroke">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="max-w-2xl mb-10 sm:mb-14">
           <div className="text-xs sm:text-sm font-semibold uppercase tracking-widest text-emerald-dark mb-3">
