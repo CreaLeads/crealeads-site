@@ -71,10 +71,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-24 lg:py-28 scroll-mt-24 bg-ink-05">
+    <section id="contact" className="py-16 sm:py-24 lg:py-28 scroll-mt-24 bg-canvas">
       <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             Contact
           </div>
           <h2 className="font-display text-display-md mb-4">
@@ -88,7 +88,7 @@ export default function Contact() {
         <div className="grid md:grid-cols-2 gap-5 sm:gap-6 items-stretch">
 
           {/* Réservation directe (popup Cal.com — léger) */}
-          <div className="bg-ink text-bg rounded-3xl p-6 sm:p-8 flex flex-col justify-center">
+          <div className="bg-ink text-bg rounded-[24px] p-6 sm:p-8 flex flex-col justify-center">
             <div className="w-12 h-12 rounded-2xl bg-emerald/15 flex items-center justify-center text-2xl mb-5">📅</div>
             <h3 className="font-display text-xl sm:text-2xl font-bold mb-2">Réserver un appel</h3>
             <p className="text-sm text-bg/65 leading-relaxed mb-6">
@@ -114,7 +114,7 @@ export default function Contact() {
           </div>
 
           {/* Formulaire */}
-          <div className="bg-bg border border-ink-10 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col">
+          <div className="bg-surface border border-stroke rounded-[24px] p-6 sm:p-8 shadow-ds-sm flex flex-col">
             <div className="font-display font-bold text-lg mb-1">Ou laissez un message</div>
             <div className="text-xs text-ink-60 mb-5">On vous rappelle sous 24 heures.</div>
 
@@ -132,23 +132,23 @@ export default function Contact() {
                   <input
                     type="text" required value={form.nom} onChange={update("nom")}
                     placeholder="Nom *"
-                    className="bg-ink-05 border border-ink-10 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors"
+                    className="bg-surface-alt border border-stroke rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors"
                   />
                   <input
                     type="tel" value={form.tel} onChange={update("tel")}
                     placeholder="Téléphone"
-                    className="bg-ink-05 border border-ink-10 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors"
+                    className="bg-surface-alt border border-stroke rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors"
                   />
                 </div>
                 <input
                   type="email" required value={form.email} onChange={update("email")}
                   placeholder="Email *"
-                  className="w-full bg-ink-05 border border-ink-10 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors"
+                  className="w-full bg-surface-alt border border-stroke rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors"
                 />
                 <textarea
                   value={form.message} onChange={update("message")}
                   placeholder="Votre métier / votre besoin (ex : carreleur à Lyon, je veux plus de chantiers)"
-                  className="w-full flex-grow min-h-[90px] bg-ink-05 border border-ink-10 rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors resize-none"
+                  className="w-full flex-grow min-h-[90px] bg-surface-alt border border-stroke rounded-xl px-4 py-3 text-sm outline-none focus:border-emerald transition-colors resize-none"
                 />
                 <button
                   type="submit"

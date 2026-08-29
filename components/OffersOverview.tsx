@@ -43,10 +43,10 @@ function AgentRow({ name, role }: { name: string; role: string }) {
 
 export default function OffersOverview() {
   return (
-    <section id="offres" className="py-16 sm:py-24 lg:py-32 bg-ink-05 scroll-mt-24">
+    <section id="offres" className="py-16 sm:py-24 lg:py-32 bg-canvas scroll-mt-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             Notre offre
           </div>
           <h2 className="font-display text-display-md mb-4 sm:mb-6">
@@ -59,7 +59,7 @@ export default function OffersOverview() {
 
         {/* Carte offre unique */}
         <div className="max-w-lg mx-auto">
-          <div className="relative card-hover rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col bg-ink text-bg border-2 border-emerald shadow-2xl shadow-emerald/10">
+          <div className="relative card-hover rounded-[24px] p-6 sm:p-8 lg:p-10 flex flex-col bg-ink text-bg border-2 border-emerald shadow-lift">
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-emerald text-ink rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap">
               L&apos;offre CreaLeads
             </div>
@@ -111,7 +111,7 @@ export default function OffersOverview() {
         {/* Upsells */}
         <div className="mt-14 sm:mt-20 max-w-5xl mx-auto">
           <div className="text-center mb-8">
-            <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-2">
+            <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-2">
               Options à la carte
             </div>
             <h3 className="font-display text-2xl sm:text-3xl font-bold">
@@ -129,7 +129,7 @@ export default function OffersOverview() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {UPSELLS_RECURRENTS.map((u) => (
-                <div key={u.name} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5 flex flex-col">
+                <div key={u.name} className="rounded-[20px] border border-stroke bg-surface shadow-ds-sm p-4 sm:p-5 flex flex-col">
                   <div className="flex items-start justify-between gap-3 mb-1.5">
                     <div className="font-display font-bold text-sm leading-tight">{u.name}</div>
                     <div className="font-display font-extrabold text-sm text-emerald whitespace-nowrap">{u.price}</div>
@@ -147,7 +147,7 @@ export default function OffersOverview() {
             </div>
             <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
               {UPSELLS_ONESHOT.map((u) => (
-                <div key={u.name} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5 flex flex-col">
+                <div key={u.name} className="rounded-[20px] border border-stroke bg-surface shadow-ds-sm p-4 sm:p-5 flex flex-col">
                   <div className="flex items-start justify-between gap-3 mb-1.5">
                     <div className="font-display font-bold text-sm leading-tight">{u.name}</div>
                     <div className="font-display font-extrabold text-sm text-emerald whitespace-nowrap">{u.price}</div>
@@ -166,7 +166,7 @@ export default function OffersOverview() {
             { t: "🔓 Sans engagement", d: "Aucune durée minimale. Vous arrêtez quand vous voulez, par simple e-mail. Aucune pénalité." },
             { t: "📍 Exclusivité de zone", d: "Un seul artisan par métier et par secteur. Une fois votre zone prise, elle n'est plus proposée à personne." },
           ].map((m) => (
-            <div key={m.t} className="rounded-2xl border border-ink-10 bg-bg p-4 sm:p-5">
+            <div key={m.t} className="rounded-[20px] border border-stroke bg-surface shadow-ds-sm p-4 sm:p-5">
               <div className="font-display font-bold text-sm mb-1.5">{m.t}</div>
               <div className="text-xs text-ink-60 leading-relaxed">{m.d}</div>
             </div>

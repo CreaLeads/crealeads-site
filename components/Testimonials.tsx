@@ -42,7 +42,7 @@ export default function Testimonials() {
     <section id="temoignages" className="py-16 sm:py-24 lg:py-32">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-10 sm:mb-16">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             Témoignages clients
           </div>
           <h2 className="font-display text-display-md">
@@ -54,7 +54,7 @@ export default function Testimonials() {
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="card-hover bg-bg border border-ink-10 rounded-3xl p-6 sm:p-8 lg:p-12 flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center"
+              className="card-hover bg-surface border border-stroke shadow-ds-sm rounded-[24px] p-6 sm:p-8 lg:p-12 flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center"
             >
               <div className="lg:col-span-7">
                 <div className="flex items-center gap-1 mb-5 sm:mb-6">
@@ -68,7 +68,7 @@ export default function Testimonials() {
                   «&nbsp;{t.quote}&nbsp;»
                 </p>
                 <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-emerald/20 flex items-center justify-center font-display font-bold text-emerald-dark flex-shrink-0">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-brand-50 flex items-center justify-center font-display font-bold text-brand-700 flex-shrink-0">
                     {t.name.charAt(0)}
                   </div>
                   <div>
@@ -83,9 +83,9 @@ export default function Testimonials() {
                 {t.stats.map((s, j) => (
                   <div
                     key={j}
-                    className="bg-ink-05 rounded-2xl p-4 sm:p-5 text-center"
+                    className="bg-surface-alt border border-stroke rounded-[16px] p-4 sm:p-5 text-center"
                   >
-                    <div className="font-display text-2xl sm:text-3xl font-bold text-emerald mb-1">
+                    <div className="tnum font-display text-2xl sm:text-3xl font-bold text-emerald-dark mb-1">
                       {s.value}
                     </div>
                     <div className="text-xs text-ink-60 leading-tight">{s.label}</div>

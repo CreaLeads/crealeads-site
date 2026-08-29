@@ -38,7 +38,7 @@ export default function ForYouIf() {
     <section className="py-16 sm:py-24 lg:py-32">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-10 sm:mb-16">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             On est faits pour s'entendre si...
           </div>
           <h2 className="font-display text-display-md">
@@ -50,14 +50,14 @@ export default function ForYouIf() {
           {items.map((item, i) => (
             <div
               key={i}
-              className="card-hover bg-bg border border-ink-10 rounded-2xl p-6 sm:p-8"
+              className="card-hover bg-surface border border-stroke shadow-ds-sm rounded-[20px] p-6 sm:p-8"
             >
-              <div className="w-11 h-11 rounded-xl bg-emerald/10 flex items-center justify-center mb-4 sm:mb-5">
+              <div className="w-11 h-11 rounded-[14px] bg-brand-50 flex items-center justify-center mb-4 sm:mb-5">
                 <svg className="w-6 h-6 text-emerald-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d={item.path} />
                 </svg>
               </div>
-              <h3 className="font-display text-lg sm:text-xl font-bold mb-2.5 sm:mb-3">{item.title}</h3>
+              <h3 className="font-sans text-lg sm:text-xl font-semibold tracking-tight mb-2.5 sm:mb-3">{item.title}</h3>
               <p className="text-ink-60 text-sm leading-relaxed">{item.desc}</p>
             </div>
           ))}

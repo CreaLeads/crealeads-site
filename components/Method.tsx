@@ -33,7 +33,7 @@ export default function Method() {
     <section id="methode" className="py-16 sm:py-24 lg:py-32 scroll-mt-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-10 sm:mb-14">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             Notre méthode
           </div>
           <h2 className="font-display text-display-md">
@@ -46,15 +46,15 @@ export default function Method() {
           {steps.map((step, i) => (
             <div
               key={i}
-              className="card-hover bg-bg border border-ink-10 rounded-2xl p-4 sm:p-5 lg:p-6 flex flex-col"
+              className="card-hover bg-surface border border-stroke shadow-ds-sm rounded-[20px] p-4 sm:p-5 lg:p-6 flex flex-col"
             >
-              <div className="font-display text-2xl sm:text-3xl font-extrabold text-emerald/30 mb-2 sm:mb-3">
+              <div className="tnum font-display text-2xl sm:text-3xl font-extrabold text-brand-300 mb-2 sm:mb-3">
                 {step.num}
               </div>
-              <h3 className="font-display text-sm sm:text-base lg:text-lg font-bold mb-1.5 sm:mb-2 leading-tight">
+              <h3 className="font-sans text-sm sm:text-base lg:text-lg font-semibold tracking-tight mb-1.5 sm:mb-2 leading-tight">
                 {step.title}
               </h3>
-              <p className="text-ink-60 text-[12.5px] sm:text-sm leading-relaxed">
+              <p className="text-muted text-[12.5px] sm:text-sm leading-relaxed">
                 {step.desc}
               </p>
             </div>

@@ -55,14 +55,14 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-16 sm:py-24 lg:py-32 bg-ink-05 scroll-mt-24">
+    <section id="faq" className="py-16 sm:py-24 lg:py-32 bg-canvas scroll-mt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="text-center mb-10 sm:mb-16">
-          <div className="text-xs sm:text-sm font-semibold text-emerald uppercase tracking-wider mb-3 sm:mb-4">
+          <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             Questions fréquentes
           </div>
           <h2 className="font-display text-display-md">
@@ -74,16 +74,16 @@ export default function FAQ() {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="bg-bg border border-ink-10 rounded-2xl overflow-hidden transition-all"
+              className="bg-surface border border-stroke shadow-ds-sm rounded-[20px] overflow-hidden transition-all"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="w-full px-5 sm:px-8 py-4 sm:py-6 flex items-center justify-between gap-4 text-left"
               >
-                <span className="font-display text-sm sm:text-lg font-bold">
+                <span className="font-sans text-sm sm:text-lg font-semibold tracking-tight">
                   {faq.q}
                 </span>
-                <span className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-ink-05 flex items-center justify-center transition-transform duration-300 ${openIndex === i ? "rotate-45" : ""}`}>
+                <span className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-surface-alt border border-stroke flex items-center justify-center transition-transform duration-300 ${openIndex === i ? "rotate-45" : ""}`}>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                   </svg>

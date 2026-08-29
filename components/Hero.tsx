@@ -101,21 +101,21 @@ export default function Hero() {
         </div>
 
         {/* Trust signals */}
-        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-x-8 sm:gap-y-3 mt-10 sm:mt-12 text-sm text-ink-60 animate-fade-up" style={{ animationDelay: "0.4s", opacity: 0 }}>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-emerald flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+        <div className="flex flex-wrap gap-2.5 sm:gap-3 mt-10 sm:mt-12 text-sm text-ink-60 animate-fade-up" style={{ animationDelay: "0.4s", opacity: 0 }}>
+          <div className="inline-flex items-center gap-2 rounded-pill border border-stroke bg-surface shadow-ds-sm px-3.5 py-2">
+            <svg className="w-5 h-5 text-emerald-dark flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             <span>Premiers leads sous 24h</span>
           </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-emerald flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+          <div className="inline-flex items-center gap-2 rounded-pill border border-stroke bg-surface shadow-ds-sm px-3.5 py-2">
+            <svg className="w-5 h-5 text-emerald-dark flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             <span>Exclusivité zone et métier</span>
           </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-emerald flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+          <div className="inline-flex items-center gap-2 rounded-pill border border-stroke bg-surface shadow-ds-sm px-3.5 py-2">
+            <svg className="w-5 h-5 text-emerald-dark flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             <span>Sans engagement</span>

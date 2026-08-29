@@ -11,10 +11,10 @@ const clients = [
 
 export default function Clients() {
   return (
-    <section className="py-20 border-y border-ink-10 bg-ink-05">
+    <section className="py-20 border-y border-stroke bg-canvas">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-12">
         <div className="text-center">
-          <div className="text-sm font-semibold text-emerald uppercase tracking-wider mb-3">
+          <div className="text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3">
             Ils nous font confiance
           </div>
           <h2 className="font-display text-display-sm">
@@ -32,7 +32,7 @@ export default function Clients() {
               key={i}
               className="flex-shrink-0 mx-8 flex items-center gap-4"
             >
-              <div className="w-12 h-12 rounded-full bg-emerald/20 flex items-center justify-center font-display font-bold text-emerald-dark">
+              <div className="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center font-display font-bold text-brand-700">
                 {client.name.charAt(0)}
               </div>
               <div>
