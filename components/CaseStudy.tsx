@@ -29,8 +29,9 @@ const CASES = [
 
 export default function CaseStudy() {
   return (
-    <section id="resultats" className="section-dark py-16 sm:py-24 lg:py-32 scroll-mt-24">
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
+    <section id="resultats" className="section-dark py-16 sm:py-24 lg:py-32 scroll-mt-24 relative overflow-hidden">
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald/10 rounded-full blur-3xl -z-0 pointer-events-none" />
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-2xl mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald/10 border border-emerald/30 mb-5 sm:mb-6">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald" />
@@ -51,11 +52,11 @@ export default function CaseStudy() {
         {/* 2 colonnes mobile, 4 desktop */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {CASES.map((c) => (
-            <div key={c.name} className="bg-bg/5 border border-bg/10 rounded-2xl p-5 sm:p-7 flex flex-col">
-              <div className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-emerald mb-3 sm:mb-4 leading-none">
+            <div key={c.name} className="card-hover bg-bg/[0.06] border border-bg/10 rounded-[20px] p-5 sm:p-7 flex flex-col hover:bg-bg/[0.09]">
+              <div className="tnum font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-emerald mb-3 sm:mb-4 leading-none">
                 {c.metric}
               </div>
-              <div className="font-display font-bold text-base sm:text-lg leading-none">{c.name}</div>
+              <div className="font-sans font-bold text-base sm:text-lg leading-none tracking-tight">{c.name}</div>
               <div className="text-[11px] sm:text-xs text-emerald uppercase tracking-wider font-semibold mt-1 mb-3">{c.loc}</div>
               <p className="text-[12.5px] sm:text-sm text-bg/60 leading-relaxed">{c.desc}</p>
             </div>

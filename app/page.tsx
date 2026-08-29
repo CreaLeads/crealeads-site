@@ -1,16 +1,16 @@
 import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import StoryCards from "@/components/StoryCards";
-import Stats from "@/components/Stats";
-import CaseStudy from "@/components/CaseStudy";
-import ForYouIf from "@/components/ForYouIf";
 import Clients from "@/components/Clients";
-import Method from "@/components/Method";
+import Platform from "@/components/Platform";
 import ProductPreview from "@/components/ProductPreview";
 import AdToChantier from "@/components/AdToChantier";
-import OffersOverview from "@/components/OffersOverview";
+import Method from "@/components/Method";
+import Stats from "@/components/Stats";
+import CaseStudy from "@/components/CaseStudy";
 import Testimonials from "@/components/Testimonials";
+import ForYouIf from "@/components/ForYouIf";
+import OffersOverview from "@/components/OffersOverview";
 import FAQ from "@/components/FAQ";
 import CTAFinal from "@/components/CTAFinal";
 import Contact from "@/components/Contact";
@@ -22,16 +22,16 @@ export default function Home() {
       <Loader />
       <Navbar />
       <Hero />
-      <StoryCards />
-      <Stats />
-      <CaseStudy />
-      <ForYouIf />
       <Clients />
-      <Method />
+      <Platform />
       <ProductPreview />
       <AdToChantier />
-      <OffersOverview />
+      <Method />
+      <Stats />
+      <CaseStudy />
       <Testimonials />
+      <ForYouIf />
+      <OffersOverview />
       <FAQ />
       <CTAFinal />
       <Contact />
