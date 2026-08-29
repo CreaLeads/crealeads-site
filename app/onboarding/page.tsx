@@ -1,11 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { getSupabaseClient } from "@/lib/supabaseClient";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-const WEBHOOK_URL = "https://crealeads.app.n8n.cloud/webhook/onboarding-client";
-const BUCKET = "onboarding-assets";
-const ONE_YEAR = 60 * 60 * 24 * 365; // signed URL expiry, in seconds
+const STORAGE_KEY = "cl_onboarding_v1";
 const MAX_LOGO_BYTES = 2 * 1024 * 1024; // 2 Mo
 const MAX_PHOTOS = 5;
 
@@ -118,11 +115,6 @@ function fmtSize(b: number) {
   return (b / 1048576).toFixed(1) + " Mo";
 }
 
-function extOf(name: string, fallback: string) {
-  const m = name.match(/\.([a-zA-Z0-9]+)$/);
-  return m ? m[1].toLowerCase() : fallback;
-}
-
 export default function OnboardingPage() {
   const [step, setStep] = useState(0);
   const [data, setData] = useState<FormState>(INITIAL);
@@ -131,11 +123,47 @@ export default function OnboardingPage() {
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [resultEmail, setResultEmail] = useState("");
+  const [warning, setWarning] = useState("");
 
   const progress = useMemo(
     () => Math.round(((step + 1) / STEPS.length) * 100),
     [step]
   );
+
+  // On ne sauvegarde qu'APRÈS la restauration initiale, sinon les données vides
+  // du premier rendu écraseraient la progression enregistrée.
+  const skipSave = useRef(true);
+
+  // Restaure la progression sauvegardée si l'artisan revient sur la page
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (saved && typeof saved === "object" && saved.data) {
+        setData((d) => ({ ...d, ...saved.data }));
+        if (typeof saved.step === "number") {
+          setStep(Math.min(Math.max(saved.step, 0), STEPS.length - 1));
+        }
+      }
+    } catch {
+      /* stockage indisponible ou corrompu : on repart de zéro */
+    }
+  }, []);
+
+  // Sauvegarde les réponses à chaque changement (les fichiers ne sont pas persistables)
+  useEffect(() => {
+    if (skipSave.current) {
+      skipSave.current = false;
+      return;
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ step, data }));
+    } catch {
+      /* ignore */
+    }
+  }, [step, data]);
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setData((d) => ({ ...d, [key]: value }));
@@ -215,61 +243,24 @@ export default function OnboardingPage() {
     if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  async function uploadFile(file: File, filename: string): Promise<string> {
-    const supabase = getSupabaseClient();
-    const path = `${data.email}/${filename}`;
-    const { error: upErr } = await supabase.storage
-      .from(BUCKET)
-      .upload(path, file, { upsert: true, contentType: file.type || undefined });
-    if (upErr) throw new Error(`Upload échoué (${filename}) : ${upErr.message}`);
-
-    const { data: signed, error: signErr } = await supabase.storage
-      .from(BUCKET)
-      .createSignedUrl(path, ONE_YEAR);
-    if (signErr || !signed?.signedUrl)
-      throw new Error(`URL signée échouée (${filename}).`);
-    return signed.signedUrl;
-  }
-
   async function handleSubmit() {
-    // Re-run the mandatory step-1 checks even if the user jumped ahead.
+    // On revalide les champs obligatoires même si l'utilisateur a sauté des étapes.
     const err = validateStep(0);
     if (err) {
       setError(err);
       setStep(0);
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     setError("");
     setSubmitting(true);
 
     try {
-      const timestamp = Date.now();
-
-      // 1) Logo
-      let logo_url = "";
-      if (logo) {
-        logo_url = await uploadFile(
-          logo,
-          `${timestamp}-logo.${extOf(logo.name, "png")}`
-        );
-      }
-
-      // 2) Photos
-      const photos_urls: string[] = [];
-      for (let i = 0; i < photos.length; i++) {
-        const url = await uploadFile(
-          photos[i],
-          `${timestamp}-photo-${i + 1}.${extOf(photos[i].name, "jpg")}`
-        );
-        photos_urls.push(url);
-      }
-
-      // 3) Corps de métier (merge free-text "Autre")
+      // Corps de métier (fusionne le champ libre "Autre")
       const corps_metier = [...data.corps_metier];
       if (data.corps_metier_autre.trim())
         corps_metier.push(data.corps_metier_autre.trim());
 
-      // 4) Payload → n8n webhook
       const payload = {
         prenom: data.prenom.trim(),
         nom: data.nom.trim(),
@@ -291,28 +282,49 @@ export default function OnboardingPage() {
         meta_ads_budget: data.meta_ads_budget.trim(),
         meta_ads_results: data.meta_ads_results.trim(),
         sources_clients: data.sources_clients,
-        logo_url,
-        photos_urls,
         couleur_charte: data.couleur_charte,
         ton_communication: data.ton_communication,
         infos_complementaires: data.infos_complementaires.trim(),
       };
 
-      const res = await fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("HTTP " + res.status);
+      // Tout passe par la route serveur (service role) — le navigateur ne touche pas la base.
+      const fd = new FormData();
+      fd.append("data", JSON.stringify(payload));
+      if (logo) fd.append("logo", logo);
+      photos.forEach((p) => fd.append("photos", p));
 
+      const res = await fetch("/api/onboarding", { method: "POST", body: fd });
+      const json = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+        email?: string;
+        warning?: string;
+      };
+
+      if (!res.ok || json.ok !== true) {
+        setError(
+          json.error ||
+            "L'envoi n'a pas abouti. Vérifie ta connexion et réessaie, ou écris-nous à contact.crealeads@gmail.com."
+        );
+        setSubmitting(false);
+        if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
+      setResultEmail(json.email || data.email.trim());
+      setWarning(json.warning || "");
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        /* ignore */
+      }
       setDone(true);
-      if (typeof window !== "undefined")
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : "Erreur inconnue.";
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
       setError(
-        `L'envoi n'a pas abouti (${msg}). Vérifie ta connexion et réessaie, ou écris-nous à contact.crealeads@gmail.com.`
+        "Impossible de contacter le serveur. Vérifie ta connexion et réessaie, ou écris-nous à contact.crealeads@gmail.com."
       );
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
     } finally {
       setSubmitting(false);
     }
@@ -347,13 +359,27 @@ export default function OnboardingPage() {
             </svg>
           </div>
           <h2>
-            ✅ Formulaire reçu
-            <span className="scribble">on te contacte sous 48h.</span>
+            ✅ Votre compte est créé
+            <span className="scribble">bienvenue chez CreaLeads !</span>
           </h2>
           <p>
-            On te contacte sous 48h pour lancer tes campagnes. Merci, on a bien
-            tout reçu.
+            Votre espace est prêt. Un e-mail contenant vos identifiants et un mot
+            de passe provisoire vient d&apos;être envoyé à <b>{resultEmail}</b>.
+            Pensez à vérifier vos spams, et à changer votre mot de passe à la
+            première connexion.
           </p>
+          {warning && (
+            <div className="err-box" style={{ marginTop: 18, textAlign: "left" }}>
+              {warning}
+            </div>
+          )}
+          <a
+            className="btn"
+            style={{ display: "inline-block", marginTop: 26, textDecoration: "none" }}
+            href="https://dashboard.crealeads.fr"
+          >
+            Accéder à mon tableau de bord
+          </a>
         </div>
       ) : (
         <>
