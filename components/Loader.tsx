@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+
+const KEY = "cl_intro_seen_v1";
 
 // Signale aux autres composants (ex : compteur du hero) que le loader a disparu
 function fireLoaded() {
@@ -11,15 +13,40 @@ function fireLoaded() {
   window.dispatchEvent(new Event("cl:loaded"));
 }
 
+// useLayoutEffect côté client (avant le paint → pas de flash), useEffect en SSR
+const useIsoLayout = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export default function Loader() {
+  const [skip, setSkip] = useState(false);
   const [pct, setPct] = useState(0);
 
-  // Compteur 0→100 via requestAnimationFrame (léger, sans librairie)
+  // Décide, AVANT le premier paint, si l'intro doit jouer (1× par session)
+  useIsoLayout(() => {
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem(KEY) === "1";
+    } catch {
+      /* stockage indisponible → on joue l'intro */
+    }
+    if (seen) {
+      setSkip(true);
+      fireLoaded();
+    } else {
+      try {
+        sessionStorage.setItem(KEY, "1");
+      } catch {
+        /* ignore */
+      }
+    }
+  }, []);
+
+  // Compteur 0→100 (uniquement quand l'intro joue)
   useEffect(() => {
+    if (skip) return;
     let raf = 0;
     let startT: number | null = null;
-    const dur = 2000;
-    const delay = 150;
+    const dur = 900;
+    const delay = 80;
     const tick = (t: number) => {
       if (startT === null) startT = t;
       const e = t - startT - delay;
@@ -28,19 +55,19 @@ export default function Loader() {
         return;
       }
       const p = Math.min(e / dur, 1);
-      const eased = 1 - Math.pow(1 - p, 2); // ease-out
+      const eased = 1 - Math.pow(1 - p, 2);
       setPct(Math.round(eased * 100));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    // Signale « loader fini » au moment où il commence à s'effacer (le compteur
-    // démarre alors, et est déjà en mouvement quand le hero se révèle).
-    const fb = setTimeout(fireLoaded, 2350);
+    const fb = setTimeout(fireLoaded, 1100);
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(fb);
     };
-  }, []);
+  }, [skip]);
+
+  if (skip) return null;
 
   return (
     <div
@@ -48,10 +75,10 @@ export default function Loader() {
       aria-hidden
       onAnimationEnd={fireLoaded}
     >
-      {/* Le retrait du loader est piloté en CSS pur : fiable même si le JS est lent/désactivé */}
+      {/* Retrait piloté en CSS pur : fiable même si le JS est lent/désactivé */}
       <style>{`
         .cl-loader {
-          animation: clOut 0.7s cubic-bezier(0.7,0,0.3,1) forwards 2.35s;
+          animation: clOut 0.5s cubic-bezier(0.7,0,0.3,1) forwards 1.05s;
         }
         @keyframes clOut {
           to { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-1.5%); }
