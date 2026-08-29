@@ -71,7 +71,7 @@ export default function Hero() {
 
         {/* Subtitle */}
         <p className="text-base sm:text-lg text-ink-60 mb-6 sm:mb-8 max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
-          Un système clé en main qui vous ramène <strong className="text-ink font-semibold">50 à 100 prospects qualifiés par mois</strong>, directement sur votre WhatsApp. Pensé par un fils d'artisan, pour les artisans.
+          Un système clé en main qui vous ramène <strong className="text-ink font-semibold">50 à 100 prospects qualifiés par mois</strong>, directement dans votre tableau de bord. Pensé par un fils d'artisan, pour les artisans.
         </p>
 
         {/* Compteur animé */}
@@ -118,7 +118,7 @@ export default function Hero() {
             <svg className="w-5 h-5 text-emerald flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
-            <span>Garantie 50 % remboursé à 90 jours</span>
+            <span>Sans engagement</span>
           </div>
         </div>
       </div>
