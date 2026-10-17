@@ -217,7 +217,7 @@ function CampagnesView() {
           </div>
         </div>
       ))}
-      <p className="text-[12px] text-faint px-1">Théo pilote vos campagnes et ajuste les enchères chaque semaine pour faire baisser le coût par demande.</p>
+      <p className="text-[12px] text-faint px-1">Vos campagnes sont pilotées et les enchères ajustées chaque semaine pour faire baisser le coût par demande.</p>
     </div>
   );
 }
@@ -263,7 +263,7 @@ function RelancesView() {
           </li>
         ))}
       </ul>
-      <p className="mt-3 text-[12px] text-faint">Lucie repère les contacts sans réponse et vous dit qui relancer ; vous n&apos;intervenez que sur les contacts chauds.</p>
+      <p className="mt-3 text-[12px] text-faint">Le système repère les contacts sans réponse et vous dit qui relancer ; vous n&apos;intervenez que sur les contacts chauds.</p>
     </CardBox>
   );
 }

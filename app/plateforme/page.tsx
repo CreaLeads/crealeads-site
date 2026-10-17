@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,25 +11,13 @@ import CTAFinal from "@/components/CTAFinal";
 const DASHBOARD_URL = "https://dashboard.crealeads.fr";
 const CAL = "https://cal.eu/enzo-crealeads/20min";
 
-export const metadata: Metadata = {
-  title: "La plateforme — Tout votre business dans un tableau de bord",
+export const metadata: Metadata = pageMeta({
+  title: "Logiciel d'acquisition client pour artisans : la plateforme",
   description:
-    "La plateforme CreaLeads centralise toute votre acquisition : campagnes Meta, demandes qualifiées, rendez-vous, relances, devis et bilan hebdo. Un seul écran, un seul abonnement à 497 €/mois. Découvrez le tableau de bord et les tarifs.",
-  keywords: [
-    "plateforme acquisition artisan",
-    "logiciel acquisition clients bâtiment",
-    "tableau de bord artisan",
-    "CRM artisan bâtiment",
-    "tarifs CreaLeads",
-  ],
-  alternates: { canonical: "/plateforme" },
-  openGraph: {
-    title: "La plateforme CreaLeads — 497 €/mois",
-    description:
-      "Campagnes, demandes, rendez-vous, relances, devis, bilan : toute votre acquisition dans un seul tableau de bord.",
-    url: "https://crealeads.fr/plateforme",
-  },
-};
+    "La plateforme CreaLeads centralise l'acquisition des artisans du bâtiment : campagnes Meta, demandes qualifiées, rendez-vous, relances, devis et bilan hebdo dans un seul tableau de bord. 497 €/mois.",
+  path: "/plateforme",
+  ogTitle: "La plateforme CreaLeads — toute votre acquisition dans un écran",
+});
 
 export default function PlateformePage() {
   return (

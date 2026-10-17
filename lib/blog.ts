@@ -16,6 +16,8 @@ export interface Article {
   keywords: string[];
   geo?: string;
   date: string; // ISO (AAAA-MM-JJ)
+  updated?: string; // ISO, si l'article a été mis à jour
+  related?: { href: string; label: string }[]; // maillage vers les pages métier / zone
   readingTime: string;
   excerpt: string;
   blocks: Block[];
@@ -27,6 +29,7 @@ const CTA_DEFAULT =
 export const ARTICLES: Article[] = [
   {
     slug: "trouver-clients-artisan-batiment",
+    related: [{ href: "/metiers", label: "Comment on trouve des chantiers pour votre métier" }, { href: "/alternative-plateformes-leads", label: "Plateformes de leads : pourquoi passer à un système à vous" }],
     title: "Comment trouver des clients quand on est artisan du bâtiment",
     description:
       "Bouche-à-oreille, Google, Pages Jaunes, publicité Meta : le guide complet pour trouver des clients et générer des leads qualifiés quand on est artisan du bâtiment.",
@@ -57,6 +60,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "generer-leads-qualifies-artisans-ile-de-france",
+    related: [{ href: "/zones/ile-de-france", label: "Trouver des clients artisan en Île-de-France" }, { href: "/zones/hauts-de-seine", label: "Artisans dans les Hauts-de-Seine (92)" }, { href: "/zones/val-de-marne", label: "Artisans dans le Val-de-Marne (94)" }],
     title: "Générer des leads qualifiés pour artisans en Île-de-France",
     description:
       "Comment générer des leads et des prospects qualifiés pour une entreprise artisanale du bâtiment en Île-de-France (Paris, 77, 78, 91, 92, 93, 94, 95).",
@@ -86,6 +90,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "acquisition-clients-artisan-yvelines-78",
+    related: [{ href: "/zones/yvelines", label: "Trouver des clients artisan dans les Yvelines" }, { href: "/metiers/applicateur-resine", label: "Chantiers de résine de garage et terrasse" }, { href: "/metiers/ravalement-facade", label: "Chantiers de ravalement de façade" }],
     title: "Acquisition de clients pour artisans dans les Yvelines (78)",
     description:
       "Trouver des clients et générer des leads qualifiés quand on est artisan du bâtiment dans les Yvelines (78) : Versailles, Saint-Germain-en-Laye, Mantes, Rambouillet.",
@@ -114,6 +119,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "acquisition-clients-artisan-paris",
+    related: [{ href: "/zones/paris", label: "Trouver des clients artisan à Paris" }, { href: "/metiers/renovation-interieure", label: "Chantiers de rénovation intérieure" }, { href: "/metiers/peintre-batiment", label: "Clients pour peintres en bâtiment" }],
     title: "Acquisition de clients pour artisans à Paris",
     description:
       "Trouver des clients et générer des prospects qualifiés quand on est artisan du bâtiment à Paris (75) : rénovation, peinture, sols, petits travaux.",
@@ -136,6 +142,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "publicite-meta-facebook-instagram-artisans",
+    related: [{ href: "/metiers", label: "La publicité Meta, métier par métier" }, { href: "/alternative-plateformes-leads", label: "Publicité Meta ou plateformes de leads ?" }, { href: "/offres", label: "L'offre CreaLeads à 497 €/mois" }],
     title: "Publicité Meta (Facebook & Instagram) pour artisans : le guide",
     description:
       "Comment fonctionne la publicité Meta pour les artisans du bâtiment, combien de prospects espérer par mois et quel budget prévoir pour générer des leads.",

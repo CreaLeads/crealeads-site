@@ -3,6 +3,8 @@ import { Inter, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import ChatWidget from "@/components/ChatWidget";
 import "./globals.css";
+import { SITE_URL, CONTACT, LEGAL, AUTHOR } from "@/lib/site";
+import { OG_IMAGE } from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,35 +18,19 @@ const outfit = Outfit({
   display: "swap",
 });
 
-const SITE_URL = "https://crealeads.fr";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "CreaLeads — Acquisition de clients pour artisans du bâtiment",
+    default: "CreaLeads — Trouver des clients et des chantiers quand on est artisan du bâtiment",
     template: "%s — CreaLeads",
   },
   description:
-    "Le bouche-à-oreille a une limite. Nous, on n'en a pas. CreaLeads installe un système d'acquisition de clients clé en main pour les artisans du bâtiment : campagnes Meta Ads, leads qualifiés, CRM et notifications. Premiers prospects sous 24 à 48h.",
-  keywords: [
-    "acquisition clients artisans",
-    "leads artisans bâtiment",
-    "publicité Meta artisans",
-    "Facebook Ads bâtiment",
-    "agence acquisition BTP",
-    "trouver des clients artisan",
-    "leads qualifiés rénovation",
-    "marketing digital artisan",
-    "google my business artisan",
-  ],
-  authors: [{ name: "CreaLeads" }],
+    "CreaLeads trouve des clients aux artisans du bâtiment : publicité Facebook et Instagram ciblée sur votre zone, demandes de devis qualifiées et suivi jusqu'au chantier signé dans un tableau de bord. 497 €/mois, sans engagement.",
+  authors: [{ name: AUTHOR.name, url: AUTHOR.url }],
   creator: "CreaLeads",
   publisher: "CreaLeads",
   applicationName: "CreaLeads",
   category: "Marketing",
-  alternates: {
-    canonical: "/",
-  },
   robots: {
     index: true,
     follow: true,
@@ -64,92 +50,90 @@ export const metadata: Metadata = {
     apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
   },
   openGraph: {
-    title: "CreaLeads — Acquisition de clients pour artisans du bâtiment",
+    title: "CreaLeads — Des chantiers, pas des contacts",
     description:
-      "Le bouche-à-oreille a une limite. Nous, on n'en a pas. Système d'acquisition de clients clé en main pour artisans du bâtiment.",
+      "Publicité Meta ciblée, demandes qualifiées et suivi jusqu'au chantier signé : le système d'acquisition clé en main des artisans du bâtiment.",
     url: SITE_URL,
     siteName: "CreaLeads",
     locale: "fr_FR",
     type: "website",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "CreaLeads — Acquisition de clients pour artisans" }],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CreaLeads — Acquisition de clients pour artisans du bâtiment",
-    description: "Le bouche-à-oreille a une limite. Nous, on n'en a pas.",
-    images: ["/og-image.jpg"],
+    title: "CreaLeads — Des chantiers, pas des contacts",
+    description: "Le système d'acquisition clé en main des artisans du bâtiment.",
+    images: [OG_IMAGE.url],
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "CreaLeads",
-  description:
-    "Agence d'acquisition de clients pour artisans du bâtiment : campagnes Meta Ads, leads qualifiés, CRM et automatisation.",
-  url: SITE_URL,
-  email: "contact.crealeads@gmail.com",
-  telephone: "+33663675254",
-  areaServed: "FR",
-  priceRange: "€€",
-  image: `${SITE_URL}/og-image.jpg`,
-  sameAs: [
-    "https://www.linkedin.com/in/enzo-wagner",
-    "https://www.instagram.com/crealeads",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "CreaLeads",
+      inLanguage: "fr-FR",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${SITE_URL}/#organization`,
+      name: "CreaLeads",
+      legalName: LEGAL.name,
+      description:
+        "Acquisition de clients pour artisans du bâtiment : publicité Meta (Facebook, Instagram) ciblée par zone et par métier, qualification des demandes de devis et suivi jusqu'au chantier signé.",
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/icon-192.png`, width: 192, height: 192 },
+      image: `${SITE_URL}/og-image.jpg`,
+      email: CONTACT.email,
+      telephone: CONTACT.phone,
+      taxID: LEGAL.siren.replace(/ /g, ""),
+      vatID: LEGAL.vat,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "60 rue François Ier",
+        postalCode: "75008",
+        addressLocality: "Paris",
+        addressCountry: "FR",
+      },
+      areaServed: { "@type": "Country", name: "France" },
+      priceRange: "€€",
+      founder: { "@type": "Person", name: AUTHOR.name, url: AUTHOR.url },
+      sameAs: [AUTHOR.url, "https://www.instagram.com/crealeads"],
+      knowsAbout: [
+        "Publicité Facebook et Instagram pour artisans",
+        "Génération de leads bâtiment",
+        "Acquisition de clients pour artisans",
+        "Qualification de demandes de devis",
+      ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Offre CreaLeads",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            name: "Abonnement CreaLeads",
+            price: "497",
+            priceCurrency: "EUR",
+            description:
+              "Système d'acquisition complet : campagnes Meta ciblées sur votre zone et votre métier, visuels renouvelés, qualification automatique des demandes 24h/24, tableau de bord et bilan hebdomadaire. Sans frais de mise en place, sans engagement. Budget publicitaire à part, versé directement à Meta.",
+            url: `${SITE_URL}/offres`,
+          },
+          {
+            "@type": "Offer",
+            name: "Site vitrine professionnel",
+            price: "490",
+            priceCurrency: "EUR",
+            description: "Site vitrine professionnel livré clé en main. Paiement unique.",
+            url: `${SITE_URL}/offres`,
+          },
+        ],
+      },
+    },
   ],
-  serviceType: [
-    "Publicité Meta Ads",
-    "Génération de leads",
-    "Gestion Google My Business",
-    "Automatisation marketing",
-    "Agents IA conversationnels",
-  ],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Offre CreaLeads",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        name: "Abonnement CreaLeads",
-        price: "497",
-        priceCurrency: "EUR",
-        description: "497 €/mois, zéro frais de mise en place, sans engagement. Quatre agents inclus : Théo (Campagne Meta Ads), Iris (Visuels IA), Lucie (qualification automatique des demandes 24h/24) et Victor (Reporting et optimisation). Budget publicitaire à part, versé directement à Meta.",
-        url: `${SITE_URL}/offres`,
-      },
-      {
-        "@type": "Offer",
-        name: "Option Retargeting automatique",
-        price: "97",
-        priceCurrency: "EUR",
-        description: "Retargeting automatique des visiteurs qui n'ont pas encore pris contact. +97 €/mois, en option de l'abonnement.",
-        url: `${SITE_URL}/plateforme`,
-      },
-      {
-        "@type": "Offer",
-        name: "Option Contenu réseaux sociaux (Marco)",
-        price: "147",
-        priceCurrency: "EUR",
-        description: "Contenu réseaux sociaux publié automatiquement par l'agent Marco. +147 €/mois, en option de l'abonnement.",
-        url: `${SITE_URL}/plateforme`,
-      },
-      {
-        "@type": "Offer",
-        name: "Option Google Ads automatique",
-        price: "197",
-        priceCurrency: "EUR",
-        description: "Campagnes Google Ads automatisées en complément de Meta. +197 €/mois, en option de l'abonnement.",
-        url: `${SITE_URL}/plateforme`,
-      },
-      {
-        "@type": "Offer",
-        name: "Site vitrine professionnel",
-        price: "490",
-        priceCurrency: "EUR",
-        description: "Site vitrine professionnel livré clé en main. Prestation ponctuelle, paiement unique de 490 €.",
-        url: `${SITE_URL}/plateforme`,
-      },
-    ],
-  },
 };
 
 export default function RootLayout({

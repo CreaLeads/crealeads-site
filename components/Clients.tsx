@@ -1,5 +1,3 @@
-"use client";
-
 const clients = [
   { name: "SurfaceBéton", location: "Île-de-France" },
   { name: "Mendes Signature", location: "Troyes" },
@@ -11,15 +9,14 @@ const clients = [
 
 export default function Clients() {
   return (
-    <section className="py-20 border-y border-stroke bg-canvas">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-12">
+    <section className="py-12 sm:py-16 border-y border-stroke bg-surface">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-8">
         <div className="text-center">
           <div className="text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3">
             Ils nous font confiance
           </div>
           <h2 className="font-display text-display-sm">
-            5 artisans accompagnés
-            <br />
+            Des artisans accompagnés{" "}
             <span className="text-ink-60 font-normal">dans toute la France.</span>
           </h2>
         </div>

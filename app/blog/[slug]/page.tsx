@@ -4,9 +4,8 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ARTICLES, getArticle, type Block } from "@/lib/blog";
-
-const CAL = "https://cal.eu/enzo-crealeads/20min";
-const SITE = "https://crealeads.fr";
+import { SITE_URL as SITE, CAL_URL as CAL, AUTHOR } from "@/lib/site";
+import { pageMeta, breadcrumbJsonLd } from "@/lib/seo";
 
 const MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 function frDate(iso: string) {
@@ -21,19 +20,15 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const a = getArticle(params.slug);
   if (!a) return {};
-  return {
+  return pageMeta({
     title: a.title,
     description: a.description,
-    keywords: a.keywords,
-    alternates: { canonical: `/blog/${a.slug}` },
-    openGraph: {
-      title: a.title,
-      description: a.description,
-      url: `${SITE}/blog/${a.slug}`,
-      type: "article",
-      publishedTime: a.date,
-    },
-  };
+    path: `/blog/${a.slug}`,
+    type: "article",
+    publishedTime: a.date,
+    modifiedTime: a.updated ?? a.date,
+    authors: [AUTHOR.name],
+  });
 }
 
 function CtaCard({ text }: { text?: string }) {
@@ -102,17 +97,20 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     headline: a.title,
     description: a.description,
     datePublished: a.date,
-    dateModified: a.date,
+    dateModified: a.updated ?? a.date,
     inLanguage: "fr-FR",
-    author: { "@type": "Organization", name: "CreaLeads" },
-    publisher: {
-      "@type": "Organization",
-      name: "CreaLeads",
-      logo: { "@type": "ImageObject", url: `${SITE}/favicon-32x32.png` },
-    },
+    image: `${SITE}/og-image.jpg`,
+    author: { "@type": "Person", name: AUTHOR.name, url: AUTHOR.url, jobTitle: AUTHOR.role },
+    publisher: { "@id": `${SITE}/#organization` },
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE}/blog/${a.slug}` },
     keywords: a.keywords.join(", "),
   };
+
+  const crumbs = breadcrumbJsonLd([
+    { name: "Accueil", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: a.title, path: `/blog/${a.slug}` },
+  ]);
 
   return (
     <main className="min-h-screen bg-canvas">
@@ -121,7 +119,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       <article className="pt-28 pb-16 sm:pt-36 sm:pb-24">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8">
           {/* Fil d'ariane */}
-          <nav className="flex items-center gap-1.5 text-[13px] text-muted mb-6">
+          <nav aria-label="Fil d&apos;Ariane" className="flex items-center gap-1.5 text-[13px] text-muted mb-6">
             <Link href="/" className="hover:text-emerald-dark transition-colors">Accueil</Link>
             <span>/</span>
             <Link href="/blog" className="hover:text-emerald-dark transition-colors">Blog</Link>
@@ -135,9 +133,40 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           </div>
 
           <h1 className="font-display text-display-md mb-4">{a.title}</h1>
-          <p className="text-base sm:text-lg text-muted leading-relaxed mb-8 pb-8 border-b border-stroke">{a.excerpt}</p>
+          <p className="text-base sm:text-lg text-muted leading-relaxed mb-6">{a.excerpt}</p>
+          <div className="flex items-center gap-3 mb-8 pb-8 border-b border-stroke">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 font-display font-bold text-brand-700">EW</span>
+            <span className="text-sm leading-tight">
+              <span className="block font-semibold">Par {AUTHOR.name}</span>
+              <span className="block text-muted text-[13px]">{AUTHOR.role}, fils d&apos;artisan</span>
+            </span>
+          </div>
 
           <div>{a.blocks.map(renderBlock)}</div>
+
+          {a.related && a.related.length > 0 && (
+            <div className="mt-10 rounded-[20px] border border-stroke bg-surface p-5 sm:p-6">
+              <div className="text-xs font-semibold uppercase tracking-wider text-emerald-dark mb-3">Pour aller plus loin</div>
+              <ul className="space-y-2">
+                {a.related.map((r) => (
+                  <li key={r.href}>
+                    <Link href={r.href} className="text-[15px] font-medium text-ink underline decoration-stroke-strong underline-offset-4 hover:text-emerald-dark hover:decoration-emerald">
+                      {r.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="mt-10 rounded-[20px] bg-surface-alt border border-stroke p-5 sm:p-6 flex gap-4 items-start">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-50 font-display font-bold text-brand-700">EW</span>
+            <div>
+              <div className="font-semibold">{AUTHOR.name}</div>
+              <div className="text-[13px] text-muted mb-2">{AUTHOR.role}</div>
+              <p className="text-sm text-ink/75 leading-relaxed">{AUTHOR.bio}</p>
+            </div>
+          </div>
 
           {/* Autres articles */}
           {others.length > 0 && (
@@ -164,6 +193,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       </article>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }} />
       <Footer />
     </main>
   );

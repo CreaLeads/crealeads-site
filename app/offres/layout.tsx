@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Offre",
+export const metadata: Metadata = pageMeta({
+  title: "Tarif et offre : 497 €/mois pour trouver des clients artisan",
   description:
-    "Une offre unique à 497 €/mois pour les artisans du bâtiment. Quatre agents inclus : campagne Meta Ads, visuels IA, qualification automatique des demandes 24h/24 et reporting. Zéro frais de mise en place, sans engagement. Options à la carte.",
-  alternates: { canonical: "/offres" },
-  openGraph: {
-    title: "L'offre CreaLeads — 497 €/mois",
-    description:
-      "Une offre, toute une équipe. Quatre agents IA au travail pour remplir votre agenda, sans frais de mise en place.",
-    url: "https://crealeads.fr/offres",
-  },
-};
+    "L'offre CreaLeads pour artisans du bâtiment : 497 €/mois, sans frais de mise en place ni engagement. Campagnes Meta ciblées, demandes qualifiées 24h/24, tableau de bord et bilan hebdo. Options à la carte.",
+  path: "/offres",
+  ogTitle: "L'offre CreaLeads — 497 €/mois, sans engagement",
+});
 
 export default function OffresLayout({ children }: { children: React.ReactNode }) {
   return children;

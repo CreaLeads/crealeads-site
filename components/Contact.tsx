@@ -157,6 +157,10 @@ export default function Contact() {
                 >
                   <span>{status === "sending" ? "Envoi…" : "Envoyer ma demande"}</span>
                 </button>
+                <p className="text-[11px] text-faint text-center leading-snug">
+                  Vos informations servent uniquement à vous recontacter.{" "}
+                  <a href="/privacy" className="underline underline-offset-2 hover:text-ink">Confidentialité</a>
+                </p>
                 {status === "error" && (
                   <p className="text-xs text-ink-60 text-center">
                     Un souci est survenu — votre logiciel mail s&apos;est ouvert pour finaliser l&apos;envoi.

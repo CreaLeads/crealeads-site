@@ -1,29 +1,64 @@
-import Link from "next/link";
+import LegalPage from "@/components/LegalPage";
+import { pageMeta } from "@/lib/seo";
+import { LEGAL, CONTACT, SITE_URL } from "@/lib/site";
 
-export const metadata = {
+export const metadata = pageMeta({
   title: "Mentions légales",
-};
+  description: "Mentions légales du site CreaLeads : éditeur, hébergeur, propriété intellectuelle et contact.",
+  path: "/mentions-legales",
+});
 
 export default function MentionsLegalesPage() {
   return (
-    <main className="min-h-screen bg-bg flex items-center justify-center px-6">
-      <div className="max-w-xl text-center">
-        <div className="text-sm font-semibold text-emerald uppercase tracking-wider mb-4">
-          Mentions légales
-        </div>
-        <h1 className="font-display text-display-md mb-6">
-          Page en <span className="text-emerald">construction</span>
-        </h1>
-        <p className="text-ink-60 mb-10 leading-relaxed">
-          Cette page sera disponible prochainement.
-        </p>
-        <Link
-          href="/"
-          className="px-8 py-4 text-base font-semibold rounded-full border border-ink-20 hover:border-ink transition-colors"
-        >
-          Retour à l&apos;accueil
-        </Link>
-      </div>
-    </main>
+    <LegalPage
+      kicker="Informations légales"
+      title="Mentions légales"
+      updated="16 octobre 2026"
+      sections={[
+        {
+          h: "Éditeur du site",
+          p: [
+            `Le site ${SITE_URL.replace("https://", "")} est édité par ${LEGAL.name}, ${LEGAL.form.toLowerCase()}.`,
+            [
+              `Adresse : ${LEGAL.address}`,
+              `SIREN : ${LEGAL.siren}`,
+              `Code NAF : ${LEGAL.naf}`,
+              `N° de TVA intracommunautaire : ${LEGAL.vat} — ${LEGAL.vatNote}`,
+              `Téléphone : ${CONTACT.phoneDisplay}`,
+              `E-mail : ${CONTACT.email}`,
+            ],
+            `Directeur de la publication : ${LEGAL.director}.`,
+          ],
+        },
+        {
+          h: "Hébergement",
+          p: [
+            "Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.",
+          ],
+        },
+        {
+          h: "Propriété intellectuelle",
+          p: [
+            "L'ensemble des contenus du site (textes, visuels, interface, logo, marque CreaLeads) est la propriété exclusive de l'éditeur, sauf mention contraire. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite.",
+          ],
+        },
+        {
+          h: "Responsabilité",
+          p: [
+            "Les informations publiées sur le site sont fournies à titre indicatif. Les résultats présentés (volumes de demandes, chiffre d'affaires, rendez-vous) sont issus de campagnes réelles mais ne constituent pas une garantie de résultat : ils dépendent du métier, de la zone, du budget publicitaire et de la capacité de chaque artisan à conclure.",
+          ],
+        },
+        {
+          h: "Données personnelles",
+          p: [
+            "Le traitement des données personnelles collectées sur le site est détaillé dans notre politique de confidentialité, accessible depuis le pied de page.",
+          ],
+        },
+        {
+          h: "Contact",
+          p: [`Pour toute question relative au site : ${CONTACT.email}.`],
+        },
+      ]}
+    />
   );
 }

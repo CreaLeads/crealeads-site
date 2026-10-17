@@ -1,36 +1,15 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 const euros = (n: number) =>
   new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
-/* Compteur isolé (rAF, sans librairie) — monte la borne haute 50 → 100.
-   Isolé pour que ses re-renders n'affectent pas le reste du hero. */
-function Counter() {
-  const [n, setN] = useState(50);
-  useEffect(() => {
-    let raf = 0;
-    let startT: number | null = null;
-    let started = false;
-    const from = 50, to = 100, dur = 1700;
-    const tick = (t: number) => {
-      if (startT === null) startT = t;
-      const p = Math.min((t - startT) / dur, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setN(Math.round(from + (to - from) * eased));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    const start = () => { if (started) return; started = true; raf = requestAnimationFrame(tick); };
-    const w = window as unknown as { __clLoaded?: boolean };
-    let fb = 0;
-    if (w.__clLoaded) start();
-    else { window.addEventListener("cl:loaded", start, { once: true }); fb = window.setTimeout(start, 4000); }
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("cl:loaded", start); if (fb) clearTimeout(fb); };
-  }, []);
-  return <>50–{n}</>;
-}
+// Résultats clients réels — la preuve dès le premier écran
+const PROOF = [
+  { v: "40 k€", l: "de CA mensuel", who: "SurfaceBéton, résine (IDF)" },
+  { v: "60", l: "demandes en 5 jours", who: "SurfaceBéton, au lancement" },
+  { v: "×2", l: "de chiffre d'affaires", who: "Eirlly, Lyon" },
+  { v: "×3", l: "de rendez-vous par mois", who: "Adame, résine (93)" },
+];
 
 /* Fenêtre « application » : la vraie interface du tableau de bord, en réduction */
 function MiniDash() {
@@ -40,9 +19,8 @@ function MiniDash() {
     { ini: "LM", nom: "Laure Mercier", ville: "Cergy (95)", label: "Signé", cls: "bg-brand-500 text-white", montant: 7200 },
   ];
   return (
-    <div className="relative">
+    <div className="relative" aria-label="Aperçu du tableau de bord CreaLeads (données de démonstration)">
       <div className="rounded-[22px] border border-stroke bg-surface shadow-lift overflow-hidden">
-        {/* Topbar */}
         <div className="flex items-center justify-between h-11 px-4 border-b border-stroke">
           <div className="flex items-center gap-2 min-w-0">
             <span className="font-display text-sm font-bold">Crea<span className="text-emerald-dark">Leads</span></span>
@@ -50,15 +28,14 @@ function MiniDash() {
           </div>
           <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-50 text-[10px] font-semibold text-brand-700">ÉG</span>
         </div>
-        {/* Contenu */}
         <div className="p-4 space-y-3">
           <div className="flex items-center justify-between gap-2">
             <div>
               <div className="text-[15px] font-semibold leading-none">Bonjour, <span className="text-faint font-normal">Éric</span></div>
-              <div className="text-[11px] text-muted mt-1">Époxy Design · Île-de-France</div>
+              <div className="text-[11px] text-muted mt-1">Résine de sol · Île-de-France</div>
             </div>
             <span className="inline-flex items-center gap-1.5 rounded-pill border border-stroke px-2.5 py-1 text-[11px] text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-400" /> août
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-400" /> ce mois-ci
             </span>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -76,8 +53,8 @@ function MiniDash() {
           <div className="rounded-[16px] border border-stroke p-3">
             <div className="text-[11px] font-semibold mb-2">Dernières demandes</div>
             <div className="space-y-2">
-              {rows.map((r, i) => (
-                <div key={i} className="flex items-center gap-2.5">
+              {rows.map((r) => (
+                <div key={r.ini} className="flex items-center gap-2.5">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-50 text-[10px] font-semibold text-brand-700">{r.ini}</span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-[12.5px] font-medium">{r.nom}</span>
@@ -91,70 +68,69 @@ function MiniDash() {
           </div>
         </div>
       </div>
-      {/* Puce flottante « nouveau lead » */}
       <div className="absolute -top-3 left-3 sm:-left-3 inline-flex items-center gap-2 rounded-pill bg-surface border border-stroke shadow-lift px-3 py-1.5">
         <span className="h-2 w-2 rounded-full bg-brand-400 animate-pulse" />
-        <span className="text-[11px] font-semibold">Nouveau lead · qualifié</span>
+        <span className="text-[11px] font-semibold">Nouvelle demande · qualifiée</span>
       </div>
+      <p className="mt-3 text-center text-[11px] text-faint">Tableau de bord réel, données de démonstration</p>
     </div>
   );
 }
 
 export default function Hero() {
   return (
-    <section className="relative pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24 overflow-hidden bg-canvas">
+    <section className="relative pt-28 pb-12 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20 overflow-hidden bg-canvas">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-14 items-center">
-          {/* Colonne texte */}
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-14 items-center">
           <div>
-            <div className="inline-flex items-center gap-2.5 mb-6 rounded-pill border border-stroke bg-surface shadow-ds-sm px-3.5 py-1.5">
-              <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-muted">Acquisition clients pour artisans du bâtiment</span>
-            </div>
-
-            <h1 className="font-display text-display-lg mb-5 sm:mb-6">
-              Le bouche-à-oreille a une <span className="italic font-light">limite.</span>{" "}
-              <span className="text-emerald-dark">Nous, on n&apos;en a pas.</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-muted mb-6 sm:mb-8 max-w-xl leading-relaxed">
-              Un système clé en main qui vous ramène <strong className="text-ink font-semibold">50 à 100 prospects qualifiés par mois</strong>, directement dans votre tableau de bord. Pensé par un fils d&apos;artisan, pour les artisans.
+            <p className="font-display text-lg sm:text-xl text-muted mb-4">
+              Le bouche-à-oreille a une <span className="italic">limite</span>. Nous, on n&apos;en a pas.
             </p>
 
-            <div className="flex items-center gap-4 mb-8">
-              <span className="font-sans text-4xl sm:text-5xl font-bold text-emerald-dark tnum leading-none">
-                <Counter />
-              </span>
-              <span className="text-sm text-muted leading-tight max-w-[170px]">
-                demandes de devis qualifiées <span className="text-ink font-semibold">par mois</span>
-              </span>
-            </div>
+            <h1 className="font-display text-display-lg mb-5 sm:mb-6">
+              Des chantiers en plus chaque mois, <span className="text-emerald-dark">pour les artisans du bâtiment.</span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-muted mb-8 max-w-xl leading-relaxed">
+              On lance vos publicités Facebook et Instagram sur votre zone, on trie les demandes pour vous, et vous suivez tout jusqu&apos;au chantier signé dans un seul tableau de bord.{" "}
+              <strong className="text-ink font-semibold">50 à 100 demandes qualifiées par mois</strong>, rien qu&apos;à vous.
+            </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Link href="#contact" className="btn-primary px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold rounded-full text-center">
-                <span>Réserver un appel découverte</span>
+              <Link href="#contact" className="btn-primary px-7 sm:px-8 py-4 text-sm sm:text-base font-semibold rounded-full text-center">
+                <span>Vérifier si mon secteur est libre</span>
               </Link>
-              <Link href="#produit" className="px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold rounded-full border border-stroke-strong bg-surface hover:border-ink transition-colors text-center">
+              <Link href="#produit" className="px-7 sm:px-8 py-4 text-sm sm:text-base font-semibold rounded-full border border-stroke-strong bg-surface hover:border-ink transition-colors text-center">
                 Voir le tableau de bord
               </Link>
             </div>
 
-            <div className="flex flex-wrap gap-2.5 sm:gap-3 mt-8 sm:mt-10 text-sm text-muted">
-              {["Premiers leads sous 24h", "Exclusivité zone et métier", "Sans engagement"].map((t) => (
-                <div key={t} className="inline-flex items-center gap-2 rounded-pill border border-stroke bg-surface shadow-ds-sm px-3.5 py-2">
-                  <svg className="w-5 h-5 text-emerald-dark flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <ul className="flex flex-wrap gap-x-5 gap-y-2 mt-7 text-sm text-muted">
+              {["Premières demandes sous 72 h", "Un seul artisan par métier et par zone", "497 €/mois, sans engagement"].map((t) => (
+                <li key={t} className="inline-flex items-center gap-1.5">
+                  <svg className="w-4 h-4 text-emerald-dark flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>{t}</span>
-                </div>
+                  {t}
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
-          {/* Colonne produit */}
           <div className="lg:pl-2">
             <MiniDash />
           </div>
+        </div>
+
+        {/* Preuve immédiate */}
+        <div className="mt-12 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 rounded-[24px] border border-stroke bg-surface shadow-ds-sm overflow-hidden">
+          {PROOF.map((p, i) => (
+            <div key={p.l} className={`p-5 sm:p-6 ${i % 2 === 1 ? "border-l border-stroke" : ""} ${i >= 2 ? "border-t lg:border-t-0 border-stroke" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
+              <div className="tnum font-display text-3xl sm:text-4xl font-extrabold text-emerald-dark leading-none mb-2">{p.v}</div>
+              <div className="text-sm font-medium leading-snug">{p.l}</div>
+              <div className="text-[12px] text-faint mt-1">{p.who}</div>
+            </div>
+          ))}
         </div>
       </div>
 

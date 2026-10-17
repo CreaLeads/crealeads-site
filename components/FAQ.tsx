@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "Qu'est-ce qui est compris dans les 497 € par mois ?",
-    a: "Tout le système d'acquisition, avec quatre agents inclus : Théo diffuse votre campagne Meta ciblée sur votre zone et votre métier, Iris crée et renouvelle vos visuels par IA, Lucie qualifie vos demandes automatiquement 24h/24, et Victor optimise vos campagnes chaque semaine et vous envoie le bilan chaque mois. S'ajoutent le CRM automatisé, la notification à chaque lead et l'exclusivité sur votre zone. Vous pouvez ensuite renforcer le système avec des options : retargeting (+97 €/mois), contenu réseaux avec Marco (+147 €/mois), zone supplémentaire (+97 €/mois), Google Ads (+197 €/mois) ou votre agent personnel Amandine (+97 €/mois). Et en une fois : un site vitrine pro (490 €) ou un audit de vos pubs actuelles (290 €).",
+    a: "Tout le système d'acquisition : vos campagnes Facebook et Instagram ciblées sur votre zone et votre métier, des visuels créés et renouvelés en continu, la qualification automatique des demandes 24h/24, votre tableau de bord (demandes, rendez-vous, relances, devis), une notification à chaque nouvelle demande, l'optimisation chaque semaine avec un bilan chaque lundi, et l'exclusivité sur votre zone. En option : Google Ads (+197 €/mois), retargeting (+97 €/mois), zone supplémentaire (+97 €/mois), contenu réseaux sociaux (+147 €/mois). Et en une fois : un site vitrine pro (490 €) ou un audit de vos pubs actuelles (290 €).",
   },
   {
     q: "Il y a des frais de mise en place ?",
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: "Gérez-vous aussi les appels et les rendez-vous physiques ?",
-    a: "Nous gérons l'acquisition digitale : publicités Meta, qualification automatique des demandes et prise de contact. Lucie, incluse dans l'abonnement, capte chaque demande dès son arrivée, 24h/24, la qualifie et écarte les curieux — pour que vous n'appeliez que les gens sérieux. Les rendez-vous physiques et la signature restent de votre ressort.",
+    a: "Nous gérons l'acquisition digitale : publicités Meta, qualification automatique des demandes et prise de contact. Chaque demande est captée dès son arrivée, 24h/24, qualifiée automatiquement et les curieux sont écartés — pour que vous n'appeliez que les gens sérieux. Les rendez-vous physiques et la signature restent de votre ressort.",
   },
 ];
 
@@ -78,6 +78,7 @@ export default function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                aria-expanded={openIndex === i}
                 className="w-full px-5 sm:px-8 py-4 sm:py-6 flex items-center justify-between gap-4 text-left"
               >
                 <span className="font-sans text-sm sm:text-lg font-semibold tracking-tight">

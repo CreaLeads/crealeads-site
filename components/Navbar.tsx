@@ -2,17 +2,15 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { DASHBOARD_URL } from "@/lib/site";
 
 const links = [
-  { href: "/offres", label: "Offres" },
   { href: "/plateforme", label: "Plateforme" },
-  { href: "/agents", label: "Agents" },
+  { href: "/metiers", label: "Métiers" },
+  { href: "/offres", label: "Tarifs" },
+  { href: "/#resultats", label: "Résultats" },
   { href: "/blog", label: "Blog" },
-  { href: "/#methode", label: "Méthode" },
-  { href: "/#contact", label: "Contact" },
 ];
-
-const DASHBOARD_URL = "https://dashboard.crealeads.fr";
 
 function LoginIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (

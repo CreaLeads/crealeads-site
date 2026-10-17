@@ -1,5 +1,3 @@
-"use client";
-
 const testimonials = [
   {
     name: "Serge Wagner",
@@ -39,9 +37,9 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="temoignages" className="py-16 sm:py-24 lg:py-32">
+    <section id="temoignages" className="py-16 sm:py-24 lg:py-28">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mb-10 sm:mb-16">
+        <div className="max-w-3xl mb-10 sm:mb-14">
           <div className="text-xs sm:text-sm font-semibold text-emerald-dark uppercase tracking-wider mb-3 sm:mb-4">
             Témoignages clients
           </div>
@@ -50,49 +48,30 @@ export default function Testimonials() {
           </h2>
         </div>
 
-        <div className="space-y-6 sm:space-y-8">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="card-hover bg-surface border border-stroke shadow-ds-sm rounded-[24px] p-6 sm:p-8 lg:p-12 flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-12 lg:items-center"
-            >
-              <div className="lg:col-span-7">
-                <div className="flex items-center gap-1 mb-5 sm:mb-6">
-                  {[...Array(5)].map((_, j) => (
-                    <svg key={j} className="w-4 h-4 sm:w-5 sm:h-5 text-emerald" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="font-display text-lg sm:text-xl lg:text-2xl leading-snug mb-6 sm:mb-8">
-                  «&nbsp;{t.quote}&nbsp;»
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-brand-50 flex items-center justify-center font-display font-bold text-brand-700 flex-shrink-0">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="font-display font-bold text-sm sm:text-base">{t.name}</div>
-                    <div className="text-xs sm:text-sm text-ink-60">{t.company} · {t.location}</div>
-                    <div className="text-xs text-ink-60">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-4">
-                {t.stats.map((s, j) => (
-                  <div
-                    key={j}
-                    className="bg-surface-alt border border-stroke rounded-[16px] p-4 sm:p-5 text-center"
-                  >
-                    <div className="tnum font-display text-2xl sm:text-3xl font-bold text-emerald-dark mb-1">
-                      {s.value}
-                    </div>
-                    <div className="text-xs text-ink-60 leading-tight">{s.label}</div>
+        <div className="grid lg:grid-cols-3 gap-4 sm:gap-5">
+          {testimonials.map((t) => (
+            <figure key={t.name} className="card-hover bg-surface border border-stroke shadow-ds-sm rounded-[24px] p-6 sm:p-7 flex flex-col">
+              <div className="flex gap-2 mb-5">
+                {t.stats.slice(0, 2).map((s) => (
+                  <div key={s.label} className="flex-1 bg-surface-alt border border-stroke rounded-[14px] px-3 py-2.5">
+                    <div className="tnum font-display text-xl font-bold text-emerald-dark leading-none mb-1">{s.value}</div>
+                    <div className="text-[11px] text-ink-60 leading-tight">{s.label}</div>
                   </div>
                 ))}
               </div>
-            </div>
+              <blockquote className="font-display text-[17px] sm:text-lg leading-snug mb-6 flex-grow">
+                «&nbsp;{t.quote}&nbsp;»
+              </blockquote>
+              <figcaption className="flex items-center gap-3 pt-5 border-t border-stroke">
+                <div className="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center font-display font-bold text-brand-700 flex-shrink-0">
+                  {t.name.charAt(0)}
+                </div>
+                <div>
+                  <div className="font-semibold text-sm">{t.name} · {t.company}</div>
+                  <div className="text-xs text-ink-60">{t.role} · {t.location}</div>
+                </div>
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>

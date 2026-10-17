@@ -1,28 +1,16 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { allArticles } from "@/lib/blog";
 
-export const metadata: Metadata = {
-  title: "Blog — Acquisition de clients pour artisans",
+export const metadata: Metadata = pageMeta({
+  title: "Blog : trouver des clients quand on est artisan du bâtiment",
   description:
-    "Conseils pour trouver des clients et générer des leads qualifiés quand on est artisan du bâtiment : publicité Meta, acquisition, prospects, Île-de-France, Yvelines, Paris.",
-  keywords: [
-    "trouver des clients artisan",
-    "leads qualifiés artisan",
-    "acquisition clients bâtiment",
-    "prospects artisan Île-de-France",
-    "publicité Meta artisan",
-  ],
-  alternates: { canonical: "/blog" },
-  openGraph: {
-    title: "Blog CreaLeads — Acquisition de clients pour artisans",
-    description:
-      "Trouver des clients, générer des leads qualifiés, réussir sa publicité Meta : le blog pour les artisans du bâtiment.",
-    url: "https://crealeads.fr/blog",
-  },
-};
+    "Conseils concrets pour trouver des clients et des chantiers quand on est artisan du bâtiment : publicité Facebook et Instagram, leads qualifiés, plateformes de mise en relation, référencement local.",
+  path: "/blog",
+});
 
 const MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 function frDate(iso: string) {
@@ -38,13 +26,13 @@ export default function BlogIndex() {
     "@type": "Blog",
     name: "Blog CreaLeads",
     description: "Acquisition de clients et génération de leads pour les artisans du bâtiment.",
-    url: "https://crealeads.fr/blog",
+    url: "https://www.crealeads.fr/blog",
     blogPost: articles.map((a) => ({
       "@type": "BlogPosting",
       headline: a.title,
       description: a.description,
       datePublished: a.date,
-      url: `https://crealeads.fr/blog/${a.slug}`,
+      url: `https://www.crealeads.fr/blog/${a.slug}`,
     })),
   };
 
